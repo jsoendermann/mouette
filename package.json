@@ -1,0 +1,25 @@
+{
+  "name": "seagull",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iHealthLab/seagull.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/iHealthLab/seagull/issues"
+  },
+  "homepage": "https://github.com/iHealthLab/seagull#readme",
+  "devDependencies": {
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.1"
+  },
+  "dependencies": {
+    "mongodb": "^2.2.25"
+  }
+}
