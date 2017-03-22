@@ -4,7 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepush": "npm run lint",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "lint": "tslint 'src/**/*.ts'"
   },
   "repository": {
     "type": "git",
@@ -16,6 +19,8 @@
   },
   "homepage": "https://github.com/iHealthLab/seagull#readme",
   "devDependencies": {
+    "@types/node": "^7.0.8",
+    "husky": "^0.13.2",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1"
   },
