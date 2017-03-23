@@ -24,5 +24,8 @@ const formatFailure = (failure: IRuleFailureJson): string => {
   if (failure.suggestion) {
     output += colors.gray(`\nYou could... ${failure.suggestion.replace(/\*(.*?)\*/g, colors.white('$1'))}`)
   }
+  if (failure.mongoCommand) {
+    output += colors.gray(`\nTo see the offending records run:\n${colors.cyan(failure.mongoCommand)}`)
+  }
   return output
 }

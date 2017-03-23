@@ -2,7 +2,7 @@ import { DbWrapper } from './DbWrapper'
 
 
 export type RuleSeverity = 'warning' | 'error'
-export type RuleGranularity = 'collection_name' | 'key_name' | 'column' | 'row'
+export type RuleGranularity = 'collection_name' | 'key_name' | 'column'
 
 export interface IRuleMetadata {
   name: string
@@ -31,30 +31,22 @@ export interface IRuleFailureJson {
   location: {
     collectionName?: string
     keyName?: string
-    recordId?: string
   }
-  fieldValue?: string
-  fieldType?: string
   failure: string
   suggestion?: string
+  mongoCommand?: string
 }
 
 export interface IRuleFailure {
   toJson(): IRuleFailureJson
   getCollectionName(): string | undefined
   getKeyName(): string | undefined
-  getRecordId(): string | undefined
-  getFieldValue(): string | undefined
-  getFieldType(): string | undefined
 }
 
 export class RuleFailure implements IRuleFailure {
   constructor(private rule: IRule,
               private collectionName?: string,
-              private keyName?: string,
-              private recordId?: string,
-              private fieldValue?: string,
-              private fieldType?: string) { }
+              private keyName?: string) { }
     
   public toJson(): IRuleFailureJson {
     return this.rule.failureToJson(this)
@@ -68,15 +60,4 @@ export class RuleFailure implements IRuleFailure {
     return this.keyName
   }
 
-  getRecordId(): string | undefined {
-    return this.recordId
-  }
-
-  getFieldValue(): string | undefined {
-    return this.fieldValue
-  }
-
-  getFieldType(): string | undefined {
-    return this.fieldType
-  }
 }

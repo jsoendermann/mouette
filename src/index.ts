@@ -5,6 +5,9 @@ import {
 import {
   Rule as NoLeadingUnderscoresInKeyNamesRule
 } from './rules/noLeadingUnderscoresInKeyNames'
+import {
+  Rule as KeysThatEndInAtShouldContainDatesRule
+} from './rules/keysThatEndInAtShouldContainDates'
 import { IRuleFailure, IRuleFailureJson } from './rule'
 import { flatten } from 'lodash'
 import { commandLineFormatter } from './formatters'
@@ -18,6 +21,7 @@ const dbWrapper = new DbWrapper(process.env.MONGODB_URL);
   const failures = flatten([
     ...await new CollectionNamesNumberRule().apply(dbWrapper),
     ...await new NoLeadingUnderscoresInKeyNamesRule().apply(dbWrapper),
+    ...await new KeysThatEndInAtShouldContainDatesRule().apply(dbWrapper),
   ])
 
   const output = commandLineFormatter(failures.map(f => f.toJson()))
