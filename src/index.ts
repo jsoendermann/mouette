@@ -1,33 +1,21 @@
-import { MongoClient, Db } from 'mongodb'
+import { DbWrapper } from './DbWrapper'
 import {
-  rule as r1
+  Rule as r1
 } from './rules/collectionNamesNumber'
 import {
-  rule as r2
+  Rule as r2
 } from './rules/noLeadingUnderscoresInKeyNames'
 import { IRuleFailure, IRuleFailureJson } from './abstractRule'
 require('dotenv').config()
 import * as colors from 'colors'
 
 
-const print = (failure: IRuleFailure) => {
-  const json = failure.toJson()
-  console.log(
-    `${colors.yellow(json.failure)
-    }${json.fix ? `\nYou could... ${json.fix}` : ''}\n`
-  )
+const dbWrapper = new DbWrapper(process.env.MONGODB_URL);
 
-}
-
-// MongoClient.connect('mongodb://localhost:27017/seagull_dev').then(async (db: Db) => {
-MongoClient.connect(process.env.MONGODB_URL).then(async (db: Db) => {
-  // if db == null, on('error'/'close')
-  console.log('Connected')
-
-  const failures1 = await r1.apply(db)
-  const failures2 = await r2.apply(db)
-  // console.log(1)
-  failures1.map(print)
-  failures2.map(print)
-  db.close()
-})
+(async () => {
+  const failures1 = await new r1().apply(dbWrapper)
+  const failures2 = await new r2().apply(dbWrapper)
+  console.log(failures1.map(f => f.toJson()))
+  console.log(failures2.map(f => f.toJson()))
+  dbWrapper.close()
+})()

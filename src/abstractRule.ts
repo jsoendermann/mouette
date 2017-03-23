@@ -1,20 +1,25 @@
-import { Db } from 'mongodb'
+import { DbWrapper } from './DbWrapper'
 
+
+export interface IRuleMetadata {
+  name: string
+  prettyName: string
+  description: string
+  rationale: string
+  severity: RuleSeverity
+  granularity: RuleGranularity
+  isFuzzy: boolean
+}
 
 export interface IRuleFailureJson {
-  ruleName: string
-  prettyRuleName: string
-  granularity: string
+  ruleMetadata: IRuleMetadata
   location: {
     collectionName?: string
     keyName?: string
     recordId?: string
   }
-  isFuzzy: boolean
-  severity: string
   failure: string
-  fix?: string
-  hash: string
+  suggestion?: string
 }
 
 export interface IRuleFailure {
@@ -50,19 +55,17 @@ export class RuleFailure implements IRuleFailure {
 export type RuleSeverity = 'warning' | 'error'
 export type RuleGranularity = 'collection_name' | 'key_name' | 'column' | 'row'
 
-export interface IRuleMetadata {
-  name: string
-  prettyName: string
-  description: string
-  rationale: string
-  severity: RuleSeverity
-  granularity: RuleGranularity
-  isFuzzy: boolean
-}
+
 
 
 export interface IRule {
-  readonly metadata: IRuleMetadata
-  apply(db: Db): Promise<IRuleFailure[]>
+  apply(db: DbWrapper): Promise<IRuleFailure[]>
   failureToJson(failure: IRuleFailure): IRuleFailureJson
+}
+
+export abstract class AbstractRule implements IRule {
+  public static metadata: IRuleMetadata
+
+  public abstract async apply(db: DbWrapper): Promise<IRuleFailure[]>
+  public abstract failureToJson(failure: IRuleFailure): IRuleFailureJson
 }

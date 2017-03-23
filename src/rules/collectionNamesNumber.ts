@@ -1,12 +1,11 @@
-import { Db } from 'mongodb'
-import * as crypto from 'crypto'
-import { IRule, IRuleFailure, RuleFailure, IRuleFailureJson, RuleSeverity, RuleGranularity } from '../abstractRule'
+import { DbWrapper } from '../DbWrapper'
+import { IRule, IRuleFailure, RuleFailure, IRuleFailureJson, RuleSeverity, RuleGranularity, AbstractRule } from '../abstractRule'
 import { isPlural, pluralize } from '../vendor/lingo'
 import * as colors from 'colors'
 
 
-export const rule: IRule = {
-  metadata: {
+export class Rule extends AbstractRule {
+  public static metadata = {
     name: 'collection-names-number',
     prettyName: 'Collection names number',
     description: 'Make sure all collections in the database have names that are pluralized.',
@@ -14,35 +13,24 @@ export const rule: IRule = {
     severity: 'warning' as RuleSeverity,
     granularity: 'collection_name' as RuleGranularity,
     isFuzzy: false,
-  },
+  }
 
-  async apply(db: Db): Promise<IRuleFailure[]> {
-    const collectionDetails = await db.listCollections({}).toArray()
-    const userCollectionNames = collectionDetails
-      .map(d => d.name)
-      .filter(n => !n.startsWith('system.'))
-    const nonPluralizedNames = userCollectionNames.filter(n => !isPlural(n))
-    return nonPluralizedNames.map(n => new RuleFailure(this, n))
-  },
+  async apply(db: DbWrapper): Promise<IRuleFailure[]> {
+    const collectionNames = await db.getCollectionNames()
+    const nonPluralizedNames = collectionNames.filter(name => !isPlural(name))
+    return nonPluralizedNames.map(name => new RuleFailure(this, name))
+  }
 
   failureToJson(failure: IRuleFailure): IRuleFailureJson {
-    const collectionName = failure.getCollectionName()
-    if (collectionName === undefined) {
-      throw new Error(`collectionName shouldn't be undefined for rule ${this.metadata.name}`)
-    }
+    const collectionName = failure.getCollectionName() as string
 
     return {
-      ruleName: this.metadata.name,
-      prettyRuleName: this.metadata.prettyName,
-      granularity: this.metadata.granularity,
+      ruleMetadata: Rule.metadata,
       location: {
         collectionName,
       },
-      isFuzzy: this.metadata.isFuzzy,
-      severity: this.metadata.severity,
-      failure: `Collection name ${colors.bgYellow(colors.black(collectionName))} is not pluralized.`,
-      fix: `Change ${collectionName} to ${pluralize(collectionName)}.`,
-      hash: crypto.createHash('sha256').update(`${this.metadata.name}.${collectionName}`).digest('hex'),
+      failure: `Collection name **${collectionName}** is not pluralized.`,
+      suggestion: `Change *${collectionName}* to *${pluralize(collectionName)}*.`,
     }
-  },
+  }
 }
