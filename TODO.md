@@ -1,5 +1,10 @@
 # TODO
 
+- options
+- json output
+- formatters
+- rename db to dbWrapper
+
 - Make it easy to disable rules (using hash sums?)
 - Remember when seagull first saw an issue so that new ones can be shown at the top
 

@@ -1,7 +1,6 @@
 import { DbWrapper } from '../DbWrapper'
-import { IRule, IRuleFailure, RuleFailure, IRuleFailureJson, RuleSeverity, RuleGranularity, AbstractRule } from '../abstractRule'
+import { IRule, IRuleFailure, RuleFailure, IRuleFailureJson, RuleSeverity, RuleGranularity, AbstractRule } from '../rule'
 import { isPlural, pluralize } from '../vendor/lingo'
-import * as colors from 'colors'
 import { flatten } from 'lodash'
 
 

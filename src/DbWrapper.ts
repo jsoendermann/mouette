@@ -7,7 +7,7 @@ export class DbWrapper {
 
   constructor(private mongoUri: string) { }
 
-  private async getDb(): Promise<Db> {
+  public async getDb(): Promise<Db> {
     if (this.connectionPromise) {
       return this.connectionPromise
     }

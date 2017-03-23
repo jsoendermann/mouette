@@ -33,6 +33,8 @@ export interface IRuleFailureJson {
     keyName?: string
     recordId?: string
   }
+  fieldValue?: string
+  fieldType?: string
   failure: string
   suggestion?: string
 }
@@ -41,14 +43,18 @@ export interface IRuleFailure {
   toJson(): IRuleFailureJson
   getCollectionName(): string | undefined
   getKeyName(): string | undefined
-  getRecordId(): any | undefined
+  getRecordId(): string | undefined
+  getFieldValue(): string | undefined
+  getFieldType(): string | undefined
 }
 
 export class RuleFailure implements IRuleFailure {
   constructor(private rule: IRule,
               private collectionName?: string,
               private keyName?: string,
-              private recordId?: any) { }
+              private recordId?: string,
+              private fieldValue?: string,
+              private fieldType?: string) { }
     
   public toJson(): IRuleFailureJson {
     return this.rule.failureToJson(this)
@@ -62,7 +68,15 @@ export class RuleFailure implements IRuleFailure {
     return this.keyName
   }
 
-  getRecordId(): any | undefined {
+  getRecordId(): string | undefined {
     return this.recordId
+  }
+
+  getFieldValue(): string | undefined {
+    return this.fieldValue
+  }
+
+  getFieldType(): string | undefined {
+    return this.fieldType
   }
 }
