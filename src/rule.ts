@@ -1,6 +1,9 @@
 import { DbWrapper } from './DbWrapper'
 
 
+export type RuleSeverity = 'warning' | 'error'
+export type RuleGranularity = 'collection_name' | 'key_name' | 'column' | 'row'
+
 export interface IRuleMetadata {
   name: string
   prettyName: string
@@ -9,6 +12,18 @@ export interface IRuleMetadata {
   severity: RuleSeverity
   granularity: RuleGranularity
   isFuzzy: boolean
+}
+
+export interface IRule {
+  apply(db: DbWrapper): Promise<IRuleFailure[]>
+  failureToJson(failure: IRuleFailure): IRuleFailureJson
+}
+
+export abstract class AbstractRule implements IRule {
+  public static metadata: IRuleMetadata
+
+  public abstract async apply(db: DbWrapper): Promise<IRuleFailure[]>
+  public abstract failureToJson(failure: IRuleFailure): IRuleFailureJson
 }
 
 export interface IRuleFailureJson {
@@ -50,22 +65,4 @@ export class RuleFailure implements IRuleFailure {
   getRecordId(): any | undefined {
     return this.recordId
   }
-}
-
-export type RuleSeverity = 'warning' | 'error'
-export type RuleGranularity = 'collection_name' | 'key_name' | 'column' | 'row'
-
-
-
-
-export interface IRule {
-  apply(db: DbWrapper): Promise<IRuleFailure[]>
-  failureToJson(failure: IRuleFailure): IRuleFailureJson
-}
-
-export abstract class AbstractRule implements IRule {
-  public static metadata: IRuleMetadata
-
-  public abstract async apply(db: DbWrapper): Promise<IRuleFailure[]>
-  public abstract failureToJson(failure: IRuleFailure): IRuleFailureJson
 }
