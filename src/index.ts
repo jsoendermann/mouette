@@ -1,26 +1,26 @@
 import { DbWrapper } from './DbWrapper'
 import {
-  Rule as r1
+  Rule as CollectionNamesNumberRule
 } from './rules/collectionNamesNumber'
 import {
-  Rule as r2
+  Rule as NoLeadingUnderscoresInKeyNamesRule
 } from './rules/noLeadingUnderscoresInKeyNames'
-import {
-  Rule as r3
-} from './rules/keysThatEndInAtShouldContainDates'
 import { IRuleFailure, IRuleFailureJson } from './rule'
+import { flatten } from 'lodash'
+import { commandLineFormatter } from './formatters'
+
 require('dotenv').config()
-import * as colors from 'colors'
 
 
 const dbWrapper = new DbWrapper(process.env.MONGODB_URL);
 
 (async () => {
-  // const failures1 = await new r1().apply(dbWrapper)
-  // const failures2 = await new r2().apply(dbWrapper)
-  const failures3 = await new r3().apply(dbWrapper)
-  // console.log(failures1.map(f => f.toJson()))
-  // console.log(failures2.map(f => f.toJson()))
-  console.log(failures3.map(f => f.toJson()))
+  const failures = flatten([
+    ...await new CollectionNamesNumberRule().apply(dbWrapper),
+    ...await new NoLeadingUnderscoresInKeyNamesRule().apply(dbWrapper),
+  ])
+
+  const output = commandLineFormatter(failures.map(f => f.toJson()))
+  console.log(output)
   dbWrapper.close()
 })()
