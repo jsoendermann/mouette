@@ -68,7 +68,8 @@ export class Rule extends AbstractRule {
         collectionName,
         keyName,
       },
-      failure: `Column **${collectionName}.${keyName}** contains values that are not dates, null or non-existant.`,
+      failure: `Column **${collectionName}.${keyName
+        }** ends in "At" but contains values that are not dates, null or undefined.`,
       mongoCommand: `
 db.${collectionName}.find({
   $nor: [
