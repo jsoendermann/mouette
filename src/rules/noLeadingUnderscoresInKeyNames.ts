@@ -1,3 +1,4 @@
+
 import { flatten } from 'lodash'
 
 import { DbWrapper } from '../DbWrapper'
@@ -20,7 +21,10 @@ export class Rule extends AbstractRule {
     severity: 'warning' as RuleSeverity,
     granularity: 'key_name' as RuleGranularity,
     isFuzzy: false,
+    optionsDescription: '',
+    optionsSchema: {},
   }
+
   public getMetadata() { return Rule.metadata }
 
   public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
@@ -42,10 +46,6 @@ export class Rule extends AbstractRule {
     const keyName = failure.getKeyName() as string
 
     const result: any = {
-      location: {
-        collectionName,
-        keyName,
-      },
       failure: `Key name **${collectionName}.${keyName}** should not start with an underscore.`,
     }
 

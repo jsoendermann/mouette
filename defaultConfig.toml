@@ -1,0 +1,11 @@
+[collection-names-number]
+  enabled = true
+  number = 'plural'
+
+[keys-that-end-in-at-should-contain-dates]
+  enabled = true
+  allow-stringified-days = true
+  stringified-days-regex = '^\\d\\d\\d\\d-[01]\\d-[0123]\\d$'
+
+[no-leading-underscores-in-key-names]
+  enabled = true
