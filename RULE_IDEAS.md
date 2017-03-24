@@ -1,34 +1,29 @@
 # Rule ideas
 
-- Consistent pluralization of collection names
-- check for camel case in collection/field names (also check for ID instead of Id at the end)
-- make sure collection names are camelcase
-- make sure key names are camelcase/snakecase
+- collection-names-number
+  - number: 'singular' | 'plural'
+- key-names-format
+  - format: 'camel-case' | 'snake-case'
+- no-leading-underscores-in-key-names
+- no-mixed-types
+- no-undefined
+- no-null
+- keys-that-end-in-at-should-contain-dates
+  - allow-stringified-days: bool
+- is-and-has-keys-should-contain-booleans
+- max-key-count
+  - count: 10
+- bad-key-names
+  - names-considered-bad: 'value' | 'data' | 'details'
+- numbers-saved-as-strings
+- columns-containing-object-ids-should-end-in-id
 
-Find mixed types (strings and bools)
-Dangling foreign keys
-Find dates that should be ‘yyyy-mm-dd’
-handle undefined
-Suggest sub objects if there are too many properties
-Make sure xxxAt is of type date, isXXX/hasXXX is of type bool
-Check for common bad names like “value”
-Check sub object schema
+## Guesses
 
+- enforce-enums
+- no-number-enums
+- save-days-in-string-when-possible
 
+## Potentially slow
 
-
-Mixed types (objectid / string)
-Nested objects
-Null/undefined
-Dates that should be saved as strings
-Dangling foreign keys
-Enums
-Numbers saved as strings
-Empty strings
-
-
-
-
-Remember which errors are new
-Make disabling warning easy
-Give it hints about schema, combine with disabling
+- dangling-foreign-keys
