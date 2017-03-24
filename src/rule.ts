@@ -14,12 +14,7 @@ export interface IRuleMetadata {
   isFuzzy: boolean
 }
 
-export interface IRule {
-  apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]>
-  failureToJson(failure: IRuleFailure): IRuleFailureJson
-}
-
-export abstract class AbstractRule implements IRule {
+export abstract class AbstractRule {
   public static metadata: IRuleMetadata
 
   public abstract async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]>
@@ -29,8 +24,8 @@ export abstract class AbstractRule implements IRule {
 export interface IRuleFailureJson {
   ruleMetadata: IRuleMetadata
   location: {
-    collectionName?: string
-    keyName?: string
+    collectionName?: string,
+    keyName?: string,
   }
   failure: string
   suggestion?: string
@@ -44,19 +39,19 @@ export interface IRuleFailure {
 }
 
 export class RuleFailure implements IRuleFailure {
-  constructor(private rule: IRule,
+  constructor(private rule: AbstractRule,
               private collectionName?: string,
               private keyName?: string) { }
-    
+
   public toJson(): IRuleFailureJson {
     return this.rule.failureToJson(this)
   }
 
-  getCollectionName(): string | undefined {
+  public getCollectionName(): string | undefined {
     return this.collectionName
   }
 
-  getKeyName(): string | undefined {
+  public getKeyName(): string | undefined {
     return this.keyName
   }
 

@@ -1,16 +1,17 @@
+import { flatten } from 'lodash'
+
 import { DbWrapper } from './DbWrapper'
+import { commandLineFormatter } from './formatters'
+
 import {
-  Rule as CollectionNamesNumberRule
+  Rule as CollectionNamesNumberRule,
 } from './rules/collectionNamesNumber'
 import {
-  Rule as NoLeadingUnderscoresInKeyNamesRule
-} from './rules/noLeadingUnderscoresInKeyNames'
-import {
-  Rule as KeysThatEndInAtShouldContainDatesRule
+  Rule as KeysThatEndInAtShouldContainDatesRule,
 } from './rules/keysThatEndInAtShouldContainDates'
-import { IRuleFailure, IRuleFailureJson } from './rule'
-import { flatten } from 'lodash'
-import { commandLineFormatter } from './formatters'
+import {
+  Rule as NoLeadingUnderscoresInKeyNamesRule,
+} from './rules/noLeadingUnderscoresInKeyNames'
 
 require('dotenv').config()
 

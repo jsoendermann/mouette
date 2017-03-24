@@ -8,16 +8,17 @@ export const commandLineFormatter: formatter = (failures: IRuleFailureJson[]): s
 }
 
 const formatFailure = (failure: IRuleFailureJson): string => {
-  let color = (s: string) => s, bgColor = (s: string) => s
+  let color: (s: string) => string
+  let bgColor: (s: string) => string
   switch (failure.ruleMetadata.severity) {
     case 'warning':
       color = colors.yellow
       bgColor = colors.bgYellow
-      break;
+      break
     case 'error':
       color = colors.red
       bgColor = colors.bgRed
-      break;
+      break
   }
 
   let output = `${failure.failure.replace(/\*\*(.*?)\*\*/g, color('$1'))}`

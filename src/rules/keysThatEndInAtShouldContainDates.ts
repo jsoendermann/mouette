@@ -1,7 +1,14 @@
 import { flatten } from 'lodash'
 
 import { DbWrapper } from '../DbWrapper'
-import { AbstractRule, IRuleFailure, IRuleFailureJson, RuleFailure,  RuleGranularity, RuleSeverity } from '../rule'
+import {
+  AbstractRule,
+  IRuleFailure,
+  IRuleFailureJson,
+  RuleFailure,
+  RuleGranularity,
+  RuleSeverity,
+} from '../rule'
 
 
 export class Rule extends AbstractRule {
@@ -31,22 +38,22 @@ export class Rule extends AbstractRule {
                 { [keyName]: { $type: 9 } }, // Date
                 { [keyName]: { $type: 10 } }, // null
                 { [keyName]: { $exists: false } },
-              ]
-            }
+              ],
+            },
           ) > 0
 
           if (hasNonDateObjects) {
             return new RuleFailure(
               this,
               collectionName,
-              keyName
+              keyName,
             )
           }
           return null
         }))
         const failuresInCollection = failuresOrNull.filter(f => f) as IRuleFailure[]
         return failuresInCollection
-      }))
+      })),
     )
     return failures
   }

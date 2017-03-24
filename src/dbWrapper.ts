@@ -1,9 +1,12 @@
-import { MongoClient, Db } from 'mongodb'
-import { flatten, uniq } from 'lodash'
+import { Db, MongoClient } from 'mongodb'
 
 
 export class DbWrapper {
   private connectionPromise: Promise<Db>
+
+  // Used for caching
+  private collectionNames: Promise<string[]> | null = null
+  private collectionToKeys: Map<string, Promise<string[]>> = new Map()
 
   constructor(private mongoUri: string) { }
 
@@ -14,7 +17,7 @@ export class DbWrapper {
 
     this.connectionPromise = MongoClient.connect(this.mongoUri).then((db: Db) => {
       if (!db) {
-        delete this.connectionPromise;
+        delete this.connectionPromise
         throw new Error('db is falsy')
       }
 
@@ -35,7 +38,6 @@ export class DbWrapper {
     db.close()
   }
 
-  private collectionNames: Promise<string[]> | null = null
   public async getCollectionNames(): Promise<string[]> {
     if (this.collectionNames) {
       return this.collectionNames
@@ -51,7 +53,6 @@ export class DbWrapper {
     return this.collectionNames
   }
 
-  private collectionToKeys: Map<string, Promise<string[]>> = new Map()
   public async getKeysInCollection(collectionName: string): Promise<string[]> {
     const keysInCollection = this.collectionToKeys.get(collectionName)
 
@@ -63,7 +64,7 @@ export class DbWrapper {
       const result = await db.collection(collectionName).mapReduce(
         'function () { for (var key in this) { emit(key, null) }}',
         'function () {}',
-        { out: { inline: 1 } }
+        { out: { inline: 1 } },
       )
 
       return result.map((k: any) => k._id) as string[]

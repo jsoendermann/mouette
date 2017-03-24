@@ -2,7 +2,7 @@
   "extends": "tslint:recommended",
   "rules": {
     "curly": false,
-    "quotemark": [true, "single"],
+    "quotemark": [true, "single", "avoid-escape"],
     "semicolon": [true, "never"],
     "object-literal-sort-keys": false,
     "no-var-requires": false,
@@ -11,13 +11,14 @@
     "no-string-throw": true,
     "no-unused-variable": true,
     "no-var-keyword": true,
-    "switch-default": true,
+    "switch-default": false,
     "triple-equals": [true, "allow-null-check"],
     "typeof-compare": true,
     "prefer-const": true,
     "cyclomatic-complexity": [true, 20],
     "max-file-line-count": [true, 300],
     "no-consecutive-blank-lines": [true, 2],
-    "no-console": [false]
+    "no-console": [false],
+    "max-classes-per-file": [false]
   }
 }

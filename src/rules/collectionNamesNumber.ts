@@ -1,5 +1,12 @@
 import { DbWrapper } from '../DbWrapper'
-import { AbstractRule, IRuleFailure, IRuleFailureJson, RuleFailure,  RuleGranularity, RuleSeverity } from '../rule'
+import {
+  AbstractRule,
+  IRuleFailure,
+  IRuleFailureJson,
+  RuleFailure,
+  RuleGranularity,
+  RuleSeverity,
+} from '../rule'
 import { isPlural, pluralize } from '../vendor/lingo'
 
 

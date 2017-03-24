@@ -12,9 +12,9 @@ export const isPlural = (s: string) => {
 }
 
 export const pluralize = (s: string): string => {
-  const c = customSingularPluralPairs.find(c => c.singular === s)
-  if (c) {
-    return c.plural
+  const custom = customSingularPluralPairs.find(c => c.singular === s)
+  if (custom) {
+    return custom.plural
   }
   return lingo.en.pluralize(s)
 }
