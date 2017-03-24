@@ -19,6 +19,7 @@ const formatFailure = (failure: IRuleFailureJson): string => {
       color = colors.red
       bgColor = colors.bgRed
       break
+    default: throw new Error('Switch must be exhaustive')
   }
 
   let output = `${failure.failure.replace(/\*\*(.*?)\*\*/g, color('$1'))}`
