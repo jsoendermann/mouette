@@ -16,7 +16,7 @@ import {
 require('dotenv').config()
 
 
-const dbWrapper = new DbWrapper(process.env.MONGODB_URL);
+const dbWrapper = new DbWrapper(process.env.MONGO_URI);
 
 (async () => {
   const failures = flatten([
