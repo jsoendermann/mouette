@@ -1,7 +1,7 @@
 {
-  "name": "seagull",
-  "version": "1.0.0",
-  "description": "",
+  "name": "mouette",
+  "version": "0.1.0",
+  "description": "A linter for your MongoDB.",
   "main": "dist/index.js",
   "scripts": {
     "prepush": "npm run lint",
@@ -12,13 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iHealthLab/seagull.git"
+    "url": "git+https://github.com/jsoendermann/mouette.git"
   },
-  "author": "",
+  "author": "Jan Soendermann",
   "bugs": {
-    "url": "https://github.com/iHealthLab/seagull/issues"
+    "url": "https://github.com/jsoendermann/mouette/issues"
   },
-  "homepage": "https://github.com/iHealthLab/seagull#readme",
+  "homepage": "https://github.com/jsoendermann/mouette#readme",
   "devDependencies": {
     "@types/colors": "^1.1.1",
     "@types/lodash": "^4.14.57",
