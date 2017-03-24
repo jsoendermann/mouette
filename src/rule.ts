@@ -15,14 +15,14 @@ export interface IRuleMetadata {
 }
 
 export interface IRule {
-  apply(db: DbWrapper): Promise<IRuleFailure[]>
+  apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]>
   failureToJson(failure: IRuleFailure): IRuleFailureJson
 }
 
 export abstract class AbstractRule implements IRule {
   public static metadata: IRuleMetadata
 
-  public abstract async apply(db: DbWrapper): Promise<IRuleFailure[]>
+  public abstract async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]>
   public abstract failureToJson(failure: IRuleFailure): IRuleFailureJson
 }
 

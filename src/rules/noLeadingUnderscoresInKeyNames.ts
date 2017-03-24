@@ -15,11 +15,11 @@ export class Rule extends AbstractRule {
     isFuzzy: false,
   }
 
-  async apply(db: DbWrapper): Promise<IRuleFailure[]> {
-    const collectionNames = await db.getCollectionNames()
+  async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
+    const collectionNames = await dbWrapper.getCollectionNames()
     const failures: IRuleFailure[] = flatten(
       await Promise.all(collectionNames.map(async collectionName => {
-        const keyNames = await db.getKeysInCollection(collectionName)
+        const keyNames = await dbWrapper.getKeysInCollection(collectionName)
         return keyNames
           .filter(keyName => keyName !== '_id' && keyName[0] === '_')
           .map(keyName => new RuleFailure(this, collectionName, keyName))

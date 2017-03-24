@@ -17,8 +17,8 @@ export class Rule extends AbstractRule {
     },
   }
 
-  public async apply(db: DbWrapper): Promise<IRuleFailure[]> {
-    const collectionNames = await db.getCollectionNames()
+  public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
+    const collectionNames = await dbWrapper.getCollectionNames()
     const nonPluralizedNames = collectionNames.filter(name => !isPlural(name))
     return nonPluralizedNames.map(name => new RuleFailure(this, name))
   }
