@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A linter for your MongoDB.",
   "main": "dist/index.js",
+  "license": "MIT",
   "scripts": {
     "prepush": "npm run lint",
     "build": "tsc",
