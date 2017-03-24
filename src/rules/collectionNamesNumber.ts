@@ -1,7 +1,6 @@
 import { DbWrapper } from '../DbWrapper'
-import { IRule, IRuleFailure, RuleFailure, IRuleFailureJson, RuleSeverity, RuleGranularity, AbstractRule } from '../rule'
+import { AbstractRule, IRuleFailure, IRuleFailureJson, RuleFailure,  RuleGranularity, RuleSeverity } from '../rule'
 import { isPlural, pluralize } from '../vendor/lingo'
-import * as colors from 'colors'
 
 
 export class Rule extends AbstractRule {
@@ -13,15 +12,18 @@ export class Rule extends AbstractRule {
     severity: 'warning' as RuleSeverity,
     granularity: 'collection_name' as RuleGranularity,
     isFuzzy: false,
+    options: {
+
+    },
   }
 
-  async apply(db: DbWrapper): Promise<IRuleFailure[]> {
+  public async apply(db: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await db.getCollectionNames()
     const nonPluralizedNames = collectionNames.filter(name => !isPlural(name))
     return nonPluralizedNames.map(name => new RuleFailure(this, name))
   }
 
-  failureToJson(failure: IRuleFailure): IRuleFailureJson {
+  public failureToJson(failure: IRuleFailure): IRuleFailureJson {
     const collectionName = failure.getCollectionName() as string
 
     return {

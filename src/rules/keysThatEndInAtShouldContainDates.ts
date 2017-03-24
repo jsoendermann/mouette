@@ -1,21 +1,21 @@
-import { DbWrapper } from '../DbWrapper'
-import { IRule, IRuleFailure, RuleFailure, IRuleFailureJson, RuleSeverity, RuleGranularity, AbstractRule } from '../rule'
-import { isPlural, pluralize } from '../vendor/lingo'
 import { flatten } from 'lodash'
+
+import { DbWrapper } from '../DbWrapper'
+import { AbstractRule, IRuleFailure, IRuleFailureJson, RuleFailure,  RuleGranularity, RuleSeverity } from '../rule'
 
 
 export class Rule extends AbstractRule {
   public static metadata = {
     name: 'keys-that-en-in-at-should-contain-dates',
     prettyName: 'Keys that end in At should contain dates',
-    description: "Make sure columns with keys that end in ...At contain nothing but dates.",
+    description: 'Make sure columns with keys that end in ...At contain nothing but dates.',
     rationale: "It's what people expect when they see names like updatedAt.",
     severity: 'error' as RuleSeverity,
     granularity: 'column' as RuleGranularity,
     isFuzzy: false,
   }
 
-  async apply(db: DbWrapper): Promise<IRuleFailure[]> {
+  public async apply(db: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await db.getCollectionNames()
 
     const failures: IRuleFailure[] = flatten(
@@ -51,7 +51,7 @@ export class Rule extends AbstractRule {
     return failures
   }
 
-  failureToJson(failure: IRuleFailure): IRuleFailureJson {
+  public failureToJson(failure: IRuleFailure): IRuleFailureJson {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 
@@ -69,7 +69,7 @@ db.${collectionName}.find({
     {${keyName}: {$type: 10}},
     {${keyName}: {$exists: false}}
   ]
-}, {${keyName}: 1})`.trim()
+}, {${keyName}: 1})`.trim(),
     }
 
     return result
