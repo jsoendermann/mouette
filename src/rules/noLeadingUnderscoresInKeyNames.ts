@@ -4,7 +4,7 @@ import { DbWrapper } from '../DbWrapper'
 import {
   AbstractRule,
   IRuleFailure,
-  IRuleFailureJson,
+  IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
   RuleSeverity,
@@ -21,6 +21,7 @@ export class Rule extends AbstractRule {
     granularity: 'key_name' as RuleGranularity,
     isFuzzy: false,
   }
+  public getMetadata() { return Rule.metadata }
 
   public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
@@ -36,12 +37,11 @@ export class Rule extends AbstractRule {
     return failures
   }
 
-  public failureToJson(failure: IRuleFailure): IRuleFailureJson {
+  public failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 
     const result: any = {
-      ruleMetadata: Rule.metadata,
       location: {
         collectionName,
         keyName,

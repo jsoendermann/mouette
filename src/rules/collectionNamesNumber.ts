@@ -2,7 +2,7 @@ import { DbWrapper } from '../DbWrapper'
 import {
   AbstractRule,
   IRuleFailure,
-  IRuleFailureJson,
+  IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
   RuleSeverity,
@@ -24,17 +24,18 @@ export class Rule extends AbstractRule {
     },
   }
 
+  public getMetadata() { return Rule.metadata }
+
   public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
     const nonPluralizedNames = collectionNames.filter(name => !isPlural(name))
     return nonPluralizedNames.map(name => new RuleFailure(this, name))
   }
 
-  public failureToJson(failure: IRuleFailure): IRuleFailureJson {
+  public failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
 
     return {
-      ruleMetadata: Rule.metadata,
       location: {
         collectionName,
       },

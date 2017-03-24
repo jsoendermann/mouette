@@ -4,7 +4,7 @@ import { DbWrapper } from '../DbWrapper'
 import {
   AbstractRule,
   IRuleFailure,
-  IRuleFailureJson,
+  IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
   RuleSeverity,
@@ -12,7 +12,7 @@ import {
 
 
 export class Rule extends AbstractRule {
-  public static metadata = {
+  private static metadata = {
     name: 'keys-that-en-in-at-should-contain-dates',
     prettyName: 'Keys that end in At should contain dates',
     description: 'Make sure columns with keys that end in ...At contain nothing but dates.',
@@ -21,6 +21,7 @@ export class Rule extends AbstractRule {
     granularity: 'column' as RuleGranularity,
     isFuzzy: false,
   }
+  public getMetadata() { return Rule.metadata }
 
   public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
@@ -58,12 +59,11 @@ export class Rule extends AbstractRule {
     return failures
   }
 
-  public failureToJson(failure: IRuleFailure): IRuleFailureJson {
+  public failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 
     const result: any = {
-      ruleMetadata: Rule.metadata,
       location: {
         collectionName,
         keyName,
