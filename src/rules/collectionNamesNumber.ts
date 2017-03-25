@@ -18,8 +18,8 @@ export class Rule extends AbstractRule {
     prettyName: 'Collection names number',
     description: 'Make sure all collections in the database have names that are pluralized.',
     rationale: 'Reads more fluently.',
-    severity: 'warning' as RuleSeverity,
-    granularity: 'collection_name' as RuleGranularity,
+    severity: RuleSeverity.Warning,
+    granularity: RuleGranularity.CollectionName,
     isFuzzy: false,
     optionsDescription: `
       [number]

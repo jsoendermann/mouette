@@ -8,8 +8,8 @@ import {
   IRuleFailure,
   IRuleFailureSpecificJson,
   RuleFailure,
-  RuleGranularity,
   RuleSeverity,
+  RuleGranularity,
 } from '../rule'
 
 
@@ -37,9 +37,8 @@ export class Rule extends AbstractRule {
     prettyName: 'Keys that end in At should refer to dates',
     description: 'Make sure columns with keys that end in ...At contain nothing but dates.',
     rationale: "It's what people expect when they see names like updatedAt.",
-    // TODO fix types
-    severity: 'error' as RuleSeverity,
-    granularity: 'column' as RuleGranularity,
+    severity: RuleSeverity.Error,
+    granularity: RuleGranularity.Column,
     isFuzzy: false,
     optionsDescription: `
       [allow-stringified-days]

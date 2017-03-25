@@ -11,11 +11,11 @@ const formatFailure = (failure: IRuleFailureJson): string => {
   let color: (s: string) => string
   let bgColor: (s: string) => string
   switch (failure.ruleMetadata.severity) {
-    case 'warning':
+    case 'Warning':
       color = colors.yellow
       bgColor = colors.bgYellow
       break
-    case 'error':
+    case 'Error':
       color = colors.red
       bgColor = colors.bgRed
       break

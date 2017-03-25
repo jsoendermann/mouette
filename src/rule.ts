@@ -1,8 +1,16 @@
 import * as Joi from 'joi'
 import { DbWrapper } from './DbWrapper'
 
-export type RuleSeverity = 'warning' | 'error'
-export type RuleGranularity = 'collection_name' | 'key_name' | 'column'
+export enum RuleSeverity {
+  Warning,
+  Error,
+}
+
+export enum RuleGranularity {
+  CollectionName,
+  KeyName,
+  Column,
+}
 
 export interface IRuleMetadata {
   name: string
@@ -14,6 +22,16 @@ export interface IRuleMetadata {
   isFuzzy: boolean
   optionsDescription: string
   optionsSchema: { [key: string]: Joi.Schema }
+}
+
+export interface IRuleMetadataJson {
+  name: string
+  prettyName: string
+  description: string
+  rationale: string
+  severity: string
+  granularity: string
+  isFuzzy: boolean
 }
 
 export interface IRuleFailureSpecificJson {
@@ -28,7 +46,7 @@ interface IRuleFailureLocation {
 }
 
 export interface IRuleFailureJson extends IRuleFailureSpecificJson {
-  ruleMetadata: IRuleMetadata
+  ruleMetadata: IRuleMetadataJson
   location: IRuleFailureLocation
 }
 
@@ -61,8 +79,19 @@ export abstract class AbstractRule {
       location.keyName = keyName
     }
 
+    const ruleMetadata = this.getMetadata()
+    const ruleMetadataJson: IRuleMetadataJson = {
+      name: ruleMetadata.name,
+      prettyName: ruleMetadata.prettyName,
+      description: ruleMetadata.description,
+      rationale: ruleMetadata.rationale,
+      severity: RuleSeverity[ruleMetadata.severity],
+      granularity: RuleGranularity[ruleMetadata.granularity],
+      isFuzzy: ruleMetadata.isFuzzy,
+    }
+
     return {
-      ruleMetadata: this.getMetadata(),
+      ruleMetadata: ruleMetadataJson,
       location,
       ...this.failureSpecificJson(failure),
     }
