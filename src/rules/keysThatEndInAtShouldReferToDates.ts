@@ -60,34 +60,39 @@ export class Rule extends AbstractRule {
   public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
 
-    // TODO use deepflatten here and everywhere else
+    const failuresForCollectionAndKey = async (collectionName: string, keyName: string) => {
+        const rawDb = await dbWrapper.getDb()
+        const hasNonDateObjects = await rawDb
+          .collection(collectionName)
+          .count(Rule.QUERY(
+            keyName,
+            this.options['allow-stringified-days'],
+            this.options['stringified-days-regex'],
+          )) > 0
+
+        if (hasNonDateObjects) {
+          return new RuleFailure(
+            this,
+            collectionName,
+            keyName,
+          )
+        }
+        return null
+      }
+
+    const failuresforCollection = async (collectionName: string) => {
+      const keyNames = await dbWrapper.getKeysInCollection(collectionName)
+      const keyNamesThatEndInAt = keyNames.filter(keyName => keyName.endsWith('At'))
+
+      const failuresOrNull = await Promise.all(
+        keyNamesThatEndInAt.map(keyName => failuresForCollectionAndKey(collectionName, keyName)),
+      )
+      const failuresInCollection = failuresOrNull.filter(f => f) as IRuleFailure[]
+      return failuresInCollection
+    }
+
     const failures: IRuleFailure[] = flatten(
-      await Promise.all(collectionNames.map(async collectionName => {
-        const keyNames = await dbWrapper.getKeysInCollection(collectionName)
-        const keyNamesThatEndInAt = keyNames.filter(keyName => keyName.endsWith('At'))
-
-        const failuresOrNull = await Promise.all(keyNamesThatEndInAt.map(async keyName => {
-          const rawDb = await dbWrapper.getDb()
-          const hasNonDateObjects = await rawDb
-            .collection(collectionName)
-            .count(Rule.QUERY(
-              keyName,
-              this.options['allow-stringified-days'],
-              this.options['stringified-days-regex'],
-            )) > 0
-
-          if (hasNonDateObjects) {
-            return new RuleFailure(
-              this,
-              collectionName,
-              keyName,
-            )
-          }
-          return null
-        }))
-        const failuresInCollection = failuresOrNull.filter(f => f) as IRuleFailure[]
-        return failuresInCollection
-      })),
+      await Promise.all(collectionNames.map(failuresforCollection)),
     )
     return failures
   }
@@ -106,9 +111,9 @@ export class Rule extends AbstractRule {
 
     const result: any = {
       failure: `Column **${collectionName}.${keyName
-        }** ends in "At" but contains values that are not dates, null ${
-        allowStringifiedDays ?
-          ', undefined or satisfying the provided regexp.'
+      }** ends in "At" but contains values that are not dates, null ${
+      allowStringifiedDays ?
+        ', undefined or satisfying the provided regexp.'
         : 'or undefined.'
       }`,
       mongoCommand: `db.getCollection('${collectionName}').find(${mongoQuery}, {${keyName}: 1})`,

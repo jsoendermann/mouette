@@ -29,13 +29,16 @@ export class Rule extends AbstractRule {
 
   public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
+
+    const failuresForCollection = async (collectionName: string) => {
+      const keyNames = await dbWrapper.getKeysInCollection(collectionName)
+      return keyNames
+        .filter(keyName => keyName !== '_id' && keyName[0] === '_')
+        .map(keyName => new RuleFailure(this, collectionName, keyName))
+    }
+
     const failures: IRuleFailure[] = flatten(
-      await Promise.all(collectionNames.map(async collectionName => {
-        const keyNames = await dbWrapper.getKeysInCollection(collectionName)
-        return keyNames
-          .filter(keyName => keyName !== '_id' && keyName[0] === '_')
-          .map(keyName => new RuleFailure(this, collectionName, keyName))
-      })),
+      await Promise.all(collectionNames.map(failuresForCollection)),
     )
 
     return failures
