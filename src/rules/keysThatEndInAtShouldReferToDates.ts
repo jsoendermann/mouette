@@ -33,9 +33,8 @@ export class Rule extends AbstractRule {
   }
 
   private static metadata = {
-    // TODO change name
-    name: 'keys-that-en-in-at-should-contain-dates',
-    prettyName: 'Keys that end in At should contain dates',
+    name: 'keys-that-en-in-at-should-refer-to-dates',
+    prettyName: 'Keys that end in At should refer to dates',
     description: 'Make sure columns with keys that end in ...At contain nothing but dates.',
     rationale: "It's what people expect when they see names like updatedAt.",
     // TODO fix types
