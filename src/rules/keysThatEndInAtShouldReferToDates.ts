@@ -43,7 +43,7 @@ export class Rule extends AbstractRule {
     optionsDescription: `
       [allow-stringified-days]
         description = "Whether to allow dates that are saved as strings."
-        type = "bool"
+        type = "boolean"
       [stringified-days-regex]
         description = "The regexp used to determine whether a string contains a date."
         type = "regexp"
