@@ -1,9 +1,8 @@
 import * as colors from 'colors'
 import { IRuleFailureJson } from '../rule'
-import { formatter } from './formatter'
 
 
-export const commandLineFormatter: formatter = (failures: IRuleFailureJson[]): string => {
+export default (failures: IRuleFailureJson[]): string => {
   return failures.map(formatFailure).join('\n\n')
 }
 

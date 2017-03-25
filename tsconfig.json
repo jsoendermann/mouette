@@ -11,12 +11,10 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "outDir": "dist",
+    "declaration": true,
     "moduleResolution": "node",
     "lib": [
       "es2015"
     ]
-  },
-  "files": [
-    "./node_modules/dedent-js/lib/index.d.ts"
-  ]
+  }
 }

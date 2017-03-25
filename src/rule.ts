@@ -40,7 +40,7 @@ export interface IRuleFailureSpecificJson {
   mongoCommand?: string
 }
 
-interface IRuleFailureLocation {
+export interface IRuleFailureLocation {
   collectionName?: string
   keyName?: string
 }

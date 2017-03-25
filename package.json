@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A linter for your MongoDB.",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "bin": {
+    "mouette": "./dist/bin/mouette.js"
+  },
   "license": "MIT",
   "scripts": {
     "prepush": "npm run lint",
@@ -21,22 +25,24 @@
   },
   "homepage": "https://github.com/jsoendermann/mouette#readme",
   "devDependencies": {
+    "@types/argparse": "^1.0.30",
     "@types/colors": "^1.1.1",
     "@types/humps": "^1.1.2",
     "@types/joi": "^10.0.1",
+    "@types/js-yaml": "^3.5.29",
     "@types/lodash": "^4.14.57",
     "@types/mongodb": "^2.1.41",
     "@types/node": "^7.0.8",
-    "dotenv": "^4.0.0",
     "husky": "^0.13.2",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1"
   },
   "dependencies": {
+    "argparse": "^1.0.9",
     "colors": "^1.1.2",
-    "dedent-js": "^1.0.1",
     "humps": "^2.0.0",
     "joi": "^10.3.0",
+    "js-yaml": "^3.8.2",
     "lingo": "^0.0.5",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.25",
