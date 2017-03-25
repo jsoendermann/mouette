@@ -53,7 +53,7 @@ export class Rule extends AbstractRule {
     }
 
     if (keyName === '__v') {
-      result.suggestion = "Configure mongoose so it doesn't create a __v key"
+      result.suggestion = "Configure mongoose so it doesn't create a __v key."
     }
 
     return result
