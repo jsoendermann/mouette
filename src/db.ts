@@ -75,7 +75,7 @@ export class MongoDbWrapper implements IDb {
 
     const promise = this.getDb().then(async db => {
       const result = await db.collection(collectionName).mapReduce(
-        'function () { for (var key in this) { emit(key, null) }}',
+        'function () { for (var key in this) { emit(key, null) } }',
         'function () {}',
         { out: { inline: 1 } },
       )
