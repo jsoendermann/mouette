@@ -87,3 +87,18 @@ export class MongoDbWrapper implements IDb {
     return promise
   }
 }
+
+export class TestDbWrapper implements IDb {
+  public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
+    return true
+  }
+  public async getCollectionNames(): Promise<string[]> {
+    return []
+  }
+  public async getKeysInCollection(collectionName: string): Promise<string[]> {
+    return []
+  }
+  public async close(): Promise<void> {
+    return
+  }
+}
