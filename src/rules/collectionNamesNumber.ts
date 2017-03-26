@@ -63,7 +63,7 @@ export class Rule extends AbstractRule {
           failure: `Collection name **${collectionName}** is not pluralized.`,
           suggestion: `Change *${collectionName}* to *${pluralize(collectionName)}*.`,
         }
-            default: throw new Error(`Options value ${this.options.number
+      default: throw new Error(`Options value ${this.options.number
         } provided as 'number to collection-names-number not valid`)
     }
   }
