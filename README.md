@@ -22,31 +22,37 @@ node dist/bin/mouette.js
 
 ## TODO
 
-- [ ] Add tests
+- [ ] Comment code
+- [ ] Add tests (+coverage)
 - [ ] Add template and instructions for new rules
 - [ ] Come up with a way to lint nested objects
+- [ ] CI
+- [ ] Dockerize
 
-## Rule Ideas
+## Rules
 
-- key-names-format
-  - format: 'camel-case' | 'snake-case'
-- no-mixed-types
-- no-undefined
-- no-null
-- is-and-has-keys-should-refer-to-booleans
-- max-key-count
-  - count: 10
-- bad-key-names
-  - names-considered-bad: 'value' | 'data' | 'details'
-- numbers-saved-as-strings
-- columns-containing-object-ids-should-end-in-id
+- [X] collection-names-number
+- [X] keys-that-end-in-at-should-refer-to-dates
+- [X] no-leading-underscores-in-key-names
+- [ ] key-names-format
+  - [ ] format: 'camel-case' | 'snake-case'
+- [ ] no-mixed-types
+- [ ] no-undefined
+- [ ] no-null
+- [ ] is-and-has-keys-should-refer-to-booleans
+- [ ] max-key-count
+  - [ ] count: 10
+- [ ] bad-key-names
+  - [ ] names-considered-bad: 'value' | 'data' | 'details'
+- [ ] numbers-saved-as-strings
+- [ ] columns-containing-object-ids-should-end-in-id
 
 ### Guesses
 
-- enforce-enums
-- no-number-enums
-- save-days-in-string-when-possible
+- [ ] enforce-enums
+- [ ] no-number-enums
+- [ ] save-days-in-string-when-possible
 
 ### Potentially slow
 
-- dangling-foreign-keys
+- [ ] dangling-foreign-keys
