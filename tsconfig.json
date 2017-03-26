@@ -7,14 +7,21 @@
     "**/*.spec.ts"
   ],
   "compilerOptions": {
-    "target": "es3",
+    "target": "es5",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "outDir": "dist",
     "declaration": true,
-    "moduleResolution": "node",
     "lib": [
-      "es2015"
-    ]
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "reflect-metadata"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

@@ -1101,6 +1101,10 @@ invariant@^2.2.0:
   dependencies:
     loose-envify "^1.0.0"
 
+inversify:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/inversify/-/inversify-3.3.0.tgz#57ca2e0aaac7b54aa5018ad69a10c5aba366e96e"
+
 invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
@@ -2236,6 +2240,10 @@ redent@^1.0.0:
   dependencies:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
+
+reflect-metadata:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
 
 regenerator-runtime@^0.10.0:
   version "0.10.3"
