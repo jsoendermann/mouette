@@ -1,5 +1,5 @@
 import * as Joi from 'joi'
-import { DbWrapper } from './DbWrapper'
+import { IDb } from './db'
 
 export enum RuleSeverity {
   Warning,
@@ -64,7 +64,7 @@ export abstract class AbstractRule {
 
   public abstract getMetadata(): IRuleMetadata
 
-  public abstract async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]>
+  public abstract async apply(db: IDb): Promise<RuleFailure[]>
 
   public failureToJson(failure: RuleFailure): IRuleFailureJson {
     const location: IRuleFailureLocation = {}

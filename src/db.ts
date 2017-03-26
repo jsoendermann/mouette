@@ -1,7 +1,14 @@
 import { Db, MongoClient } from 'mongodb'
 
 
-export class DbWrapper {
+export interface IDb {
+  doesContainInCollection(collectionName: string, query: any): Promise<boolean>
+  getCollectionNames(): Promise<string[]>
+  getKeysInCollection(collectionName: string): Promise<string[]>
+  close(): Promise<void>
+}
+
+export class MongoDbWrapper implements IDb {
   private connectionPromise: Promise<Db>
 
   // Used for caching
@@ -10,7 +17,7 @@ export class DbWrapper {
 
   constructor(private mongoUri: string) { }
 
-  public async getDb(): Promise<Db> {
+  private async getDb(): Promise<Db> {
     if (this.connectionPromise) {
       return this.connectionPromise
     }
@@ -36,6 +43,12 @@ export class DbWrapper {
   public async close() {
     const db = await this.connectionPromise
     db.close()
+  }
+
+  public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
+    const db = await this.getDb()
+    const recordCount = await db.collection(collectionName).count(query)
+    return recordCount > 0
   }
 
   public async getCollectionNames(): Promise<string[]> {

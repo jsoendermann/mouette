@@ -1,6 +1,6 @@
 import * as Joi from 'joi'
 
-import { DbWrapper } from '../DbWrapper'
+import { IDb } from '../db'
 import {
   AbstractRule,
   IRuleFailureSpecificJson,
@@ -33,8 +33,8 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]> {
-    const collectionNames = await dbWrapper.getCollectionNames()
+  public async apply(db: IDb): Promise<RuleFailure[]> {
+    const collectionNames = await db.getCollectionNames()
     let violatingColletionNames: string[] = []
     switch (this.options.number) {
       case 'singular':

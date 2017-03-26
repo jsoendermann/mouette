@@ -4,13 +4,12 @@ import { merge, flatten } from 'lodash'
 import { dirname, resolve } from 'path'
 import { parse } from 'toml'
 
-import { DbWrapper } from './DbWrapper'
-
+import { MongoDbWrapper } from './db'
 import { IRuleFailureJson, AbstractRule } from './rule'
 
 
 export const run = async (mongoUri: string, userConfig: any = {}): Promise<IRuleFailureJson[]> => {
-  const dbWrapper = new DbWrapper(mongoUri)
+  const db = new MongoDbWrapper(mongoUri)
 
   const moduleFolder = dirname(module.filename)
   const defaultConfigFileName = resolve(moduleFolder, '../defaultConfig.toml')
@@ -31,8 +30,8 @@ export const run = async (mongoUri: string, userConfig: any = {}): Promise<IRule
     }
   }
 
-  const failures = flatten(await Promise.all(rules.map(r => r.apply(dbWrapper))))
+  const failures = flatten(await Promise.all(rules.map(r => r.apply(db))))
   const failuresJson = failures.map(f => f.toJson())
-  dbWrapper.close()
+  db.close()
   return failuresJson
 }

@@ -2,7 +2,7 @@ import * as Joi from 'joi'
 import { flatten } from 'lodash'
 const serialize = require('serialize-javascript')
 
-import { DbWrapper } from '../DbWrapper'
+import { IDb } from '../db'
 import {
   AbstractRule,
   IRuleFailureSpecificJson,
@@ -55,31 +55,31 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]> {
-    const collectionNames = await dbWrapper.getCollectionNames()
+  public async apply(db: IDb): Promise<RuleFailure[]> {
+    const collectionNames = await db.getCollectionNames()
 
     const failuresForCollectionAndKey = async (collectionName: string, keyName: string) => {
-        const rawDb = await dbWrapper.getDb()
-        const hasNonDateObjects = await rawDb
-          .collection(collectionName)
-          .count(Rule.QUERY(
-            keyName,
-            this.options['allow-stringified-days'],
-            this.options['stringified-days-regex'],
-          )) > 0
+      const hasNonDateObjects = await db.doesContainInCollection(
+        collectionName,
+        Rule.QUERY(
+          keyName,
+          this.options['allow-stringified-days'],
+          this.options['stringified-days-regex'],
+        ),
+      )
 
-        if (hasNonDateObjects) {
-          return new RuleFailure(
-            this,
-            collectionName,
-            keyName,
-          )
-        }
-        return null
+      if (hasNonDateObjects) {
+        return new RuleFailure(
+          this,
+          collectionName,
+          keyName,
+        )
       }
+      return null
+    }
 
     const failuresforCollection = async (collectionName: string) => {
-      const keyNames = await dbWrapper.getKeysInCollection(collectionName)
+      const keyNames = await db.getKeysInCollection(collectionName)
       const keyNamesThatEndInAt = keyNames.filter(keyName => keyName.endsWith('At'))
 
       const failuresOrNull = await Promise.all(

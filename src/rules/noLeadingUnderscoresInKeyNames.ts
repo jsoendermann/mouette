@@ -1,7 +1,7 @@
 
 import { flatten } from 'lodash'
 
-import { DbWrapper } from '../DbWrapper'
+import { IDb } from '../db'
 import {
   AbstractRule,
   IRuleFailureSpecificJson,
@@ -26,11 +26,11 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]> {
-    const collectionNames = await dbWrapper.getCollectionNames()
+  public async apply(db: IDb): Promise<RuleFailure[]> {
+    const collectionNames = await db.getCollectionNames()
 
     const failuresForCollection = async (collectionName: string) => {
-      const keyNames = await dbWrapper.getKeysInCollection(collectionName)
+      const keyNames = await db.getKeysInCollection(collectionName)
       return keyNames
         .filter(keyName => keyName !== '_id' && keyName[0] === '_')
         .map(keyName => new RuleFailure(this, collectionName, keyName))
