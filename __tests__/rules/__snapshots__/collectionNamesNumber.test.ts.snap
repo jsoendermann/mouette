@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collection-names-number has correct metadata 1`] = `
+Object {
+  "description": "Make sure all collections in the database have names that are pluralized.",
+  "granularity": 0,
+  "isFuzzy": false,
+  "name": "collection-names-number",
+  "optionsDescription": "
+      [number]
+        description = \\"The grammatical number that collection names should be checked for.\\"
+        type = \\"enum\\"
+        possibleValues = \\"'singular' | 'plural'\\"
+    ",
+  "optionsSchema": Object {
+    "number":  {
+      "_description": null,
+      "_examples": Array [],
+      "_flags": Object {
+        "presence": "required",
+      },
+      "_inner": Object {},
+      "_invalids": Set {
+        "_set": Array [],
+      },
+      "_meta": Array [],
+      "_notes": Array [],
+      "_refs": Array [],
+      "_settings": null,
+      "_tags": Array [],
+      "_tests": Array [],
+      "_type": "any",
+      "_unit": null,
+      "_valids": Set {
+        "_set": Array [
+          "singular",
+          "plural",
+        ],
+      },
+      "isJoi": true,
+    },
+  },
+  "prettyName": "Collection names number",
+  "rationale": "Reads more fluently.",
+  "severity": 0,
+}
+`;
