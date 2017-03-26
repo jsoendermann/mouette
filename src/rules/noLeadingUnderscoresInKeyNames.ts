@@ -4,7 +4,6 @@ import { flatten } from 'lodash'
 import { DbWrapper } from '../DbWrapper'
 import {
   AbstractRule,
-  IRuleFailure,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
@@ -27,7 +26,7 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
+  public async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
 
     const failuresForCollection = async (collectionName: string) => {
@@ -37,14 +36,14 @@ export class Rule extends AbstractRule {
         .map(keyName => new RuleFailure(this, collectionName, keyName))
     }
 
-    const failures: IRuleFailure[] = flatten(
+    const failures: RuleFailure[] = flatten(
       await Promise.all(collectionNames.map(failuresForCollection)),
     )
 
     return failures
   }
 
-  public failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson {
+  public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 

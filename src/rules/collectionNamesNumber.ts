@@ -3,7 +3,6 @@ import * as Joi from 'joi'
 import { DbWrapper } from '../DbWrapper'
 import {
   AbstractRule,
-  IRuleFailure,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
@@ -34,7 +33,7 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
+  public async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
     let violatingColletionNames: string[] = []
     switch (this.options.number) {
@@ -50,7 +49,7 @@ export class Rule extends AbstractRule {
     return violatingColletionNames.map(name => new RuleFailure(this, name))
   }
 
-  public failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson {
+  public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
 
     switch (this.options.number) {

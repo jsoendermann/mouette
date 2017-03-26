@@ -5,7 +5,6 @@ const serialize = require('serialize-javascript')
 import { DbWrapper } from '../DbWrapper'
 import {
   AbstractRule,
-  IRuleFailure,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleSeverity,
@@ -56,7 +55,7 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]> {
+  public async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]> {
     const collectionNames = await dbWrapper.getCollectionNames()
 
     const failuresForCollectionAndKey = async (collectionName: string, keyName: string) => {
@@ -86,17 +85,17 @@ export class Rule extends AbstractRule {
       const failuresOrNull = await Promise.all(
         keyNamesThatEndInAt.map(keyName => failuresForCollectionAndKey(collectionName, keyName)),
       )
-      const failuresInCollection = failuresOrNull.filter(f => f) as IRuleFailure[]
+      const failuresInCollection = failuresOrNull.filter(f => f) as RuleFailure[]
       return failuresInCollection
     }
 
-    const failures: IRuleFailure[] = flatten(
+    const failures: RuleFailure[] = flatten(
       await Promise.all(collectionNames.map(failuresforCollection)),
     )
     return failures
   }
 
-  public failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson {
+  public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 

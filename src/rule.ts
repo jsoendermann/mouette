@@ -64,9 +64,9 @@ export abstract class AbstractRule {
 
   public abstract getMetadata(): IRuleMetadata
 
-  public abstract async apply(dbWrapper: DbWrapper): Promise<IRuleFailure[]>
+  public abstract async apply(dbWrapper: DbWrapper): Promise<RuleFailure[]>
 
-  public failureToJson(failure: IRuleFailure): IRuleFailureJson {
+  public failureToJson(failure: RuleFailure): IRuleFailureJson {
     const location: IRuleFailureLocation = {}
 
     const collectionName = failure.getCollectionName()
@@ -97,16 +97,10 @@ export abstract class AbstractRule {
     }
   }
 
-  protected abstract failureSpecificJson(failure: IRuleFailure): IRuleFailureSpecificJson
+  protected abstract failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson
 }
 
-export interface IRuleFailure {
-  toJson(): IRuleFailureJson
-  getCollectionName(): string | undefined
-  getKeyName(): string | undefined
-}
-
-export class RuleFailure implements IRuleFailure {
+export class RuleFailure {
   constructor(private rule: AbstractRule,
               private collectionName?: string,
               private keyName?: string) { }
