@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`collection-names-number has correct metadata 1`] = `
+exports[`collection-names-number should have correct metadata 1`] = `
 Object {
   "description": "Make sure all collections in the database have names that are pluralized.",
   "granularity": 0,
@@ -44,4 +44,18 @@ Object {
   "rationale": "Reads more fluently.",
   "severity": 0,
 }
+`;
+
+exports[`collection-names-number should work when number is 'singular' 1`] = `
+Array [
+  RuleFailure {
+    "collectionName": "cats",
+    "keyName": undefined,
+    "rule": Rule {
+      "options": Object {
+        "number": "singular",
+      },
+    },
+  },
+]
 `;
