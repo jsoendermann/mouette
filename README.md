@@ -33,6 +33,8 @@ node dist/bin/mouette.js
 
 ## TODO
 
+- [ ] Implement diffing
+- [ ] Web interface
 - [ ] Comment code
 - [ ] Add tests (+coverage)
 - [ ] Come up with a way to lint nested objects
