@@ -46,6 +46,20 @@ Object {
 }
 `;
 
+exports[`collection-names-number should work when number is 'plural' 1`] = `
+Array [
+  RuleFailure {
+    "collectionName": "cow",
+    "keyName": undefined,
+    "rule": Rule {
+      "options": Object {
+        "number": "plural",
+      },
+    },
+  },
+]
+`;
+
 exports[`collection-names-number should work when number is 'singular' 1`] = `
 Array [
   RuleFailure {
