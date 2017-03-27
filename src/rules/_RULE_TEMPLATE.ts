@@ -13,8 +13,10 @@ import {
 // Don't change the name of this class
 export class Rule extends AbstractRule {
   public static metadata = {
-    name: 'my-new-rule', // The name of your rule in kebab case.
-    prettyName: 'My new rule', // A readable version of the name.
+    // The name of your rule in kebab case.
+    name: 'my-new-rule',
+    // A readable version of the name.
+    prettyName: 'My new rule',
     // A description of what your rule does.
     description: 'Makes sure collections collect.',
     // A justification for why it exists.
