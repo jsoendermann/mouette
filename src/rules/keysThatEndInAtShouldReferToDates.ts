@@ -58,7 +58,7 @@ export class Rule extends AbstractRule {
   public async apply(db: IDb): Promise<RuleFailure[]> {
     const collectionNames = await db.getCollectionNames()
 
-    const failuresForCollectionAndKey = async (collectionName: string, keyName: string) => {
+    const failureOptionForCollectionAndKey = async (collectionName: string, keyName: string) => {
       const hasNonDateObjects = await db.doesContainInCollection(
         collectionName,
         Rule.QUERY(
@@ -83,7 +83,7 @@ export class Rule extends AbstractRule {
       const keyNamesThatEndInAt = keyNames.filter(keyName => keyName.endsWith('At'))
 
       const failuresOrNull = await Promise.all(
-        keyNamesThatEndInAt.map(keyName => failuresForCollectionAndKey(collectionName, keyName)),
+        keyNamesThatEndInAt.map(keyName => failureOptionForCollectionAndKey(collectionName, keyName)),
       )
       const failuresInCollection = failuresOrNull.filter(f => f) as RuleFailure[]
       return failuresInCollection
