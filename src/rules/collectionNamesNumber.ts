@@ -64,7 +64,7 @@ export class Rule extends AbstractRule {
           suggestion: `Change *${collectionName}* to *${pluralize(collectionName)}*.`,
         }
       default: throw new Error(`Options value ${this.options.number
-        } provided as 'number to collection-names-number not valid`)
+        } provided as 'number' to collection-names-number not valid`)
     }
   }
 }
