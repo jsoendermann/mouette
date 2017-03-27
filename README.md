@@ -24,6 +24,13 @@ npm run watch
 node dist/bin/mouette.js
 ```
 
+## Adding a new rule
+
+1. Copy `src/rules/_RULE_TEMPLATE.ts` to a new file in the `src/rules/` folder.
+2. Follow the instructions in that file to implement your rule.
+3. Add default options for your new rule to `defaultConfig.toml`.
+4. Write tests and add them to the `__tests__/rules/` folder.
+
 ## TODO
 
 - [ ] Comment code
