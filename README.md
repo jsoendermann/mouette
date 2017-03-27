@@ -2,11 +2,15 @@
 
 Mouette is a linter for your MongoDB.
 
+## Try it out
+
+TODO
+
 ## Features
 
 TODO
 
-## Install
+## How is this supposed to be used?
 
 TODO
 
