@@ -44,8 +44,7 @@ node dist/bin/mouette.js
 - [X] collection-names-number
 - [X] keys-that-end-in-at-should-refer-to-dates
 - [X] no-leading-underscores-in-key-names
-- [ ] key-names-format
-  - [ ] format: 'camel-case' | 'snake-case'
+- [X] key-names-case
 - [ ] no-mixed-types
 - [ ] no-undefined
 - [ ] no-null

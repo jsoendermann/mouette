@@ -9,3 +9,7 @@
 
 [no-leading-underscores-in-key-names]
   enabled = true
+
+[key-names-case]
+  enabled = true
+  case = 'camel'
