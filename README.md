@@ -35,7 +35,6 @@ node dist/bin/mouette.js
 
 - [ ] Comment code
 - [ ] Add tests (+coverage)
-- [ ] Add template and instructions for new rules
 - [ ] Come up with a way to lint nested objects
 - [ ] CI
 - [ ] Dockerize
