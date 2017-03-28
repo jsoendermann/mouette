@@ -41,12 +41,12 @@ export class Rule extends AbstractKeyRule {
       return []
     }
 
-    const keyCase = to(keyName) as string
+    const actualKeyCase = to(keyName) as string
 
-    switch (keyCase) {
+    switch (actualKeyCase) {
       case 'camel':
       case 'snake':
-        if (this.options.case !== keyCase) {
+        if (this.options.case !== actualKeyCase) {
           return [new RuleFailure(this, { collectionName, keyName })]
         }
         return []
