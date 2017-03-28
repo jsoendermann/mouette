@@ -6,7 +6,6 @@ import {
   AbstractKeyRule,
   IRuleFailureSpecificJson,
   RuleFailure,
-  RuleSeverity,
   RuleGranularity,
 } from '../rule'
 
@@ -27,7 +26,6 @@ export class Rule extends AbstractKeyRule {
     prettyName: 'Keys that start with is or has should refer to booleans',
     description: 'Make sure columns with keys that start with is or has contain nothing but booleans.',
     rationale: "It's what people expect when they see names like isEmpty or hasChild.",
-    severity: RuleSeverity.Error,
     granularity: RuleGranularity.Column,
     isFuzzy: false,
     optionsDescription: '',

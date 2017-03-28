@@ -9,12 +9,12 @@ export default (failures: IRuleFailureJson[]): string => {
 const formatFailure = (failure: IRuleFailureJson): string => {
   let color: (s: string) => string
   let bgColor: (s: string) => string
-  switch (failure.ruleMetadata.severity) {
-    case 'Warning':
+  switch (failure.options.severity) {
+    case 'warning':
       color = colors.yellow
       bgColor = colors.bgYellow
       break
-    case 'Error':
+    case 'error':
       color = colors.red
       bgColor = colors.bgRed
       break

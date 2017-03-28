@@ -6,7 +6,6 @@ import {
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
-  RuleSeverity,
 } from '../rule'
 
 
@@ -16,7 +15,6 @@ export class Rule extends AbstractKeyRule {
     prettyName: 'No leading underscores in key names',
     description: 'Make sure no key name except _id starts with an underscore.',
     rationale: 'It suggests the data is used internally.',
-    severity: RuleSeverity.Warning,
     granularity: RuleGranularity.KeyName,
     isFuzzy: false,
     optionsDescription: '',

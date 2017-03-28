@@ -18,7 +18,6 @@ export interface IRuleMetadata {
   prettyName: string
   description: string
   rationale: string
-  severity: RuleSeverity
   granularity: RuleGranularity
   isFuzzy: boolean
   optionsDescription: string
@@ -30,7 +29,6 @@ export interface IRuleMetadataJson {
   prettyName: string
   description: string
   rationale: string
-  severity: string
   granularity: string
   isFuzzy: boolean
 }
@@ -48,19 +46,31 @@ export interface IRuleFailureLocation {
 
 export interface IRuleFailureJson extends IRuleFailureSpecificJson {
   ruleMetadata: IRuleMetadataJson
+  options: IRuleOptions
   location: IRuleFailureLocation
 }
 
+export interface IRuleOptions {
+  severity: 'warning' | 'error'
+  // Even though this is typed 'any', we know it's Json convertible
+  // because these options get loaded from toml/yaml/json files.
+  ; [ k: string ]: any
+}
+
 export abstract class AbstractRule {
-  constructor(protected options: any) {
+  protected options: IRuleOptions
+
+  constructor(untypedOptions: any) {
     const { optionsSchema } = this.getMetadata()
     const joiSchema = Joi.object().keys({
+      severity: Joi.any().allow(['warning', 'error']).required(),
       ...optionsSchema,
     })
-    const validationResult = Joi.validate(options, joiSchema)
+    const validationResult = Joi.validate(untypedOptions, joiSchema)
     if (validationResult.error) {
       throw validationResult.error
     }
+    this.options = untypedOptions as IRuleOptions
   }
 
   public abstract getMetadata(): IRuleMetadata
@@ -86,13 +96,13 @@ export abstract class AbstractRule {
       prettyName: ruleMetadata.prettyName,
       description: ruleMetadata.description,
       rationale: ruleMetadata.rationale,
-      severity: RuleSeverity[ruleMetadata.severity],
       granularity: RuleGranularity[ruleMetadata.granularity],
       isFuzzy: ruleMetadata.isFuzzy,
     }
 
     return {
       ruleMetadata: ruleMetadataJson,
+      options: this.options,
       location,
       ...this.getFailureSpecificJson(failure),
     }

@@ -6,7 +6,6 @@ import {
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
-  RuleSeverity,
 } from '../rule'
 
 
@@ -16,7 +15,6 @@ export class Rule extends AbstractCollectionRule {
     prettyName: 'Max key count',
     description: 'Enforces a maximum number of keys per collection.',
     rationale: 'Hierarchical objects are more readable and faster to scan without index.',
-    severity: RuleSeverity.Warning,
     granularity: RuleGranularity.CollectionName,
     isFuzzy: false,
     optionsDescription: `

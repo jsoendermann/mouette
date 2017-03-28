@@ -7,7 +7,6 @@ import {
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
-  RuleSeverity,
 } from '../rule'
 
 
@@ -17,7 +16,6 @@ export class Rule extends AbstractKeyRule {
     prettyName: 'Key names case',
     description: 'Make sure all keys in the database have the right case.',
     rationale: 'Reads more fluently.',
-    severity: RuleSeverity.Warning,
     granularity: RuleGranularity.KeyName,
     isFuzzy: false,
     optionsDescription: `

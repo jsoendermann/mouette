@@ -6,7 +6,6 @@ import {
   AbstractKeyRule,
   IRuleFailureSpecificJson,
   RuleFailure,
-  RuleSeverity,
   RuleGranularity,
 } from '../rule'
 
@@ -19,7 +18,6 @@ export class Rule extends AbstractKeyRule {
     prettyName: 'No undefined',
     description: 'Make sure columns do not contain undefined values.',
     rationale: "It's efficient because the record doesn't have to grow later.",
-    severity: RuleSeverity.Warning,
     granularity: RuleGranularity.Column,
     isFuzzy: false,
     optionsDescription: '',

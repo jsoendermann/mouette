@@ -6,7 +6,6 @@ import {
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
-  RuleSeverity,
 } from '../rule'
 import { isSingular, isPlural, singularize, pluralize } from '../vendor/lingo'
 
@@ -17,7 +16,6 @@ export class Rule extends AbstractCollectionRule {
     prettyName: 'Collection names number',
     description: 'Make sure all collections in the database have names that are pluralized.',
     rationale: 'Reads more fluently.',
-    severity: RuleSeverity.Warning,
     granularity: RuleGranularity.CollectionName,
     isFuzzy: false,
     optionsDescription: `
