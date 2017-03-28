@@ -53,8 +53,7 @@ node dist/bin/mouette.js
 - [X] no-undefined
 - [ ] no-null
 - [X] keys-that-start-with-is-or-has-should-refer-to-booleans
-- [ ] max-key-count
-  - [ ] count: 10
+- [X] max-key-count
 - [ ] bad-key-names
   - [ ] names-considered-bad: 'value' | 'data' | 'details'
 - [ ] numbers-saved-as-strings

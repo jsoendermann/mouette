@@ -19,3 +19,7 @@
 
 [keys-that-start-with-is-or-has-should-refer-to-booleans]
   enabled = true
+
+[max-key-count]
+  enabled = true
+  maximum-excluding-_id = 10
