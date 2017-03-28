@@ -54,8 +54,7 @@ node dist/bin/mouette.js
 - [X] no-null
 - [X] keys-that-start-with-is-or-has-should-refer-to-booleans
 - [X] max-key-count
-- [ ] bad-key-names
-  - [ ] names-considered-bad: 'value' | 'data' | 'details'
+- [X] bad-key-names,
 - [ ] numbers-saved-as-strings
 - [ ] columns-containing-object-ids-should-end-in-id
 

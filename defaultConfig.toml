@@ -23,9 +23,14 @@
   severity = 'warning'
   maximum-excluding-_id = 10
 
-[no-leading-underscores-in-key-names]
-  severity = 'warning'
+[no-bad-key-names]
   enabled = true
+  severity = 'warning'
+  names-considered-bad = ["value", "data", "details", "stuff"]
+
+[no-leading-underscores-in-key-names]
+  enabled = true
+  severity = 'warning'
 
 [no-null]
   enabled = true
