@@ -62,7 +62,7 @@ export class Rule extends AbstractKeyRule {
     if (!keyName.endsWith('At')) {
       return null
     }
-    const hasNonDateObjects = await db.doesContainInCollection(
+    const hasNonDateValues = await db.doesContainInCollection(
       collectionName,
       Rule.QUERY(
         keyName,
@@ -71,11 +71,13 @@ export class Rule extends AbstractKeyRule {
       ),
     )
 
-    if (hasNonDateObjects) {
+    if (hasNonDateValues) {
       return new RuleFailure(
         this,
-        collectionName,
-        keyName,
+        {
+          collectionName,
+          keyName,
+        },
       )
     }
     return null

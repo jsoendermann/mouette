@@ -135,20 +135,29 @@ export abstract class AbstractKeyRule extends AbstractRule {
   ): Promise<RuleFailure | null>
 }
 
+export interface IRuleFailureConstructorOptions {
+  collectionName?: string
+  keyName?: string
+  additionalDetails?: any
+}
+
 export class RuleFailure {
   constructor(private rule: AbstractRule,
-              private collectionName?: string,
-              private keyName?: string) { }
+              private options: IRuleFailureConstructorOptions) { }
 
   public toJson(): IRuleFailureJson {
     return this.rule.getJsonForFailure(this)
   }
 
   public getCollectionName(): string | undefined {
-    return this.collectionName
+    return this.options.collectionName
   }
 
   public getKeyName(): string | undefined {
-    return this.keyName
+    return this.options.keyName
+  }
+
+  public getAdditionalDetails(): any | undefined {
+    return this.options.additionalDetails
   }
 }

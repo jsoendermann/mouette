@@ -55,8 +55,10 @@ export class Rule extends AbstractKeyRule {
     if (hasNonBoolValues) {
       return new RuleFailure(
         this,
-        collectionName,
-        keyName,
+        {
+          collectionName,
+          keyName,
+        },
       )
     }
     return null

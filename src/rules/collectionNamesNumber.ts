@@ -40,12 +40,12 @@ export class Rule extends AbstractCollectionRule {
     switch (this.options.number) {
       case 'singular':
         if (!isSingular(collectionName)) {
-          return new RuleFailure(this, collectionName)
+          return new RuleFailure(this, { collectionName })
         }
         return null
       case 'plural':
         if (!isPlural(collectionName)) {
-          return new RuleFailure(this, collectionName)
+          return new RuleFailure(this, { collectionName })
         }
         return null
       default: throw new Error(`Options value ${this.options.number

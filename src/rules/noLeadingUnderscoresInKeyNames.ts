@@ -31,7 +31,7 @@ export class Rule extends AbstractKeyRule {
     keyName: string,
   ): Promise<RuleFailure | null> {
     if (keyName !== '_id' && keyName[0] === '_') {
-      return new RuleFailure(this, collectionName, keyName)
+      return new RuleFailure(this, { collectionName, keyName })
     }
     return null
   }

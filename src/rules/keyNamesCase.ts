@@ -49,10 +49,10 @@ export class Rule extends AbstractKeyRule {
       case 'camel':
       case 'snake':
         if (this.options.case !== keyCase) {
-          return new RuleFailure(this, collectionName, keyName)
+          return new RuleFailure(this, { collectionName, keyName })
         }
         return null
-      default: return new RuleFailure(this, collectionName, keyName)
+      default: return new RuleFailure(this, { collectionName, keyName })
     }
   }
 

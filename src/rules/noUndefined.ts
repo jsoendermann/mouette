@@ -40,8 +40,10 @@ export class Rule extends AbstractKeyRule {
     if (hasUndefinedValues) {
       return new RuleFailure(
         this,
-        collectionName,
-        keyName,
+        {
+          collectionName,
+          keyName,
+        },
       )
     }
     return null
