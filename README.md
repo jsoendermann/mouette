@@ -52,7 +52,7 @@ node dist/bin/mouette.js
 - [ ] no-mixed-types
 - [X] no-undefined
 - [ ] no-null
-- [ ] is-and-has-keys-should-refer-to-booleans
+- [X] keys-that-start-with-is-or-has-should-refer-to-booleans
 - [ ] max-key-count
   - [ ] count: 10
 - [ ] bad-key-names

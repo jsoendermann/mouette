@@ -16,3 +16,6 @@
 
 [no-undefined]
   enabled = true
+
+[keys-that-start-with-is-or-has-should-refer-to-booleans]
+  enabled = true
