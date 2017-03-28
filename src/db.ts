@@ -1,10 +1,27 @@
 import { Db, MongoClient } from 'mongodb'
 
 
+export interface IMapReduceResultElement {
+  _id: string
+  value: any
+}
+
+export type MapReduceResult = IMapReduceResultElement[]
+
 export interface IDb {
   doesContainInCollection(collectionName: string, query: any): Promise<boolean>
   getCollectionNames(): Promise<string[]>
   getKeysInCollection(collectionName: string): Promise<string[]>
+  mapReduceOnCollection(
+    collectionName: string,
+    map: string,
+    reduce: string,
+  ): Promise<MapReduceResult>
+  mapReduceOnCollectionDoesProduceResults(
+    collectionName: string,
+    map: string,
+    reduce: string,
+  ): Promise<boolean>
   close(): Promise<void>
 }
 
@@ -38,11 +55,6 @@ export class MongoDbWrapper implements IDb {
     })
 
     return this.connectionPromise
-  }
-
-  public async close() {
-    const db = await this.connectionPromise
-    db.close()
   }
 
   public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
@@ -86,7 +98,35 @@ export class MongoDbWrapper implements IDb {
     this.collectionToKeys.set(collectionName, promise)
     return promise
   }
+
+  public async mapReduceOnCollection(
+    collectionName: string,
+    map: string,
+    reduce: string,
+  ): Promise<MapReduceResult> {
+    const db = await this.getDb()
+    return db.collection(collectionName).mapReduce(
+      map,
+      reduce,
+      { out: { inline: 1 } },
+    )
+  }
+
+  public async mapReduceOnCollectionDoesProduceResults(
+    collectionName: string,
+    map: string,
+    reduce: string,
+  ): Promise<boolean> {
+    const mapReduceResult = await this.mapReduceOnCollection(collectionName, map, reduce)
+    return mapReduceResult.length > 0
+  }
+
+  public async close() {
+    const db = await this.connectionPromise
+    db.close()
+  }
 }
+
 
 export class TestDbWrapper implements IDb {
   public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
@@ -97,6 +137,20 @@ export class TestDbWrapper implements IDb {
   }
   public async getKeysInCollection(collectionName: string): Promise<string[]> {
     return []
+  }
+  public async mapReduceOnCollection(
+    collectionName: string,
+    map: string,
+    reduce: string,
+  ): Promise<MapReduceResult> {
+    return []
+  }
+    public async mapReduceOnCollectionDoesProduceResults(
+    collectionName: string,
+    map: string,
+    reduce: string,
+  ): Promise<boolean> {
+    return true
   }
   public async close(): Promise<void> {
     return

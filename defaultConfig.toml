@@ -36,6 +36,11 @@
   enabled = true
   severity = 'warning'
 
+[no-numbers-saved-as-string]
+  enabled = true
+  severity = 'error'
+  strict-number-check = true
+
 [no-undefined]
   enabled = true
   severity = 'warning'

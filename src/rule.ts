@@ -1,6 +1,7 @@
 import * as Joi from 'joi'
 import { IDb } from './db'
 import { flatten } from 'lodash'
+import { minify } from 'uglify-js'
 
 export enum RuleSeverity {
   Warning,
@@ -100,12 +101,25 @@ export abstract class AbstractRule {
       isFuzzy: ruleMetadata.isFuzzy,
     }
 
-    return {
+    const failureSpecificJson = this.getFailureSpecificJson(failure)
+    const result = {
       ruleMetadata: ruleMetadataJson,
       options: this.options,
       location,
-      ...this.getFailureSpecificJson(failure),
+      ...failureSpecificJson,
     }
+    if (result.mongoCommand) {
+      result.mongoCommand = minify(
+        result.mongoCommand,
+        {
+          fromString: true,
+          mangle: false,
+          compress: false,
+        },
+      ).code
+    }
+
+    return result
   }
 
   protected abstract getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson
