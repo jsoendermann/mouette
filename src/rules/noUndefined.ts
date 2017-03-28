@@ -1,4 +1,3 @@
-
 const serialize = require('serialize-javascript')
 
 import { IDb } from '../db'

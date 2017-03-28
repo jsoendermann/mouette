@@ -1,5 +1,3 @@
-
-
 import { IDb } from '../db'
 import {
   AbstractKeyRule,
