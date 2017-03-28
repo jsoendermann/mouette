@@ -92,10 +92,10 @@ export class Rule extends AbstractKeyRule {
 
     const result: any = {
       failure: `Column **${collectionName}.${keyName
-      }** ends in "At" but contains values that are not dates, null ${
+      }** ends in "At" but contains values that are not dates, null${
       allowStringifiedDays ?
         ', undefined or satisfying the provided regexp.'
-        : 'or undefined.'
+        : ' or undefined.'
       }`,
       mongoCommand: `db.getCollection('${collectionName}').find(${mongoQuery}, {${keyName}: 1})`,
     }
