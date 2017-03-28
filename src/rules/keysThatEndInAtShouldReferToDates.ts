@@ -59,6 +59,9 @@ export class Rule extends AbstractKeyRule {
     collectionName: string,
     keyName: string,
   ): Promise<RuleFailure | null> {
+    if (!/.*At$/.test(keyName)) {
+      return null
+    }
     const hasNonDateObjects = await db.doesContainInCollection(
       collectionName,
       Rule.QUERY(
