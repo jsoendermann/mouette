@@ -13,3 +13,6 @@
 [key-names-case]
   enabled = true
   case = 'camel'
+
+[no-undefined]
+  enabled = true

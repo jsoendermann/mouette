@@ -50,7 +50,7 @@ node dist/bin/mouette.js
 - [X] no-leading-underscores-in-key-names
 - [X] key-names-case
 - [ ] no-mixed-types
-- [ ] no-undefined
+- [X] no-undefined
 - [ ] no-null
 - [ ] is-and-has-keys-should-refer-to-booleans
 - [ ] max-key-count
