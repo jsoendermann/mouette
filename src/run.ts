@@ -30,7 +30,7 @@ export const run = async (mongoUri: string, userConfig: any = {}): Promise<IRule
     }
   }
 
-  const failures = flatten(await Promise.all(rules.map(r => r.apply(db))))
+  const failures = flatten(await Promise.all(rules.map(r => r.getFailures(db))))
   const failuresJson = failures.map(f => f.toJson())
   db.close()
   return failuresJson
