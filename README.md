@@ -43,19 +43,9 @@ node dist/bin/mouette.js
 - [ ] Come up with a way to lint nested objects
 
 
-## Rules
+### Rules
 
-- [X] collection-names-number
-- [X] keys-that-end-in-at-should-refer-to-dates
-- [X] no-leading-underscores-in-key-names
-- [X] key-names-case
 - [ ] no-mixed-types
-- [X] no-undefined
-- [X] no-null
-- [X] keys-that-start-with-is-or-has-should-refer-to-booleans
-- [X] max-key-count
-- [X] bad-key-names,
-- [X] no-numbers-saved-as-string
 - [ ] columns-containing-object-ids-should-end-in-id
 
 ### Guesses
