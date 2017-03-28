@@ -37,9 +37,9 @@ export class Rule extends AbstractKeyRule {
     db: IDb,
     collectionName: string,
     keyName: string,
-  ): Promise<RuleFailure | null> {
+  ): Promise<RuleFailure[]> {
     if (!(keyName.startsWith('is') || keyName.startsWith('has'))) {
-      return null
+      return []
     }
 
     const hasNonBoolValues = await db.doesContainInCollection(
@@ -50,15 +50,15 @@ export class Rule extends AbstractKeyRule {
     )
 
     if (hasNonBoolValues) {
-      return new RuleFailure(
+      return [new RuleFailure(
         this,
         {
           collectionName,
           keyName,
         },
-      )
+      )]
     }
-    return null
+    return []
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {

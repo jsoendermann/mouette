@@ -114,35 +114,40 @@ export abstract class AbstractRule {
 export abstract class AbstractCollectionRule extends AbstractRule {
   public async getFailures(db: IDb): Promise<RuleFailure[]> {
     const collectionNames = await db.getCollectionNames()
-    const failureOptions = await Promise.all(collectionNames.map(c => this.getFailuresForCollection(db, c)))
-    const failures = failureOptions.filter(f => !!f).map(f => f!)
+    const failures = flatten(
+      await Promise.all(collectionNames.map(c => this.getFailuresForCollection(db, c))),
+    )
     return failures
   }
 
-  public abstract async getFailuresForCollection(db: IDb, collectionName: string): Promise<RuleFailure | null>
+  public abstract async getFailuresForCollection(
+    db: IDb,
+    collectionName: string,
+  ): Promise<RuleFailure[]>
 }
 
 export abstract class AbstractKeyRule extends AbstractRule {
   public async getFailures(db: IDb): Promise<RuleFailure[]> {
     const getFailuresForCollection = async (collectionName: string) => {
       const keyNames = await db.getKeysInCollection(collectionName)
-      const failureOptions = await Promise.all(keyNames.map(keyName => (
+      const failures = await Promise.all(keyNames.map(keyName => (
         this.getFailuresForCollectionAndKey(db, collectionName, keyName)
       )))
-      const failures = failureOptions.filter(f => !!f).map(f => f!)
       return failures
     }
 
     const collectionNames = await db.getCollectionNames()
-    const failuresForCollections = await Promise.all(collectionNames.map(getFailuresForCollection))
-    return flatten(failuresForCollections)
+    const failuresForCollections = flatten(flatten(
+      await Promise.all(collectionNames.map(getFailuresForCollection)),
+    ))
+    return failuresForCollections
   }
 
   public abstract async getFailuresForCollectionAndKey(
     db: IDb,
     collectionName: string,
     keyName: string,
-  ): Promise<RuleFailure | null>
+  ): Promise<RuleFailure[]>
 }
 
 export interface IRuleFailureConstructorOptions {

@@ -34,18 +34,18 @@ export class Rule extends AbstractCollectionRule {
   public async getFailuresForCollection(
     db: IDb,
     collectionName: string,
-  ): Promise<RuleFailure | null> {
+  ): Promise<RuleFailure[]> {
     switch (this.options.number) {
       case 'singular':
         if (!isSingular(collectionName)) {
-          return new RuleFailure(this, { collectionName })
+          return [new RuleFailure(this, { collectionName })]
         }
-        return null
+        return []
       case 'plural':
         if (!isPlural(collectionName)) {
-          return new RuleFailure(this, { collectionName })
+          return [new RuleFailure(this, { collectionName })]
         }
-        return null
+        return []
       default: throw new Error(`Options value ${this.options.number
         } provided as 'number to collection-names-number not valid`)
     }

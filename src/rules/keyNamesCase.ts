@@ -35,10 +35,10 @@ export class Rule extends AbstractKeyRule {
     db: IDb,
     collectionName: string,
     keyName: string,
-  ): Promise<RuleFailure | null> {
+  ): Promise<RuleFailure[]> {
     if (/^_*[a-z]+$/.test(keyName)) {
       // Single words don't have a case
-      return null
+      return []
     }
 
     const keyCase = to(keyName) as string
@@ -47,10 +47,10 @@ export class Rule extends AbstractKeyRule {
       case 'camel':
       case 'snake':
         if (this.options.case !== keyCase) {
-          return new RuleFailure(this, { collectionName, keyName })
+          return [new RuleFailure(this, { collectionName, keyName })]
         }
-        return null
-      default: return new RuleFailure(this, { collectionName, keyName })
+        return []
+      default: return [new RuleFailure(this, { collectionName, keyName })]
     }
   }
 

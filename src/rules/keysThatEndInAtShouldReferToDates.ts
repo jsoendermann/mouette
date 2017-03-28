@@ -56,9 +56,9 @@ export class Rule extends AbstractKeyRule {
     db: IDb,
     collectionName: string,
     keyName: string,
-  ): Promise<RuleFailure | null> {
+  ): Promise<RuleFailure[]> {
     if (!keyName.endsWith('At')) {
-      return null
+      return []
     }
     const hasNonDateValues = await db.doesContainInCollection(
       collectionName,
@@ -70,15 +70,15 @@ export class Rule extends AbstractKeyRule {
     )
 
     if (hasNonDateValues) {
-      return new RuleFailure(
+      return [new RuleFailure(
         this,
         {
           collectionName,
           keyName,
         },
-      )
+      )]
     }
-    return null
+    return []
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {

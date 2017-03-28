@@ -25,11 +25,11 @@ export class Rule extends AbstractKeyRule {
     db: IDb,
     collectionName: string,
     keyName: string,
-  ): Promise<RuleFailure | null> {
+  ): Promise<RuleFailure[]> {
     if (keyName !== '_id' && keyName[0] === '_') {
-      return new RuleFailure(this, { collectionName, keyName })
+      return [new RuleFailure(this, { collectionName, keyName })]
     }
-    return null
+    return []
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {

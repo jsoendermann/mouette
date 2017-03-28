@@ -32,20 +32,20 @@ export class Rule extends AbstractCollectionRule {
   public async getFailuresForCollection(
     db: IDb,
     collectionName: string,
-  ): Promise<RuleFailure | null> {
+  ): Promise<RuleFailure[]> {
     const keys = await db.getKeysInCollection(collectionName)
     const keysWithoutId = keys.filter(k => k !== '_id')
     const actualKeyCount = keysWithoutId.length
     if (actualKeyCount > this.options['maximum-excluding-_id']) {
-      return new RuleFailure(
+      return [new RuleFailure(
         this,
         {
           collectionName,
           additionalDetails: { actualKeyCount },
         },
-      )
+      )]
     }
-    return null
+    return []
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
