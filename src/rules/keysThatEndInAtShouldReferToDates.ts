@@ -1,10 +1,9 @@
 import * as Joi from 'joi'
-import { flatten } from 'lodash'
 const serialize = require('serialize-javascript')
 
 import { IDb } from '../db'
 import {
-  AbstractRule,
+  AbstractKeyRule,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleSeverity,
@@ -12,7 +11,7 @@ import {
 } from '../rule'
 
 
-export class Rule extends AbstractRule {
+export class Rule extends AbstractKeyRule {
   private static QUERY = (
     keyName: string,
     allowStringifiedDays: boolean,
@@ -55,44 +54,28 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(db: IDb): Promise<RuleFailure[]> {
-    const collectionNames = await db.getCollectionNames()
-
-    const failureOptionForCollectionAndKey = async (collectionName: string, keyName: string) => {
-      const hasNonDateObjects = await db.doesContainInCollection(
-        collectionName,
-        Rule.QUERY(
-          keyName,
-          this.options['allow-stringified-days'],
-          this.options['stringified-days-regex'],
-        ),
-      )
-
-      if (hasNonDateObjects) {
-        return new RuleFailure(
-          this,
-          collectionName,
-          keyName,
-        )
-      }
-      return null
-    }
-
-    const failuresforCollection = async (collectionName: string) => {
-      const keyNames = await db.getKeysInCollection(collectionName)
-      const keyNamesThatEndInAt = keyNames.filter(keyName => keyName.endsWith('At'))
-
-      const failuresOrNull = await Promise.all(
-        keyNamesThatEndInAt.map(keyName => failureOptionForCollectionAndKey(collectionName, keyName)),
-      )
-      const failuresInCollection = failuresOrNull.filter(f => f) as RuleFailure[]
-      return failuresInCollection
-    }
-
-    const failures: RuleFailure[] = flatten(
-      await Promise.all(collectionNames.map(failuresforCollection)),
+  public async applyForCollectionAndKey(
+    db: IDb,
+    collectionName: string,
+    keyName: string,
+  ): Promise<RuleFailure | null> {
+    const hasNonDateObjects = await db.doesContainInCollection(
+      collectionName,
+      Rule.QUERY(
+        keyName,
+        this.options['allow-stringified-days'],
+        this.options['stringified-days-regex'],
+      ),
     )
-    return failures
+
+    if (hasNonDateObjects) {
+      return new RuleFailure(
+        this,
+        collectionName,
+        keyName,
+      )
+    }
+    return null
   }
 
   public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {

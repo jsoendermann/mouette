@@ -1,5 +1,6 @@
 import * as Joi from 'joi'
 import { IDb } from './db'
+import { flatten } from 'lodash'
 
 export enum RuleSeverity {
   Warning,
@@ -98,6 +99,40 @@ export abstract class AbstractRule {
   }
 
   protected abstract failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson
+}
+
+export abstract class AbstractCollectionRule extends AbstractRule {
+  public async apply(db: IDb): Promise<RuleFailure[]> {
+    const collectionNames = await db.getCollectionNames()
+    const failureOptions = await Promise.all(collectionNames.map(c => this.applyForCollection(db, c)))
+    const failures = failureOptions.filter(f => !!f).map(f => f!)
+    return failures
+  }
+
+  public abstract async applyForCollection(db: IDb, collectionName: string): Promise<RuleFailure | null>
+}
+
+export abstract class AbstractKeyRule extends AbstractRule {
+  public async apply(db: IDb): Promise<RuleFailure[]> {
+    const getFailuresForCollection = async (collectionName: string) => {
+      const keyNames = await db.getKeysInCollection(collectionName)
+      const failureOptions = await Promise.all(keyNames.map(keyName => (
+        this.applyForCollectionAndKey(db, collectionName, keyName)
+      )))
+      const failures = failureOptions.filter(f => !!f).map(f => f!)
+      return failures
+    }
+
+    const collectionNames = await db.getCollectionNames()
+    const failuresForCollections = await Promise.all(collectionNames.map(getFailuresForCollection))
+    return flatten(failuresForCollections)
+  }
+
+  public abstract async applyForCollectionAndKey(
+    db: IDb,
+    collectionName: string,
+    keyName: string,
+  ): Promise<RuleFailure | null>
 }
 
 export class RuleFailure {

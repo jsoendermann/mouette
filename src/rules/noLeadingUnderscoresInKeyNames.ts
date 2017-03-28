@@ -1,9 +1,8 @@
 
-import { flatten } from 'lodash'
 
 import { IDb } from '../db'
 import {
-  AbstractRule,
+  AbstractKeyRule,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
@@ -11,7 +10,7 @@ import {
 } from '../rule'
 
 
-export class Rule extends AbstractRule {
+export class Rule extends AbstractKeyRule {
   public static metadata = {
     name: 'no-leading-underscores-in-key-names',
     prettyName: 'No leading underscores in key names',
@@ -26,21 +25,15 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(db: IDb): Promise<RuleFailure[]> {
-    const collectionNames = await db.getCollectionNames()
-
-    const failuresForCollection = async (collectionName: string) => {
-      const keyNames = await db.getKeysInCollection(collectionName)
-      return keyNames
-        .filter(keyName => keyName !== '_id' && keyName[0] === '_')
-        .map(keyName => new RuleFailure(this, collectionName, keyName))
+  public async applyForCollectionAndKey(
+    db: IDb,
+    collectionName: string,
+    keyName: string,
+  ): Promise<RuleFailure | null> {
+    if (keyName !== '_id' && keyName[0] === '_') {
+      return new RuleFailure(this, collectionName, keyName)
     }
-
-    const failures: RuleFailure[] = flatten(
-      await Promise.all(collectionNames.map(failuresForCollection)),
-    )
-
-    return failures
+    return null
   }
 
   public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {

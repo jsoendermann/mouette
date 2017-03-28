@@ -2,7 +2,7 @@ import * as Joi from 'joi'
 
 import { IDb } from '../db'
 import {
-  AbstractRule,
+  AbstractCollectionRule,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
@@ -11,7 +11,7 @@ import {
 import { isSingular, isPlural, singularize, pluralize } from '../vendor/lingo'
 
 
-export class Rule extends AbstractRule {
+export class Rule extends AbstractCollectionRule {
   public static metadata = {
     name: 'collection-names-number',
     prettyName: 'Collection names number',
@@ -33,20 +33,24 @@ export class Rule extends AbstractRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async apply(db: IDb): Promise<RuleFailure[]> {
-    const collectionNames = await db.getCollectionNames()
-    let violatingColletionNames: string[] = []
+  public async applyForCollection(
+    db: IDb,
+    collectionName: string,
+  ): Promise<RuleFailure | null> {
     switch (this.options.number) {
       case 'singular':
-        violatingColletionNames = collectionNames.filter(name => !isSingular(name))
-        break
+        if (!isSingular(collectionName)) {
+          return new RuleFailure(this, collectionName)
+        }
+        return null
       case 'plural':
-        violatingColletionNames = collectionNames.filter(name => !isPlural(name))
-        break
+        if (!isPlural(collectionName)) {
+          return new RuleFailure(this, collectionName)
+        }
+        return null
       default: throw new Error(`Options value ${this.options.number
         } provided as 'number to collection-names-number not valid`)
     }
-    return violatingColletionNames.map(name => new RuleFailure(this, name))
   }
 
   public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
