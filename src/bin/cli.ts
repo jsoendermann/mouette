@@ -4,60 +4,68 @@ import { load as parseYaml } from 'js-yaml'
 import { parse as parseToml } from 'toml'
 
 import args from './argsParser'
-import { run } from '..'
+import { run, diff, IRuleFailureJson } from '..'
 import commandLineFormatter from './commandLineFormatter'
 
 
-const loadConfigFileAtPath = (configFilePath: string): any | null => {
-  if (!existsSync(configFilePath)) {
+const loadSerializedData = (filePath: string): any | null => {
+  if (!existsSync(filePath)) {
     return null
   }
 
-  const configFileContent = readFileSync(configFilePath, 'utf8')
+  const configFileContent = readFileSync(filePath, 'utf8')
 
-  const configFilePathExtension = extname(configFilePath)
-  switch (configFilePathExtension) {
+  const filePathExtension = extname(filePath)
+  switch (filePathExtension) {
     case '.json': return JSON.parse(configFileContent)
     case '.yml':
     case '.yaml': return parseYaml(configFileContent)
     case '.toml': return parseToml(configFileContent)
-    default: throw new Error(`Unrecognized config file extension: ${configFilePathExtension}.`)
+    default: throw new Error(`Unrecognized config file extension: ${filePathExtension}.`)
   }
 }
 
 const getUserConfig = (userConfigFilePath: string | null): any => {
   if (userConfigFilePath !== null) {
-    const userConfig = loadConfigFileAtPath(userConfigFilePath)
+    const userConfig = loadSerializedData(userConfigFilePath)
     if (userConfig === null) {
       throw new Error(`Cannot load config file at ${userConfigFilePath}`)
     }
     return userConfig
   }
 
-  return loadConfigFileAtPath('./mouette.json') ||
-    loadConfigFileAtPath('./mouette.yaml') ||
-    loadConfigFileAtPath('./mouette.yml') ||
-    loadConfigFileAtPath('./mouette.toml') || {}
+  return loadSerializedData('./mouette.json') ||
+    loadSerializedData('./mouette.yaml') ||
+    loadSerializedData('./mouette.yml') ||
+    loadSerializedData('./mouette.toml') || {}
+}
+
+const logFailures = (failures: IRuleFailureJson[], style: string) => {
+  switch (style) {
+    case 'json':
+      console.log(JSON.stringify(failures))
+      return
+    case 'terminal':
+      console.log(commandLineFormatter(failures))
+      return
+    default: throw new Error(`Unrecognized output style: ${args.output_style}`)
+  }
 }
 
 const runCommand = async (args: any) => {
   const userConfig = getUserConfig(args.config_file)
   const lintResults = await run(args.MONGO_URI, userConfig)
 
-  switch (args.output_style) {
-    case 'json':
-      console.log(JSON.stringify(lintResults))
-      return
-    case 'terminal':
-      console.log(commandLineFormatter(lintResults))
-      return
-    default: throw new Error(`Unrecognized output style: ${args.output_style}`)
-  }
+  logFailures(lintResults, args.output_style)
 }
 
 const diffCommand = async (args: any) => {
-  // TODO
-  throw new Error('The diff subcommand has not yet been implemented.')
+  const lintResultsOld = loadSerializedData(args.LINT_RESULTS_OLD)
+  const lintResultsNew = loadSerializedData(args.LINT_RESULTS_NEW)
+
+  const difference = diff(lintResultsOld, lintResultsNew)
+
+  logFailures(difference, args.output_style)
 }
 
 export default async () => {

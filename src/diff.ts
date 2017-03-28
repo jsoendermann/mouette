@@ -1,8 +1,18 @@
+import { differenceBy } from 'lodash'
+
 import { IRuleFailureJson } from './rule'
 
-export const diff = async (
+
+export const diff = (
   lintResultsOld: IRuleFailureJson[],
-  lintResultsNew: IRuleFailureJson[]
-): Promise<IRuleFailureJson[]> => {
-  throw new Error('Not yet implemented')
+  lintResultsNew: IRuleFailureJson[],
+): IRuleFailureJson[] => {
+  return differenceBy(
+    lintResultsNew,
+    lintResultsOld,
+    (a: IRuleFailureJson) => `${
+      a.ruleMetadata.name}.${
+      a.location.collectionName}.${
+      a.location.keyName}`,
+  )
 }

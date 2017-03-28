@@ -39,6 +39,15 @@ runParser.addArgument(
 runParser.addArgument(['MONGO_URI'], { help: 'The URI to your Mongo database.' })
 
 const diffParser = subparsers.addParser('diff', { addHelp: true })
+diffParser.addArgument(
+  ['-s', '--output-style'],
+  {
+    required: false,
+    help: 'The style of the output that is written to stdout. Defaults to `terminal`.',
+    choices: ['json', 'terminal'],
+    defaultValue: 'terminal',
+  },
+)
 diffParser.addArgument(['LINT_RESULTS_OLD'], {
   help: 'The path to the older of the two lint results. Must be a .json/.yaml/.toml file.',
 })
