@@ -15,7 +15,7 @@ export class Rule extends AbstractCollectionRule {
     prettyName: 'Max key count',
     description: 'Enforces a maximum number of keys per collection.',
     rationale: 'Hierarchical objects are more readable and faster to scan without index.',
-    granularity: RuleGranularity.CollectionName,
+    granularity: RuleGranularity.AllKeyNames,
     isFuzzy: false,
     optionsDescription: `
       [maximum-excluding-_id]

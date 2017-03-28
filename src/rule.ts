@@ -10,6 +10,7 @@ export enum RuleSeverity {
 
 export enum RuleGranularity {
   CollectionName,
+  AllKeyNames,
   KeyName,
   Column,
 }

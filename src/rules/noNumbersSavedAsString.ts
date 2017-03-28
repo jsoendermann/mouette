@@ -36,7 +36,7 @@ export class Rule extends AbstractCollectionRule {
     prettyName: 'No numbers saved as string',
     description: "Makes sure numbers don't get saved as strings.",
     rationale: 'It breaks expectations and is easy to overlook.',
-    granularity: RuleGranularity.KeyName,
+    granularity: RuleGranularity.Column,
     isFuzzy: false,
     optionsDescription: `
       [strict-number-check]
