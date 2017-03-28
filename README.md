@@ -30,15 +30,18 @@ node dist/bin/mouette.js
 2. Follow the instructions in that file to implement your rule.
 3. Add default options for your new rule to `defaultConfig.toml`.
 4. Write tests and add them to the `__tests__/rules/` folder.
+5. Send me a pull request and share your new rule with the world.
 
 ## TODO
 
-- [ ] Web interface
+- [ ] Add tests
+  - [ ] Coverage
+  - [ ] CI
 - [ ] Comment code
-- [ ] Add tests (+coverage)
+- [ ] Web interface
+  - [ ] Dockerize
 - [ ] Come up with a way to lint nested objects
-- [ ] CI
-- [ ] Dockerize
+
 
 ## Rules
 
