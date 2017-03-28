@@ -1,46 +1,51 @@
-[collection-names-number]
-  enabled = true
-  severity = 'warning'
-  number = 'plural'
-
-[key-names-case]
+[collection-names-case]
   enabled = true
   severity = 'warning'
   case = 'camel'
 
+[collection-names-number]
+  enabled = false
+  severity = 'warning'
+  number = 'plural'
+
+[key-names-case]
+  enabled = false
+  severity = 'warning'
+  case = 'camel'
+
 [keys-that-end-in-at-should-refer-to-dates]
-  enabled = true
+  enabled = false
   severity = 'error'
   allow-stringified-days = true
   stringified-days-regex = '^\\d\\d\\d\\d-[01]\\d-[0123]\\d$'
 
 [keys-that-start-with-is-or-has-should-refer-to-booleans]
-  enabled = true
+  enabled = false
   severity = 'error'
 
 [max-key-count]
-  enabled = true
+  enabled = false
   severity = 'warning'
   maximum-excluding-_id = 10
 
 [no-bad-key-names]
-  enabled = true
+  enabled = false
   severity = 'warning'
   names-considered-bad = ["value", "data", "details", "stuff"]
 
 [no-leading-underscores-in-key-names]
-  enabled = true
+  enabled = false
   severity = 'warning'
 
 [no-null]
-  enabled = true
+  enabled = false
   severity = 'warning'
 
 [no-numbers-saved-as-string]
-  enabled = true
+  enabled = false
   severity = 'error'
   strict-number-check = true
 
 [no-undefined]
-  enabled = true
+  enabled = false
   severity = 'warning'
