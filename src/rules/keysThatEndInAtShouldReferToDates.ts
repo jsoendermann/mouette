@@ -31,7 +31,7 @@ export class Rule extends AbstractKeyRule {
   }
 
   private static metadata = {
-    name: 'keys-that-en-in-at-should-refer-to-dates',
+    name: 'keys-that-end-in-at-should-refer-to-dates',
     prettyName: 'Keys that end in At should refer to dates',
     description: 'Make sure columns with keys that end in ...At contain nothing but dates.',
     rationale: "It's what people expect when they see names like updatedAt.",
