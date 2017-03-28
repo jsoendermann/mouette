@@ -33,7 +33,7 @@ export class Rule extends AbstractCollectionRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async applyForCollection(
+  public async getFailuresForCollection(
     db: IDb,
     collectionName: string,
   ): Promise<RuleFailure | null> {
@@ -53,7 +53,7 @@ export class Rule extends AbstractCollectionRule {
     }
   }
 
-  public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
+  public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
 
     switch (this.options.number) {

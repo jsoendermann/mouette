@@ -65,9 +65,9 @@ export abstract class AbstractRule {
 
   public abstract getMetadata(): IRuleMetadata
 
-  public abstract async apply(db: IDb): Promise<RuleFailure[]>
+  public abstract async getFailures(db: IDb): Promise<RuleFailure[]>
 
-  public failureToJson(failure: RuleFailure): IRuleFailureJson {
+  public getJsonForFailure(failure: RuleFailure): IRuleFailureJson {
     const location: IRuleFailureLocation = {}
 
     const collectionName = failure.getCollectionName()
@@ -94,30 +94,30 @@ export abstract class AbstractRule {
     return {
       ruleMetadata: ruleMetadataJson,
       location,
-      ...this.failureSpecificJson(failure),
+      ...this.getFailureSpecificJson(failure),
     }
   }
 
-  protected abstract failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson
+  protected abstract getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson
 }
 
 export abstract class AbstractCollectionRule extends AbstractRule {
-  public async apply(db: IDb): Promise<RuleFailure[]> {
+  public async getFailures(db: IDb): Promise<RuleFailure[]> {
     const collectionNames = await db.getCollectionNames()
-    const failureOptions = await Promise.all(collectionNames.map(c => this.applyForCollection(db, c)))
+    const failureOptions = await Promise.all(collectionNames.map(c => this.getFailuresForCollection(db, c)))
     const failures = failureOptions.filter(f => !!f).map(f => f!)
     return failures
   }
 
-  public abstract async applyForCollection(db: IDb, collectionName: string): Promise<RuleFailure | null>
+  public abstract async getFailuresForCollection(db: IDb, collectionName: string): Promise<RuleFailure | null>
 }
 
 export abstract class AbstractKeyRule extends AbstractRule {
-  public async apply(db: IDb): Promise<RuleFailure[]> {
+  public async getFailures(db: IDb): Promise<RuleFailure[]> {
     const getFailuresForCollection = async (collectionName: string) => {
       const keyNames = await db.getKeysInCollection(collectionName)
       const failureOptions = await Promise.all(keyNames.map(keyName => (
-        this.applyForCollectionAndKey(db, collectionName, keyName)
+        this.getFailuresForCollectionAndKey(db, collectionName, keyName)
       )))
       const failures = failureOptions.filter(f => !!f).map(f => f!)
       return failures
@@ -128,7 +128,7 @@ export abstract class AbstractKeyRule extends AbstractRule {
     return flatten(failuresForCollections)
   }
 
-  public abstract async applyForCollectionAndKey(
+  public abstract async getFailuresForCollectionAndKey(
     db: IDb,
     collectionName: string,
     keyName: string,
@@ -141,7 +141,7 @@ export class RuleFailure {
               private keyName?: string) { }
 
   public toJson(): IRuleFailureJson {
-    return this.rule.failureToJson(this)
+    return this.rule.getJsonForFailure(this)
   }
 
   public getCollectionName(): string | undefined {

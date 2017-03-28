@@ -33,7 +33,7 @@ export class Rule extends AbstractKeyRule {
 
   public getMetadata() { return Rule.metadata }
 
-  public async applyForCollectionAndKey(
+  public async getFailuresForCollectionAndKey(
     db: IDb,
     collectionName: string,
     keyName: string,
@@ -56,7 +56,7 @@ export class Rule extends AbstractKeyRule {
     }
   }
 
-  public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
+  public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 

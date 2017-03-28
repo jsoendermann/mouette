@@ -64,7 +64,7 @@ export class Rule extends AbstractRule {
   //   collectionName, // If your rule operates on collections
   //   keyName, // If it also operates on keys or columns
   // )
-  public async apply(db: IDb): Promise<RuleFailure[]> {
+  public async getFailures(db: IDb): Promise<RuleFailure[]> {
     return []
   }
 
@@ -77,7 +77,7 @@ export class Rule extends AbstractRule {
   //   be executed on the user's MongoDB that shows him all the records that
   //   violate this rule. MAKE SURE RUNNING THIS COMMAND DOES NOT ALTER The
   //   CONTENTS OF THE DATABASE IN ANY WAY!
-  public failureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
+  public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     // const collectionName = failure.getCollectionName() as string
 
     return {
