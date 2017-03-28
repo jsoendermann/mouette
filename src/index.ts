@@ -1,3 +1,3 @@
-export * from './run'
+export * from './lint'
 export * from './diff'
 export { IRuleFailureJson } from './rule'

@@ -14,11 +14,11 @@ const subparsers = parser.addSubparsers({
   dest: 'subcommand',
 })
 
-const runParser = subparsers.addParser('run', {
+const lintParser = subparsers.addParser('lint', {
   description: 'Lints your database and writes the result to stdout.',
   addHelp: true,
 })
-runParser.addArgument(
+lintParser.addArgument(
   ['-c', '--config-file'],
   {
     required: false,
@@ -27,7 +27,7 @@ If this flag is not set, mouette looks for a mouette.{json,yaml,toml} file in th
 If it can't find one, the default configuration is used.",
   },
 )
-runParser.addArgument(
+lintParser.addArgument(
   ['-s', '--output-style'],
   {
     required: false,
@@ -36,7 +36,7 @@ runParser.addArgument(
     defaultValue: 'terminal',
   },
 )
-runParser.addArgument(['MONGO_URI'], { help: 'The URI to your Mongo database.' })
+lintParser.addArgument(['MONGO_URI'], { help: 'The URI to your Mongo database.' })
 
 const diffParser = subparsers.addParser('diff', { addHelp: true })
 diffParser.addArgument(

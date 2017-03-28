@@ -4,7 +4,7 @@ import { load as parseYaml } from 'js-yaml'
 import { parse as parseToml } from 'toml'
 
 import args from './argsParser'
-import { run, diff, IRuleFailureJson } from '..'
+import { lint, diff, IRuleFailureJson } from '..'
 import commandLineFormatter from './commandLineFormatter'
 
 
@@ -52,9 +52,9 @@ const logFailures = (failures: IRuleFailureJson[], style: string) => {
   }
 }
 
-const runCommand = async (args: any) => {
+const lintCommand = async (args: any) => {
   const userConfig = getUserConfig(args.config_file)
-  const lintResults = await run(args.MONGO_URI, userConfig)
+  const lintResults = await lint(args.MONGO_URI, userConfig)
 
   logFailures(lintResults, args.output_style)
 }
@@ -71,8 +71,8 @@ const diffCommand = async (args: any) => {
 export default async () => {
   try {
     switch (args.subcommand) {
-      case 'run':
-        await runCommand(args)
+      case 'lint':
+        await lintCommand(args)
         break
       case 'diff':
         diffCommand(args)

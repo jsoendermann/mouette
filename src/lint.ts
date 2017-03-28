@@ -8,7 +8,7 @@ import { MongoDbWrapper } from './db'
 import { IRuleFailureJson, AbstractRule } from './rule'
 
 
-export const run = async (mongoUri: string, userConfig: any = {}): Promise<IRuleFailureJson[]> => {
+export const lint = async (mongoUri: string, userConfig: any = {}): Promise<IRuleFailureJson[]> => {
   const db = new MongoDbWrapper(mongoUri)
 
   const moduleFolder = dirname(module.filename)
