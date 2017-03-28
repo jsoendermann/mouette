@@ -51,7 +51,7 @@ node dist/bin/mouette.js
 - [X] key-names-case
 - [ ] no-mixed-types
 - [X] no-undefined
-- [ ] no-null
+- [X] no-null
 - [X] keys-that-start-with-is-or-has-should-refer-to-booleans
 - [X] max-key-count
 - [ ] bad-key-names
