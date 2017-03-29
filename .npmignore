@@ -1,0 +1,11 @@
+src
+node_modules
+.DS_Store
+.env
+*.log
+coverage
+tsconfig.json
+tslint.json
+yarn.lock
+.gitignore
+.vscode
