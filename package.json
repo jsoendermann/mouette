@@ -34,6 +34,7 @@
     "@types/lodash": "^4.14.57",
     "@types/mongodb": "^2.1.41",
     "@types/node": "^7.0.8",
+    "cartesian-product": "^2.1.2",
     "husky": "^0.13.2",
     "jest": "^19.0.2",
     "ts-jest": "^19.0.5",
@@ -58,15 +59,23 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testRegex": "/__tests__/.*\\.(test|spec)\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
+      "/node_modules/"
+    ],
+    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/!(mouette|_RULE_TEMPLATE).ts"
+    ],
+    "coverageReporters": [
+      "html",
+      "json"
     ]
   }
 }

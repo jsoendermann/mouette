@@ -35,7 +35,10 @@ export class Rule extends AbstractCollectionRule {
     db: IDb,
     collectionName: string,
   ): Promise<RuleFailure[]> {
-    switch (this.options.number) {
+    type numberOption = 'singular' | 'plural'
+    // Joi makes sure we don't need a default case
+    // tslint:disable-next-line:switch-default
+    switch (this.options.number as numberOption) {
       case 'singular':
         if (!isSingular(collectionName)) {
           return [new RuleFailure(this, { collectionName })]
@@ -46,15 +49,16 @@ export class Rule extends AbstractCollectionRule {
           return [new RuleFailure(this, { collectionName })]
         }
         return []
-      default: throw new Error(`Options value ${this.options.number
-        } provided as 'number to collection-names-number not valid`)
     }
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
 
-    switch (this.options.number) {
+    type numberOption = 'singular' | 'plural'
+    // Joi makes sure we don't need a default case
+    // tslint:disable-next-line:switch-default
+    switch (this.options.number as numberOption) {
       case 'singular':
         return {
           failure: `Collection name **${collectionName}** is not singular.`,
@@ -65,8 +69,6 @@ export class Rule extends AbstractCollectionRule {
           failure: `Collection name **${collectionName}** is not pluralized.`,
           suggestion: `Change *${collectionName}* to *${pluralize(collectionName)}*.`,
         }
-      default: throw new Error(`Options value ${this.options.number
-        } provided as 'number' to collection-names-number not valid`)
     }
   }
 }

@@ -52,6 +52,7 @@ export interface IRuleFailureJson extends IRuleFailureSpecificJson {
 }
 
 export interface IRuleOptions {
+  // TODO Maybe add "suggestion" or "use case dependent"
   severity: 'warning' | 'error'
   // Even though this is typed 'any', we know it's Json convertible
   // because these options get loaded from toml/yaml/json files.

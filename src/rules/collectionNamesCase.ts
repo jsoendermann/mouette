@@ -58,6 +58,8 @@ export class Rule extends AbstractCollectionRule {
 
     const collectionNameCase = this.options.case as string
 
+    // Joi makes sure we don't need a default case
+    // tslint:disable-next-line:switch-default
     switch (collectionNameCase) {
       case 'camel':
       case 'snake':
@@ -65,8 +67,6 @@ export class Rule extends AbstractCollectionRule {
           failure: `Collection name **${collectionName}** is not in ${collectionNameCase} case.`,
           suggestion: `Change *${collectionName}* to *${to[collectionNameCase](collectionName)}*.`,
         }
-      default: throw new Error(`Options value ${collectionNameCase
-        } provided as 'case' to collection-names-case not valid`)
     }
   }
 }

@@ -67,14 +67,11 @@ export class Rule extends AbstractKeyRule {
 
     const mongoQuery = serialize(Rule.QUERY(keyName))
 
-    let startsWith: string
+    let startsWith = 'UNRECOGNIZED_PREFIX'
     if (keyName.startsWith('is')) {
       startsWith = 'is'
     } else if (keyName.startsWith('has')) {
       startsWith = 'has'
-    } else {
-      throw new Error(`Key ${collectionName}.${keyName
-        } doesn't start with is or has but still generated a failure`)
     }
     const result: any = {
       failure: `Column **${collectionName}.${keyName
