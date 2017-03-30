@@ -23,7 +23,7 @@ export class Rule extends AbstractKeyRule {
         type = "string[]"
     `,
     optionsSchema: {
-      'names-considered-bad': Joi.array().items(Joi.string().alphanum().min(1)).min(1).required(),
+      'names-considered-bad': Joi.array().items(Joi.string().alphanum().min(1)).min(1).unique().required(),
     },
   }
 
