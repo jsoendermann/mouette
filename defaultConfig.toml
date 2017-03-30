@@ -38,7 +38,7 @@
   severity = 'warning'
 
 [no-null]
-  enabled = true
+  enabled = false
   severity = 'warning'
 
 [no-numbers-saved-as-string]
