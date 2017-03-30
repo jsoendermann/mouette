@@ -18,7 +18,7 @@ git clone https://github.com/jsoendermann/mouette/
 cd mouette
 yarn install
 yarn watch
-node dist/bin/mouette.js
+node dist/bin/mouette.js lint <your mongodb://...>
 ```
 
 ## Adding a new rule
