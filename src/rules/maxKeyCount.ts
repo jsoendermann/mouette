@@ -23,7 +23,7 @@ export class Rule extends AbstractCollectionRule {
         type = "number"
     `,
     optionsSchema: {
-      'maximum-excluding-_id': Joi.number().required(),
+      'maximum-excluding-_id': Joi.number().integer().min(2).required(),
     },
   }
 
