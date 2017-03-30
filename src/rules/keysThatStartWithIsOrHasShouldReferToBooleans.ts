@@ -20,7 +20,7 @@ export class Rule extends AbstractKeyRule {
     return ({ $nor: norArray })
   }
 
-  private static metadata = {
+  public static metadata = {
     name: 'keys-that-start-with-is-or-has-should-refer-to-booleans',
     prettyName: 'Keys that start with is or has should refer to booleans',
     description: 'Make sure columns with keys that start with is or has contain nothing but booleans.',
@@ -31,7 +31,7 @@ export class Rule extends AbstractKeyRule {
     optionsSchema: {},
   }
 
-  public getMetadata() { return Rule.metadata }
+  protected getMetadata() { return Rule.metadata }
 
   public async getFailuresForCollectionAndKey(
     db: IDb,

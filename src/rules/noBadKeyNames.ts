@@ -27,7 +27,7 @@ export class Rule extends AbstractKeyRule {
     },
   }
 
-  public getMetadata() { return Rule.metadata }
+  protected getMetadata() { return Rule.metadata }
 
   public async getFailuresForCollectionAndKey(
     db: IDb,

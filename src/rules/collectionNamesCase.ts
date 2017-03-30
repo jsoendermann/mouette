@@ -29,7 +29,7 @@ export class Rule extends AbstractCollectionRule {
     },
   }
 
-  public getMetadata() { return Rule.metadata }
+  protected getMetadata() { return Rule.metadata }
 
   public async getFailuresForCollection(
     db: IDb,

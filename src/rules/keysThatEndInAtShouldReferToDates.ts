@@ -29,7 +29,7 @@ export class Rule extends AbstractKeyRule {
     return ({ $nor: norArray })
   }
 
-  private static metadata = {
+  public static metadata = {
     name: 'keys-that-end-in-at-should-refer-to-dates',
     prettyName: 'Keys that end in At should refer to dates',
     description: 'Make sure columns with keys that end in ...At contain nothing but dates.',
@@ -50,7 +50,7 @@ export class Rule extends AbstractKeyRule {
     },
   }
 
-  public getMetadata() { return Rule.metadata }
+  protected getMetadata() { return Rule.metadata }
 
   public async getFailuresForCollectionAndKey(
     db: IDb,

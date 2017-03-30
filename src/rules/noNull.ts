@@ -12,7 +12,7 @@ import {
 export class Rule extends AbstractKeyRule {
   private static QUERY = (keyName: string) => ({ [keyName]: { $type: 10 } })
 
-  private static metadata = {
+  public static metadata = {
     name: 'no-null',
     prettyName: 'No null',
     description: 'Make sure columns do not contain null values.',
@@ -23,7 +23,7 @@ export class Rule extends AbstractKeyRule {
     optionsSchema: {},
   }
 
-  public getMetadata() { return Rule.metadata }
+  protected getMetadata() { return Rule.metadata }
 
   public async getFailuresForCollectionAndKey(
     db: IDb,

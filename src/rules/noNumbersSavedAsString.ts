@@ -31,7 +31,7 @@ export class Rule extends AbstractCollectionRule {
     }
   `
 
-  private static metadata = {
+  public static metadata = {
     name: 'no-numbers-saved-as-string',
     prettyName: 'No numbers saved as string',
     description: "Makes sure numbers don't get saved as strings.",
@@ -48,7 +48,7 @@ export class Rule extends AbstractCollectionRule {
     },
   }
 
-  public getMetadata() { return Rule.metadata }
+  protected getMetadata() { return Rule.metadata }
 
   public async getFailuresForCollection(
     db: IDb,

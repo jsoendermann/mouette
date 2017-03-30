@@ -56,10 +56,11 @@ export interface IRuleOptions {
   severity: 'warning' | 'error'
   // Even though this is typed 'any', we know it's Json convertible
   // because these options get loaded from toml/yaml/json files.
-  ; [ k: string ]: any
+  ; [k: string]: any
 }
 
 export abstract class AbstractRule {
+  public static metadata: IRuleMetadata
   protected options: IRuleOptions
 
   constructor(untypedOptions: any) {
@@ -75,7 +76,7 @@ export abstract class AbstractRule {
     this.options = untypedOptions as IRuleOptions
   }
 
-  public abstract getMetadata(): IRuleMetadata
+  protected abstract getMetadata(): IRuleMetadata
 
   public abstract async getFailures(db: IDb): Promise<RuleFailure[]>
 
