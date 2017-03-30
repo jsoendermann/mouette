@@ -7,7 +7,7 @@
   "bin": {
     "mouette": "./dist/bin/mouette.js"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "prepush": "npm run lint",
     "build": "tsc",
