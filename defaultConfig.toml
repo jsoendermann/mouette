@@ -31,7 +31,7 @@
 [no-bad-key-names]
   enabled = true
   severity = 'warning'
-  names-considered-bad = ["value", "data", "details", "stuff"]
+  names-considered-bad = ["value", "data", "details", "stuff", "dbValue", "info"]
 
 [no-leading-underscores-in-key-names]
   enabled = true
