@@ -19,7 +19,7 @@ export class Rule extends AbstractKeyRule {
     granularity: RuleGranularity.KeyName,
     isFuzzy: false,
     optionsDescription: `
-      [format]
+      [case]
         description = "The case your keys should be in."
         type = "enum"
         possibleValues = "'camel' | 'snake'"
