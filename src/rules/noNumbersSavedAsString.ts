@@ -12,24 +12,21 @@ import {
 export class Rule extends AbstractCollectionRule {
   private static NUMBER_CHECK_STRICT = `typeof value === 'string' && String(Number(value)) === value`
   private static NUMBER_CHECK_LOOSE = `typeof value === 'string' && !isNaN(Number(value))`
-  private static MAP = (numberCheck: string, key?: string) => `
+  private static MAP = (numberCheck: string) => `
     function () {
-      ${key !== undefined ? `var key = '${key}'` : 'for (var key in this) {'}
+      for (var key in this) {
         var value = this[key];
         if (${numberCheck})
         {
             emit(key, value);
         }
-      ${key !== undefined ? '' : '}'}
+      }
     }
   `
-  private static REDUCE = `
-    function (key, values) {
-      return "'" +
-        values.join("', '") +
-        "'"
-    }
-  `
+  private static REDUCE = 'function () {}'
+
+  private static REGEXP_STRICT = '^[1-9]\\d*\\.?(\\d*[1-9])?$'
+  private static REGEXP_LOOSE = '^(0x|0b)?\\d+\\.?\\d*$'
 
   public static metadata = {
     name: 'no-numbers-saved-as-string',
@@ -79,17 +76,14 @@ export class Rule extends AbstractCollectionRule {
     const collectionName = failure.getCollectionName() as string
     const keyName = failure.getKeyName() as string
 
-    let map: string
-    if (this.options['strict-number-check']) {
-      map = Rule.MAP(Rule.NUMBER_CHECK_STRICT, keyName)
-    } else {
-      map = Rule.MAP(Rule.NUMBER_CHECK_LOOSE, keyName)
-    }
+    const regexp = this.options['strict-number-check']
+      ? Rule.REGEXP_STRICT
+      : Rule.REGEXP_LOOSE
 
     return {
       failure: `Column **${collectionName}.${keyName}** contains numbers that are saved as strings.`,
       mongoCommand: `db.getCollection('${collectionName
-        }').mapReduce(${map}, ${Rule.REDUCE}, { out: { inline: 1 } }).find({}, { results: 1 })`,
+      }').find({${keyName}: {$type: 2, $regex: new RegExp('${regexp.replace(/\\/g, '\\\\')}')}}, {${keyName}: 1})`,
     }
   }
 }
