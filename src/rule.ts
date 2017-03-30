@@ -1,7 +1,6 @@
 import * as Joi from 'joi'
 import { IDb } from './db'
 import { flatten } from 'lodash'
-import { minify } from 'uglify-js'
 
 export enum RuleSeverity {
   Warning,
@@ -111,14 +110,11 @@ export abstract class AbstractRule {
       ...failureSpecificJson,
     }
     if (result.mongoCommand) {
-      result.mongoCommand = minify(
-        result.mongoCommand,
-        {
-          fromString: true,
-          mangle: false,
-          compress: false,
-        },
-      ).code
+      // This is pretty hacky
+      result.mongoCommand = result
+        .mongoCommand
+        .replace('\n', '')
+        .replace(/\s+/g, ' ')
     }
 
     return result
