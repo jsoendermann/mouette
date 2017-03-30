@@ -10,9 +10,6 @@ TODO
 
 TODO
 
-## How is this supposed to be used?
-
-TODO
 
 ## Develop
 
@@ -20,7 +17,7 @@ TODO
 git clone https://github.com/jsoendermann/mouette/
 cd mouette
 yarn install
-npm run watch
+yarn watch
 node dist/bin/mouette.js
 ```
 
@@ -35,18 +32,22 @@ node dist/bin/mouette.js
 ## TODO
 
 - [ ] Add tests
-  - [ ] Coverage
-  - [ ] CI
 - [ ] Comment code
-- [ ] Web interface
-  - [ ] Dockerize
+
 - [ ] Come up with a way to lint nested objects
+- [ ] CI
+  - [ ] Coverage
 
 
 ### Rules
 
+- [ ] columns-containing-dates-should-end-in-at
+- [ ] columns-containing-bools-should-end-in-is-or-has
+- [ ] no-dates-saved-as-string
 - [ ] no-mixed-types
 - [ ] columns-containing-object-ids-should-end-in-id
+- [ ] columns-containing-string-ids-should-end-in-id
+- [ ] no-deep-object-nesting
 
 ### Guesses
 
