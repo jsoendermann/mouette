@@ -8,8 +8,8 @@ import { MongoDbWrapper } from './db'
 import { IRuleFailureJson, AbstractRule } from './rule'
 
 
-export const lint = async (mongoUri: string, userConfig: any = {}): Promise<IRuleFailureJson[]> => {
-  const db = new MongoDbWrapper(mongoUri)
+export const lint = async (mongoUrl: string, userConfig: any = {}): Promise<IRuleFailureJson[]> => {
+  const db = new MongoDbWrapper(mongoUrl)
 
   const moduleFolder = dirname(module.filename)
   const defaultConfigFileName = resolve(moduleFolder, '../defaultConfig.toml')

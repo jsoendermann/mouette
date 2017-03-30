@@ -32,14 +32,14 @@ export class MongoDbWrapper implements IDb {
   private collectionNames: Promise<string[]> | null = null
   private collectionToKeys: Map<string, Promise<string[]>> = new Map()
 
-  constructor(private mongoUri: string) { }
+  constructor(private mongoUrl: string) { }
 
   private async getDb(): Promise<Db> {
     if (this.connectionPromise) {
       return this.connectionPromise
     }
 
-    this.connectionPromise = MongoClient.connect(this.mongoUri).then((db: Db) => {
+    this.connectionPromise = MongoClient.connect(this.mongoUrl).then((db: Db) => {
       if (!db) {
         delete this.connectionPromise
         throw new Error('db is falsy')
