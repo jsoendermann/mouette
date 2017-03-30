@@ -37,6 +37,7 @@ node dist/bin/mouette.js lint <your mongodb://...>
 - [ ] Come up with a way to lint nested objects
 - [ ] CI
   - [ ] Coverage
+- [ ] See if any map reduce queries can be rewritten using the aggregation pipeline
 
 
 ### Rules
