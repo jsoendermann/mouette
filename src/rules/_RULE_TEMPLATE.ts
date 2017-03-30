@@ -87,7 +87,7 @@ export class Rule extends AbstractCollectionRule {
   //   it's better to leave this undefined.
   // - (optionally) a 'mongoCommand' property that contains a string ready to
   //   be executed on the user's MongoDB that shows him all the records that
-  //   violate this rule. MAKE SURE RUNNING THIS COMMAND DOES NOT ALTER The
+  //   violate this rule. MAKE SURE RUNNING THIS COMMAND DOES NOT ALTER THE
   //   CONTENTS OF THE DATABASE IN ANY WAY!
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     // const collectionName = failure.getCollectionName() as string
