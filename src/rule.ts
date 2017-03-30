@@ -136,7 +136,7 @@ export abstract class AbstractCollectionRule extends AbstractRule {
     return failures
   }
 
-  public abstract async getFailuresForCollection(
+  protected abstract async getFailuresForCollection(
     db: IDb,
     collectionName: string,
   ): Promise<RuleFailure[]>
@@ -159,7 +159,7 @@ export abstract class AbstractKeyRule extends AbstractRule {
     return failuresForCollections
   }
 
-  public abstract async getFailuresForCollectionAndKey(
+  protected abstract async getFailuresForCollectionAndKey(
     db: IDb,
     collectionName: string,
     keyName: string,

@@ -29,7 +29,7 @@ export class Rule extends AbstractCollectionRule {
 
   protected getMetadata() { return Rule.metadata }
 
-  public async getFailuresForCollection(
+  protected async getFailuresForCollection(
     db: IDb,
     collectionName: string,
   ): Promise<RuleFailure[]> {

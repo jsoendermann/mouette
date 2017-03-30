@@ -52,7 +52,7 @@ export class Rule extends AbstractKeyRule {
 
   protected getMetadata() { return Rule.metadata }
 
-  public async getFailuresForCollectionAndKey(
+  protected async getFailuresForCollectionAndKey(
     db: IDb,
     collectionName: string,
     keyName: string,
