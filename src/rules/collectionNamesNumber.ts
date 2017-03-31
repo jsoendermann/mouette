@@ -35,10 +35,7 @@ export class Rule extends AbstractCollectionRule {
     db: IDb,
     collectionName: string,
   ): Promise<RuleFailure[]> {
-    type numberOption = 'singular' | 'plural'
-    // Joi makes sure we don't need a default case
-    // tslint:disable-next-line:switch-default
-    switch (this.options.number as numberOption) {
+    switch (this.options.number) {
       case 'singular':
         if (!isSingular(collectionName)) {
           return [new RuleFailure(this, { collectionName })]
@@ -49,16 +46,15 @@ export class Rule extends AbstractCollectionRule {
           return [new RuleFailure(this, { collectionName })]
         }
         return []
+      /* istanbul ignore next Joi makes sure this can't happen */
+      default: throw new Error(`Unknown number: ${this.options.number}`)
     }
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {
     const collectionName = failure.getCollectionName() as string
 
-    type numberOption = 'singular' | 'plural'
-    // Joi makes sure we don't need a default case
-    // tslint:disable-next-line:switch-default
-    switch (this.options.number as numberOption) {
+    switch (this.options.number) {
       case 'singular':
         return {
           failure: `Collection name **${collectionName}** is not singular.`,
@@ -69,6 +65,8 @@ export class Rule extends AbstractCollectionRule {
           failure: `Collection name **${collectionName}** is not pluralized.`,
           suggestion: `Change *${collectionName}* to *${pluralize(collectionName)}*.`,
         }
+      /* istanbul ignore next Joi makes sure this can't happen */
+      default: throw new Error(`Unknown number: ${this.options.number}`)
     }
   }
 }

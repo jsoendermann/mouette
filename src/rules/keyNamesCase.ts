@@ -60,8 +60,6 @@ export class Rule extends AbstractKeyRule {
 
     const keyCase = this.options.case as string
 
-    // Joi makes sure we don't need a default case
-    // tslint:disable-next-line:switch-default
     switch (keyCase) {
       case 'camel':
       case 'snake':
@@ -69,6 +67,8 @@ export class Rule extends AbstractKeyRule {
           failure: `Key name **${collectionName}.${keyName}** is not in ${keyCase} case.`,
           suggestion: `Change *${collectionName}.${keyName}* to *${collectionName}.${to[keyCase](keyName)}*.`,
         }
+      /* istanbul ignore next Joi makes sure this can't happen */
+      default: throw new Error(`Unknown case: ${keyCase}`)
     }
   }
 }
