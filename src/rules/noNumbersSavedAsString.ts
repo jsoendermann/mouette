@@ -25,8 +25,8 @@ export class Rule extends AbstractCollectionRule {
   `
   private static REDUCE = 'function () {}'
 
-  private static REGEXP_STRICT = '^[1-9]\\d*\\.?(\\d*[1-9])?$'
-  private static REGEXP_LOOSE = '^(0x|0b)?\\d+\\.?\\d*$'
+  private static REGEXP_STRICT = '^-?[1-9]\\d*\\.?(\\d*[1-9])?$'
+  private static REGEXP_LOOSE = '^(0x|0b|-)?\\d+\\.?\\d*$'
 
   public static metadata = {
     name: 'no-numbers-saved-as-string',
