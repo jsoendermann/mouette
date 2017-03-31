@@ -1,8 +1,8 @@
 import { flatten } from 'lodash'
 import * as humps from 'humps'
-import { IDb, TestDbWrapper } from '../../src/db'
-import generateRuleTestConfigs from '../helpers/generateRuleTestConfigs'
-import { AbstractRule, RuleFailure, IRuleFailureJson } from '../../src/rule'
+import { IDb, TestDbWrapper } from '../src/db'
+import generateRuleTestConfigs from './helpers/generateRuleTestConfigs'
+import { AbstractRule, RuleFailure, IRuleFailureJson } from '../src/rule'
 
 
 interface IRuleTestDetails {
@@ -235,7 +235,7 @@ describe('rules', () => {
   beforeAll(async () => {
     augmentedRuleDetails = await Promise.all(ruleDetails.map(async details => {
       const { Rule } = require(
-        '../../src/rules/' + humps.camelize(details.name),
+        '../src/rules/' + humps.camelize(details.name),
       )
 
       const configs = details.configs ||
