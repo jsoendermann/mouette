@@ -3,7 +3,12 @@ import { IRuleFailureJson } from '../rule'
 
 
 export default (failures: IRuleFailureJson[]): string => {
-  return failures.map(formatFailure).join('\n\n')
+  const warnings = failures.filter(failure => failure.options.severity === 'warning')
+  const errors = failures.filter(failure => failure.options.severity === 'error')
+
+  return warnings.map(formatFailure).join('\n\n') +
+    '\n\n' +
+    errors.map(formatFailure).join('\n\n')
 }
 
 const formatFailure = (failure: IRuleFailureJson): string => {
