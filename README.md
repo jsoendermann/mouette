@@ -32,9 +32,10 @@ node dist/bin/mouette.js lint <your mongodb://...>
 ## TODO
 
 - [ ] Comment code
+- [ ] Document rules
+- [ ] Add a summary switch to argument parser
 - [ ] Come up with a way to lint nested objects
 - [ ] See if any map reduce queries can be rewritten using the aggregation pipeline
-
 
 ### Rules
 
