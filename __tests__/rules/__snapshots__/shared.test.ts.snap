@@ -1279,119 +1279,6 @@ Object {
 }
 `;
 
-exports[`keys-that-start-with-is-or-has-should-refer-to-booleans.failures 1`] = `
-Array [
-  RuleFailure {
-    "options": Object {
-      "collectionName": "collection",
-      "keyName": "isQwfp",
-    },
-    "rule": Rule {
-      "options": Object {
-        "severity": "warning",
-      },
-    },
-  },
-  RuleFailure {
-    "options": Object {
-      "collectionName": "collection",
-      "keyName": "is",
-    },
-    "rule": Rule {
-      "options": Object {
-        "severity": "warning",
-      },
-    },
-  },
-  RuleFailure {
-    "options": Object {
-      "collectionName": "collection",
-      "keyName": "hasQwfp",
-    },
-    "rule": Rule {
-      "options": Object {
-        "severity": "warning",
-      },
-    },
-  },
-]
-`;
-
-exports[`keys-that-start-with-is-or-has-should-refer-to-booleans.failuresJson 1`] = `
-Array [
-  Object {
-    "failure": "Column **collection.isQwfp** starts with is but contains values that are not booleans, null or undefined",
-    "location": Object {
-      "collectionName": "collection",
-      "keyName": "isQwfp",
-    },
-    "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"isQwfp\\":{\\"$type\\":8}},{\\"isQwfp\\":{\\"$type\\":10}},{\\"isQwfp\\":{\\"$exists\\":false}}]}, {isQwfp: 1})",
-    "options": Object {
-      "severity": "warning",
-    },
-    "ruleMetadata": Object {
-      "description": "Make sure columns with keys that start with is or has contain nothing but booleans.",
-      "granularity": "Column",
-      "isFuzzy": false,
-      "name": "keys-that-start-with-is-or-has-should-refer-to-booleans",
-      "prettyName": "Keys that start with is or has should refer to booleans",
-      "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
-    },
-  },
-  Object {
-    "failure": "Column **collection.is** starts with is but contains values that are not booleans, null or undefined",
-    "location": Object {
-      "collectionName": "collection",
-      "keyName": "is",
-    },
-    "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"is\\":{\\"$type\\":8}},{\\"is\\":{\\"$type\\":10}},{\\"is\\":{\\"$exists\\":false}}]}, {is: 1})",
-    "options": Object {
-      "severity": "warning",
-    },
-    "ruleMetadata": Object {
-      "description": "Make sure columns with keys that start with is or has contain nothing but booleans.",
-      "granularity": "Column",
-      "isFuzzy": false,
-      "name": "keys-that-start-with-is-or-has-should-refer-to-booleans",
-      "prettyName": "Keys that start with is or has should refer to booleans",
-      "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
-    },
-  },
-  Object {
-    "failure": "Column **collection.hasQwfp** starts with has but contains values that are not booleans, null or undefined",
-    "location": Object {
-      "collectionName": "collection",
-      "keyName": "hasQwfp",
-    },
-    "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"hasQwfp\\":{\\"$type\\":8}},{\\"hasQwfp\\":{\\"$type\\":10}},{\\"hasQwfp\\":{\\"$exists\\":false}}]}, {hasQwfp: 1})",
-    "options": Object {
-      "severity": "warning",
-    },
-    "ruleMetadata": Object {
-      "description": "Make sure columns with keys that start with is or has contain nothing but booleans.",
-      "granularity": "Column",
-      "isFuzzy": false,
-      "name": "keys-that-start-with-is-or-has-should-refer-to-booleans",
-      "prettyName": "Keys that start with is or has should refer to booleans",
-      "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
-    },
-  },
-]
-`;
-
-exports[`keys-that-start-with-is-or-has-should-refer-to-booleans.metadata 1`] = `
-Object {
-  "description": "Make sure columns with keys that start with is or has contain nothing but booleans.",
-  "granularity": 3,
-  "isFuzzy": false,
-  "name": "keys-that-start-with-is-or-has-should-refer-to-booleans",
-  "optionsDescription": "",
-  "optionsSchema": Object {},
-  "prettyName": "Keys that start with is or has should refer to booleans",
-  "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
-}
-`;
-
 exports[`max-key-count.failures 1`] = `
 Array [
   RuleFailure {
@@ -2139,5 +2026,226 @@ Object {
   "optionsSchema": Object {},
   "prettyName": "No undefined",
   "rationale": "It's efficient because the record doesn't have to grow later.",
+}
+`;
+
+exports[`question-keys-should-refer-to-booleans.failures 1`] = `
+Array [
+  RuleFailure {
+    "options": Object {
+      "collectionName": "collection",
+      "keyName": "isQwfp",
+    },
+    "rule": Rule {
+      "options": Object {
+        "boolean-key-prefixes": Array [
+          "is",
+          "does",
+        ],
+        "severity": "warning",
+      },
+    },
+  },
+  RuleFailure {
+    "options": Object {
+      "collectionName": "collection",
+      "keyName": "is",
+    },
+    "rule": Rule {
+      "options": Object {
+        "boolean-key-prefixes": Array [
+          "is",
+          "does",
+        ],
+        "severity": "warning",
+      },
+    },
+  },
+]
+`;
+
+exports[`question-keys-should-refer-to-booleans.failuresJson 1`] = `
+Array [
+  Object {
+    "failure": "Column **collection.isQwfp** starts with \\"is\\" but contains values that are not booleans, null or undefined",
+    "location": Object {
+      "collectionName": "collection",
+      "keyName": "isQwfp",
+    },
+    "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"isQwfp\\":{\\"$type\\":8}},{\\"isQwfp\\":{\\"$type\\":10}},{\\"isQwfp\\":{\\"$exists\\":false}}]}, {isQwfp: 1})",
+    "options": Object {
+      "boolean-key-prefixes": Array [
+        "is",
+        "does",
+      ],
+      "severity": "warning",
+    },
+    "ruleMetadata": Object {
+      "description": "Make sure columns with keys that start with verbs like \\"is\\" or \\"has\\" contain nothing but booleans.",
+      "granularity": "Column",
+      "isFuzzy": false,
+      "name": "question-keys-should-refer-to-booleans",
+      "prettyName": "Question keys should refer to booleans",
+      "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
+    },
+  },
+  Object {
+    "failure": "Column **collection.is** starts with \\"is\\" but contains values that are not booleans, null or undefined",
+    "location": Object {
+      "collectionName": "collection",
+      "keyName": "is",
+    },
+    "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"is\\":{\\"$type\\":8}},{\\"is\\":{\\"$type\\":10}},{\\"is\\":{\\"$exists\\":false}}]}, {is: 1})",
+    "options": Object {
+      "boolean-key-prefixes": Array [
+        "is",
+        "does",
+      ],
+      "severity": "warning",
+    },
+    "ruleMetadata": Object {
+      "description": "Make sure columns with keys that start with verbs like \\"is\\" or \\"has\\" contain nothing but booleans.",
+      "granularity": "Column",
+      "isFuzzy": false,
+      "name": "question-keys-should-refer-to-booleans",
+      "prettyName": "Question keys should refer to booleans",
+      "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
+    },
+  },
+]
+`;
+
+exports[`question-keys-should-refer-to-booleans.metadata 1`] = `
+Object {
+  "description": "Make sure columns with keys that start with verbs like \\"is\\" or \\"has\\" contain nothing but booleans.",
+  "granularity": 3,
+  "isFuzzy": false,
+  "name": "question-keys-should-refer-to-booleans",
+  "optionsDescription": "
+    [boolean-key-prefixes]
+      description = \\"Which prefixes should indicate booleans.\\"
+      type = \\"string[]\\"
+    ",
+  "optionsSchema": Object {
+    "boolean-key-prefixes":  {
+      "_description": null,
+      "_examples": Array [],
+      "_flags": Object {
+        "presence": "required",
+        "sparse": false,
+      },
+      "_inner": Object {
+        "exclusions": Array [],
+        "inclusions": Array [
+           {
+            "_description": null,
+            "_examples": Array [],
+            "_flags": Object {},
+            "_inner": Object {},
+            "_invalids": Set {
+              "_set": Array [
+                "",
+              ],
+            },
+            "_meta": Array [],
+            "_notes": Array [],
+            "_refs": Array [],
+            "_settings": null,
+            "_tags": Array [],
+            "_tests": Array [
+              Object {
+                "arg": undefined,
+                "func": [Function],
+                "name": "alphanum",
+                "options": undefined,
+              },
+              Object {
+                "arg": 1,
+                "func": [Function],
+                "name": "min",
+                "options": undefined,
+              },
+            ],
+            "_type": "string",
+            "_unit": null,
+            "_valids": Set {
+              "_set": Array [],
+            },
+            "isJoi": true,
+          },
+        ],
+        "items": Array [
+           {
+            "_description": null,
+            "_examples": Array [],
+            "_flags": Object {},
+            "_inner": Object {},
+            "_invalids": Set {
+              "_set": Array [
+                "",
+              ],
+            },
+            "_meta": Array [],
+            "_notes": Array [],
+            "_refs": Array [],
+            "_settings": null,
+            "_tags": Array [],
+            "_tests": Array [
+              Object {
+                "arg": undefined,
+                "func": [Function],
+                "name": "alphanum",
+                "options": undefined,
+              },
+              Object {
+                "arg": 1,
+                "func": [Function],
+                "name": "min",
+                "options": undefined,
+              },
+            ],
+            "_type": "string",
+            "_unit": null,
+            "_valids": Set {
+              "_set": Array [],
+            },
+            "isJoi": true,
+          },
+        ],
+        "ordereds": Array [],
+        "requireds": Array [],
+      },
+      "_invalids": Set {
+        "_set": Array [],
+      },
+      "_meta": Array [],
+      "_notes": Array [],
+      "_refs": Array [],
+      "_settings": null,
+      "_tags": Array [],
+      "_tests": Array [
+        Object {
+          "arg": 1,
+          "func": [Function],
+          "name": "min",
+          "options": undefined,
+        },
+        Object {
+          "arg": Object {},
+          "func": [Function],
+          "name": "unique",
+          "options": undefined,
+        },
+      ],
+      "_type": "array",
+      "_unit": null,
+      "_valids": Set {
+        "_set": Array [],
+      },
+      "isJoi": true,
+    },
+  },
+  "prettyName": "Question keys should refer to booleans",
+  "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
 }
 `;

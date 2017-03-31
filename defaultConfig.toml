@@ -19,10 +19,6 @@
   allow-stringified-days = true
   stringified-days-regex = '^\\d\\d\\d\\d-[01]\\d-[0123]\\d$'
 
-[keys-that-start-with-is-or-has-should-refer-to-booleans]
-  enabled = true
-  severity = 'error'
-
 [max-key-count]
   enabled = true
   severity = 'warning'
@@ -49,3 +45,8 @@
 [no-undefined]
   enabled = true
   severity = 'warning'
+
+[question-keys-should-refer-to-booleans]
+  enabled = true
+  severity = 'error'
+  boolean-key-prefixes = ["did", "does", "was", "is", "will"]

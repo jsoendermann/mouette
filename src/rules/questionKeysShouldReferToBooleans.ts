@@ -1,4 +1,5 @@
 const serialize = require('serialize-javascript')
+import * as Joi from 'joi'
 
 import { IDb } from '../db'
 import {
@@ -21,14 +22,20 @@ export class Rule extends AbstractKeyRule {
   }
 
   public static metadata = {
-    name: 'keys-that-start-with-is-or-has-should-refer-to-booleans',
-    prettyName: 'Keys that start with is or has should refer to booleans',
-    description: 'Make sure columns with keys that start with is or has contain nothing but booleans.',
+    name: 'question-keys-should-refer-to-booleans',
+    prettyName: 'Question keys should refer to booleans',
+    description: 'Make sure columns with keys that start with verbs like "is" or "has" contain nothing but booleans.',
     rationale: "It's what people expect when they see names like isEmpty or hasChild.",
     granularity: RuleGranularity.Column,
     isFuzzy: false,
-    optionsDescription: '',
-    optionsSchema: {},
+    optionsDescription: `
+    [boolean-key-prefixes]
+      description = "Which prefixes should indicate booleans."
+      type = "string[]"
+    `,
+    optionsSchema: {
+      'boolean-key-prefixes': Joi.array().items(Joi.string().alphanum().min(1)).min(1).unique().required(),
+    },
   }
 
   protected getMetadata() { return Rule.metadata }
@@ -38,7 +45,11 @@ export class Rule extends AbstractKeyRule {
     collectionName: string,
     keyName: string,
   ): Promise<RuleFailure[]> {
-    if (!(keyName.startsWith('is') || keyName.startsWith('has'))) {
+    const keyDoesStartWithPrefix = this
+      .options['boolean-key-prefixes']
+      .find((prefix: string) => keyName.startsWith(prefix)) !== undefined
+
+    if (!keyDoesStartWithPrefix) {
       return []
     }
 
@@ -67,15 +78,19 @@ export class Rule extends AbstractKeyRule {
 
     const mongoQuery = serialize(Rule.QUERY(keyName))
 
-    let startsWith = 'UNRECOGNIZED_PREFIX'
-    if (keyName.startsWith('is')) {
-      startsWith = 'is'
-    } else if (keyName.startsWith('has')) {
-      startsWith = 'has'
+
+    const keyPrefix = this
+      .options['boolean-key-prefixes']
+      .find((prefix: string) => keyName.startsWith(prefix))
+
+    /* istanbul ignore if We wouldn't have gotten a failure if it wasn't in the list */
+    if (!keyPrefix) {
+      throw new Error(`Unknown key prefix: ${keyPrefix}`)
     }
+
     const result: any = {
       failure: `Column **${collectionName}.${keyName
-      }** starts with ${startsWith} but contains values that are not booleans, null or undefined`,
+      }** starts with "${keyPrefix}" but contains values that are not booleans, null or undefined`,
       mongoCommand: `db.getCollection('${collectionName}').find(${mongoQuery}, {${keyName}: 1})`,
     }
 

@@ -99,31 +99,6 @@ const ruleDetails: IRuleTestDetails[] = [
     ],
   },
   {
-    name: 'keys-that-start-with-is-or-has-should-refer-to-booleans',
-    dbMock: (db: IDb) => {
-      db.getCollectionNames = jest.fn();
-      (db.getCollectionNames as jest.Mock<any>).mockReturnValueOnce(['collection'])
-      db.getKeysInCollection = jest.fn();
-      (db.getKeysInCollection as jest.Mock<any>).mockReturnValueOnce([
-        'qwfp',
-        'qwfp',
-        'isQwfp',
-        'isQwfp',
-        'is',
-        'hasQwfp',
-        'hasQwfp',
-      ])
-      db.doesContainInCollection = jest.fn();
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true)
-    },
-  },
-  {
     name: 'max-key-count',
     dbMock: (db: IDb) => {
       db.getCollectionNames = jest.fn();
@@ -214,6 +189,34 @@ const ruleDetails: IRuleTestDetails[] = [
       (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
       (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
       (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false)
+    },
+  },
+  {
+    name: 'question-keys-should-refer-to-booleans',
+    configs: [
+      { 'boolean-key-prefixes': ['is', 'does'] },
+    ],
+    dbMock: (db: IDb) => {
+      db.getCollectionNames = jest.fn();
+      (db.getCollectionNames as jest.Mock<any>).mockReturnValueOnce(['collection'])
+      db.getKeysInCollection = jest.fn();
+      (db.getKeysInCollection as jest.Mock<any>).mockReturnValueOnce([
+        'qwfp',
+        'qwfp',
+        'isQwfp',
+        'isQwfp',
+        'is',
+        'hasQwfp',
+        'hasQwfp',
+      ])
+      db.doesContainInCollection = jest.fn();
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true)
     },
   },
 ]
