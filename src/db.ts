@@ -124,12 +124,14 @@ export class MongoDbWrapper implements IDb {
       return keyToType
     }
 
-    const db = await this.getDb()
-    const keys = await this.getKeysInCollection(collectionName)
-    const result = await db.collection(collectionName).mapReduce(
-      `
+    const promise = this.getDb().then(async db => {
+      const keys = await this.getKeysInCollection(collectionName)
+      const result = await db.collection(collectionName).mapReduce(
+        `
       function() {
-        for (var key in ["${keys.join('","')}"]) {
+        var keys = ["${keys.join('","')}"];
+        for (var i = 0; i < keys.length; i++) {
+          var key = keys[i];
           var value = this[key];
           var result;
           if (value instanceof ObjectId) {
@@ -149,8 +151,8 @@ export class MongoDbWrapper implements IDb {
         }
       }
       `
-      ,
-      `
+        ,
+        `
       function (key, values) {
         var result = {};
         for (var i = 0; i < values.length; i++) {
@@ -165,19 +167,22 @@ export class MongoDbWrapper implements IDb {
         return result;
       }
       `,
-      { out: { inline: 1 } },
-    )
+        { out: { inline: 1 } },
+      )
 
-    const map = new Map<string, MongoType[]>()
-    result.forEach(({ _id, value }: { _id: string, value: any }) => {
-      const types: MongoType[] = []
-      Object.keys(value).forEach(type => types.push(type as MongoType))
-      map.set(_id, types)
+      const map = new Map<string, MongoType[]>()
+      result.forEach(({ _id, value }: { _id: string, value: any }) => {
+        const types: MongoType[] = []
+        Object.keys(value).forEach(type => types.push(type as MongoType))
+        map.set(_id, types)
+      })
+
+      return map
     })
 
-    this.collectionToKeyToTypes.set(collectionName, Promise.resolve(map))
+    this.collectionToKeyToTypes.set(collectionName, promise)
 
-    return map
+    return promise
   }
 
   public async getTypesOfKeyInCollection(
