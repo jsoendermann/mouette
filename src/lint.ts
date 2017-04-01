@@ -23,8 +23,8 @@ export const lint = async (mongoUrl: string, userConfig: any = {}): Promise<IRul
   for (const ruleName of Object.keys(config)) {
     const { enabled, ...ruleOptions } = config[ruleName]
     if (enabled) {
-      const fileName = `./rules/${humps.camelize(ruleName)}`
-      const Rule = require(fileName).Rule
+      const ruleFileName = resolve(`${dirname(module.filename)}/rules/${humps.camelize(ruleName)}`)
+      const Rule = require(ruleFileName).Rule
       const rule = new Rule(ruleOptions)
       rules.push(rule)
     }
