@@ -9,6 +9,7 @@ import {
 } from '../rule'
 
 
+// TODO Rewrite this to exclusively use regexp
 export class Rule extends AbstractCollectionRule {
   private static NUMBER_CHECK_STRICT = `typeof value === 'string' && String(Number(value)) === value`
   private static NUMBER_CHECK_LOOSE = `typeof value === 'string' && !isNaN(Number(value))`
