@@ -10,3 +10,4 @@ yarn.lock
 .gitignore
 .vscode
 __tests__
+dist/scripts
