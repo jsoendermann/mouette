@@ -36,23 +36,5 @@ node dist/bin/mouette.js lint <your mongodb://...>
 
 - [ ] Comment code
 - [ ] Document rules
+- [ ] Complete test coverage
 - [ ] Add a summary switch to argument parser
-- [ ] Come up with a way to lint nested objects
-- [ ] See if any map reduce queries can be rewritten using the aggregation pipeline
-
-### Rules
-
-- [ ] columns-containing-dates-should-end-in-at
-- [ ] columns-containing-bools-should-start-with-is-or-has
-- [ ] columns-containing-object-ids-should-end-in-id
-- [ ] columns-containing-string-ids-should-end-in-id
-
-### Guesses
-
-- [ ] enforce-enums
-- [ ] no-number-enums
-- [ ] save-days-in-string-when-possible
-
-### Potentially slow
-
-- [ ] dangling-foreign-keys
