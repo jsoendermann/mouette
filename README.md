@@ -4,19 +4,22 @@ Mouette is a linter for your MongoDB.
 
 ## Try it out
 
+TODO: Make this work
+```shell
+yarn global add mouette
+mouette
+```
+
+## Rules
+
 TODO
-
-## Features
-
-TODO
-
 
 ## Develop
 
 ```shell
 git clone https://github.com/jsoendermann/mouette/
 cd mouette
-yarn install
+yarn
 yarn watch
 node dist/bin/mouette.js lint <your mongodb://...>
 ```
