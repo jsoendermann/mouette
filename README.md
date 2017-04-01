@@ -44,11 +44,8 @@ node dist/bin/mouette.js lint <your mongodb://...>
 
 - [ ] columns-containing-dates-should-end-in-at
 - [ ] columns-containing-bools-should-end-in-is-or-has
-- [ ] no-dates-saved-as-string
-- [ ] no-mixed-types
 - [ ] columns-containing-object-ids-should-end-in-id
 - [ ] columns-containing-string-ids-should-end-in-id
-- [ ] no-deep-object-nesting
 
 ### Guesses
 
