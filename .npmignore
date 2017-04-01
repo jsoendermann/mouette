@@ -9,3 +9,4 @@ tslint.json
 yarn.lock
 .gitignore
 .vscode
+__tests__
