@@ -43,7 +43,7 @@ node dist/bin/mouette.js lint <your mongodb://...>
 ### Rules
 
 - [ ] columns-containing-dates-should-end-in-at
-- [ ] columns-containing-bools-should-end-in-is-or-has
+- [ ] columns-containing-bools-should-start-with-is-or-has
 - [ ] columns-containing-object-ids-should-end-in-id
 - [ ] columns-containing-string-ids-should-end-in-id
 
