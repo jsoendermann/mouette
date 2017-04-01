@@ -8,10 +8,25 @@ export interface IMapReduceResultElement {
 
 export type MapReduceResult = IMapReduceResultElement[]
 
+// TODO Do we have to check for NumberInt/NumberDecimal types?
+export type MongoType =
+  | 'missing'
+  | 'null'
+  | 'boolean'
+  | 'number'
+  | 'string'
+  | 'array'
+  | 'object'
+  | 'ObjectId'
+  | 'Date'
+
+
 export interface IDb {
   doesContainInCollection(collectionName: string, query: any): Promise<boolean>
   getCollectionNames(): Promise<string[]>
   getKeysInCollection(collectionName: string): Promise<string[]>
+  getTypesOfKeysInCollection(collectionName: string): Promise<Map<string, MongoType[]>>
+  getTypesOfKeyInCollection(collectionName: string, keyName: string): Promise<MongoType[]>
   mapReduceOnCollection(
     collectionName: string,
     map: string,
@@ -31,6 +46,7 @@ export class MongoDbWrapper implements IDb {
   // Used for caching
   private collectionNames: Promise<string[]> | null = null
   private collectionToKeys: Map<string, Promise<string[]>> = new Map()
+  private collectionToKeyToTypes: Map<string, Promise<Map<string, MongoType[]>>> = new Map()
 
   constructor(private mongoUrl: string) { }
 
@@ -99,6 +115,81 @@ export class MongoDbWrapper implements IDb {
     return promise
   }
 
+  public async getTypesOfKeysInCollection(
+    collectionName: string,
+  ): Promise<Map<string, MongoType[]>> {
+    const keyToType = this.collectionToKeyToTypes.get(collectionName)
+
+    if (keyToType) {
+      return keyToType
+    }
+
+    const db = await this.getDb()
+    const keys = await this.getKeysInCollection(collectionName)
+    const result = await db.collection(collectionName).mapReduce(
+      `
+      function() {
+        for (var key in ["${keys.join('","')}"]) {
+          var value = this[key];
+          var result;
+          if (value instanceof ObjectId) {
+            result = {'ObjectId': true};
+          } else if (value instanceof Date) {
+            result = {'Date': true};
+          } else if (value === null) {
+            result = {'null': true};
+          } else if (value === undefined) {
+            result = {'missing': true};
+          } else {
+            var type = typeof value;
+            result = {};
+            result[type] = true;
+          }
+          emit(key, result)
+        }
+      }
+      `
+      ,
+      `
+      function (key, values) {
+        var result = {};
+        for (var i = 0; i < values.length; i++) {
+          var value = values[i];
+          for (var type in value) {
+            if (value.hasOwnProperty(type) && value[type]) {
+              print(type)
+              result[type] = true;
+            }
+          }
+        }
+        return result;
+      }
+      `,
+      { out: { inline: 1 } },
+    )
+
+    const map = new Map<string, MongoType[]>()
+    result.forEach(({ _id, value }: { _id: string, value: any }) => {
+      const types: MongoType[] = []
+      Object.keys(value).forEach(type => types.push(type as MongoType))
+      map.set(_id, types)
+    })
+
+    this.collectionToKeyToTypes.set(collectionName, Promise.resolve(map))
+
+    return map
+  }
+
+  public async getTypesOfKeyInCollection(
+    collectionName: string,
+    keyName: string,
+  ): Promise<MongoType[]> {
+    const types = this
+      .getTypesOfKeysInCollection(collectionName)
+      .then(keysToType => keysToType.get(keyName)!)
+    return types
+  }
+
   public async mapReduceOnCollection(
     collectionName: string,
     map: string,
@@ -130,29 +221,47 @@ export class MongoDbWrapper implements IDb {
 
 export class TestDbWrapper implements IDb {
   public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
-    return true
+    throw new Error('doesContainInCollection should be mocked')
   }
+
   public async getCollectionNames(): Promise<string[]> {
-    return []
+    throw new Error('getCollectionNames should be mocked')
   }
+
   public async getKeysInCollection(collectionName: string): Promise<string[]> {
-    return []
+    throw new Error('getKeysInCollection should be mocked')
   }
+
+  public async getTypesOfKeysInCollection(
+    collectionName: string,
+  ): Promise<Map<string, MongoType[]>> {
+    throw new Error('getTypesOfKeysInCollection should be mocked')
+  }
+
+  public async getTypesOfKeyInCollection(
+    collectionName: string,
+    keyName: string,
+  ): Promise<MongoType[]> {
+    throw new Error('getTypesOfKeyInCollection should be mocked')
+  }
+
   public async mapReduceOnCollection(
     collectionName: string,
     map: string,
     reduce: string,
   ): Promise<MapReduceResult> {
-    return []
+    throw new Error('mapReduceOnCollection should be mocked')
   }
-    public async mapReduceOnCollectionDoesProduceResults(
+
+  public async mapReduceOnCollectionDoesProduceResults(
     collectionName: string,
     map: string,
     reduce: string,
   ): Promise<boolean> {
-    return true
+    throw new Error('mapReduceOnCollectionDoesProduceResults should be mocked')
   }
+
   public async close(): Promise<void> {
-    return
+    throw new Error('close should be mocked')
   }
 }

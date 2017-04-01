@@ -2046,21 +2046,6 @@ Array [
       },
     },
   },
-  RuleFailure {
-    "options": Object {
-      "collectionName": "collection",
-      "keyName": "is",
-    },
-    "rule": Rule {
-      "options": Object {
-        "boolean-key-prefixes": Array [
-          "is",
-          "does",
-        ],
-        "severity": "warning",
-      },
-    },
-  },
 ]
 `;
 
@@ -2073,29 +2058,6 @@ Array [
       "keyName": "isQwfp",
     },
     "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"isQwfp\\":{\\"$type\\":8}},{\\"isQwfp\\":{\\"$type\\":10}},{\\"isQwfp\\":{\\"$exists\\":false}}]}, {isQwfp: 1})",
-    "options": Object {
-      "boolean-key-prefixes": Array [
-        "is",
-        "does",
-      ],
-      "severity": "warning",
-    },
-    "ruleMetadata": Object {
-      "description": "Make sure columns with keys that start with verbs like \\"is\\" or \\"has\\" contain nothing but booleans.",
-      "granularity": "Column",
-      "isFuzzy": false,
-      "name": "question-keys-should-refer-to-booleans",
-      "prettyName": "Question keys should refer to booleans",
-      "rationale": "It's what people expect when they see names like isEmpty or hasChild.",
-    },
-  },
-  Object {
-    "failure": "Column **collection.is** starts with \\"is\\" but contains values that are not booleans, null or undefined",
-    "location": Object {
-      "collectionName": "collection",
-      "keyName": "is",
-    },
-    "mongoCommand": "db.getCollection('collection').find({\\"$nor\\":[{\\"is\\":{\\"$type\\":8}},{\\"is\\":{\\"$type\\":10}},{\\"is\\":{\\"$exists\\":false}}]}, {is: 1})",
     "options": Object {
       "boolean-key-prefixes": Array [
         "is",

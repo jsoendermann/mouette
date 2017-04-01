@@ -1,7 +1,7 @@
 const serialize = require('serialize-javascript')
 import * as Joi from 'joi'
 
-import { IDb } from '../db'
+import { IDb, MongoType } from '../db'
 import {
   AbstractKeyRule,
   IRuleFailureSpecificJson,
@@ -34,7 +34,9 @@ export class Rule extends AbstractKeyRule {
       type = "string[]"
     `,
     optionsSchema: {
-      'boolean-key-prefixes': Joi.array().items(Joi.string().alphanum().min(1)).min(1).unique().required(),
+      'boolean-key-prefixes': Joi.array().items(
+        Joi.string().alphanum().min(1),
+      ).min(1).unique().required(),
     },
   }
 
@@ -53,14 +55,9 @@ export class Rule extends AbstractKeyRule {
       return []
     }
 
-    const hasNonBoolValues = await db.doesContainInCollection(
-      collectionName,
-      Rule.QUERY(
-        keyName,
-      ),
-    )
+    const types = await db.getTypesOfKeyInCollection(collectionName, keyName)
 
-    if (hasNonBoolValues) {
+    if (types.find((t: MongoType) => !(t === 'missing' || t === 'null' || t === 'boolean'))) {
       return [new RuleFailure(
         this,
         {
@@ -69,6 +66,7 @@ export class Rule extends AbstractKeyRule {
         },
       )]
     }
+
     return []
   }
 

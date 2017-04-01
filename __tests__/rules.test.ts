@@ -209,14 +209,14 @@ const ruleDetails: IRuleTestDetails[] = [
         'hasQwfp',
         'hasQwfp',
       ])
-      db.doesContainInCollection = jest.fn();
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false);
-      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true)
+      db.getTypesOfKeyInCollection = jest.fn();
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['null']);
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['string']);
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['boolean']);
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['number', 'object']);
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['missing', 'null']);
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['array', 'boolean']);
+      (db.getTypesOfKeyInCollection as jest.Mock<any>).mockReturnValueOnce(['boolean'])
     },
   },
 ]
