@@ -26,7 +26,7 @@ const formatFailure = (failure: IRuleFailureJson): string => {
     default: throw new Error('Switch must be exhaustive')
   }
 
-  let output = `${failure.failure.replace(/\*\*(.*?)\*\*/g, color('$1'))}`
+  let output = `${failure.failure.replace(/\*\*(.*?)\*\*/g, color('$1'))} ${colors.grey('(' + failure.hash + ')')}`
   if (failure.suggestion) {
     output += colors.gray(`\nYou could... ${failure.suggestion.replace(/\*(.*?)\*/g, colors.white('$1'))}`)
   }

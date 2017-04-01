@@ -1,6 +1,7 @@
 import * as Joi from 'joi'
 import { IDb } from './db'
 import { flatten } from 'lodash'
+import * as crypto from 'crypto'
 
 export enum RuleSeverity {
   Warning,
@@ -49,6 +50,7 @@ export interface IRuleFailureJson extends IRuleFailureSpecificJson {
   ruleMetadata: IRuleMetadataJson
   options: IRuleOptions
   location: IRuleFailureLocation
+  hash: string
 }
 
 export interface IRuleOptions {
@@ -109,6 +111,9 @@ export abstract class AbstractRule {
       options: this.options,
       location,
       ...failureSpecificJson,
+      hash: crypto.createHash('sha256').update(
+        `${ruleMetadata.name}.${location.collectionName}.${location.keyName}`,
+      ).digest('hex').slice(0, 8),
     }
     if (result.mongoCommand) {
       // This is pretty hacky
