@@ -29,6 +29,10 @@
   severity = 'warning'
   names-considered-bad = ["value", "data", "details", "stuff", "dbValue", "info"]
 
+[no-dates-saved-as-string]
+  enabled = true
+  severity = 'error'
+
 [no-leading-underscores-in-key-names]
   enabled = true
   severity = 'warning'
