@@ -33,6 +33,10 @@
   enabled = true
   severity = 'warning'
 
+[no-mixed-types]
+  enabled = true
+  severity = 'error'
+
 [no-null]
   enabled = false
   severity = 'warning'
