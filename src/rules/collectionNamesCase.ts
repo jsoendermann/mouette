@@ -13,7 +13,7 @@ import {
 export class Rule extends AbstractCollectionRule {
   public static metadata = {
     name: 'collection-names-case',
-    prettyName: 'Collection names case',
+    prettyName: 'Collection names camel/snake case',
     description: 'Make sure all collection names in the database have the right case.',
     rationale: 'Reads more fluently.',
     granularity: RuleGranularity.CollectionName,

@@ -13,8 +13,8 @@ import { isSingular, isPlural, singularize, pluralize } from '../vendor/lingo'
 export class Rule extends AbstractCollectionRule {
   public static metadata = {
     name: 'collection-names-number',
-    prettyName: 'Collection names number',
-    description: 'Make sure all collections in the database have names that are pluralized.',
+    prettyName: 'Collection names singular/plural',
+    description: 'Make sure all collections in the database have names that are either singular or plural.',
     rationale: 'Reads more fluently.',
     granularity: RuleGranularity.CollectionName,
     isFuzzy: false,

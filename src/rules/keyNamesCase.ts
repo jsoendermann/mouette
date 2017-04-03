@@ -13,7 +13,7 @@ import {
 export class Rule extends AbstractKeyRule {
   public static metadata = {
     name: 'key-names-case',
-    prettyName: 'Key names case',
+    prettyName: 'Key names singular/plural',
     description: 'Make sure all keys in the database have the right case.',
     rationale: 'Reads more fluently.',
     granularity: RuleGranularity.KeyName,
