@@ -31,9 +31,9 @@ lintParser.addArgument(
   ['-s', '--output-style'],
   {
     required: false,
-    help: 'The style of the output that is written to stdout. Defaults to `terminal`.',
-    choices: ['json', 'terminal'],
-    defaultValue: 'terminal',
+    help: 'The style of the output that is written to stdout. Defaults to `full`.',
+    choices: ['json', 'full', 'summary'],
+    defaultValue: 'full',
   },
 )
 lintParser.addArgument(['MONGO_URI'], { help: 'The URI to your Mongo database.' })
@@ -43,9 +43,9 @@ diffParser.addArgument(
   ['-s', '--output-style'],
   {
     required: false,
-    help: 'The style of the output that is written to stdout. Defaults to `terminal`.',
-    choices: ['json', 'terminal'],
-    defaultValue: 'terminal',
+    help: 'The style of the output that is written to stdout. Defaults to `full`.',
+    choices: ['json', 'full', 'summary'],
+    defaultValue: 'full',
   },
 )
 diffParser.addArgument(['LINT_RESULTS_OLD'], {

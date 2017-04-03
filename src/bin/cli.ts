@@ -6,6 +6,7 @@ import { parse as parseToml } from 'toml'
 import args from './argsParser'
 import { lint, diff, IRuleFailureJson } from '..'
 import commandLineFormatter from './commandLineFormatter'
+import summaryCommandLineFormatter from './summaryCommandLineFormatter'
 
 
 const loadSerializedData = (filePath: string): any | null => {
@@ -45,8 +46,11 @@ const logFailures = (failures: IRuleFailureJson[], style: string) => {
     case 'json':
       console.log(JSON.stringify(failures))
       return
-    case 'terminal':
+    case 'full':
       console.log(commandLineFormatter(failures))
+      return
+    case 'summary':
+      console.log(summaryCommandLineFormatter(failures))
       return
     default: throw new Error(`Unrecognized output style: ${args.output_style}`)
   }

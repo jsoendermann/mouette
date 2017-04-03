@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "argparse": "^1.0.9",
+    "cli-table2": "^0.2.0",
     "colors": "^1.1.2",
     "humps": "^2.0.0",
     "inversify": "^3.3.0",
