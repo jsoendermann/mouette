@@ -51,7 +51,7 @@
   strict-number-check = true
 
 [no-undefined]
-  enabled = true
+  enabled = false
   severity = 'warning'
 
 [question-keys-should-refer-to-booleans]
