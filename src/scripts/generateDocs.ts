@@ -13,7 +13,7 @@ Object.keys(defaultConfig).forEach(ruleName => {
   const ruleFileName = resolve(`${dirname(module.filename)}/../rules/${humps.camelize(ruleName)}`)
   const { Rule } = require(ruleFileName)
   const metadata = Rule.metadata
-  console.log(`- **${metadata.prettyName}**: ${metadata.description}`)
+  console.log(`- [${defaultConfig[ruleName].enabled ? 'X' : ' '}] **${metadata.prettyName}**: ${metadata.description}`)
   const options = parse(metadata.optionsDescription)
   Object.keys(options).forEach(optionDescription => {
     console.log(`  * *${optionDescription}*: ${options[optionDescription].description}`)
