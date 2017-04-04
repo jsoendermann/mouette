@@ -18,7 +18,7 @@ To see all functions, run `mouette --help`
   * *case*: The case your collection names should be in.
 - [X] **Collection names singular/plural**: Make sure all collections in the database have names that are either singular or plural.
   * *number*: The grammatical number that collection names should be checked for.
-- [X] **Key names case**: Make sure all keys in the database have the right case.
+- [X] **Key names singular/plural**: Make sure all keys in the database have the right case.
   * *case*: The case your keys should be in.
 - [X] **Keys that end in At should refer to dates**: Make sure columns with keys that end in ...At contain nothing but dates.
   * *allow-stringified-days*: Whether to allow dates that are saved as strings.
