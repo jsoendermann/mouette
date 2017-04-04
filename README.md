@@ -2,7 +2,7 @@
 
 Mouette is a linter for your MongoDB.
 
-## Try it out
+## Try it
 
 ```shell
 yarn global add mouette
