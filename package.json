@@ -10,6 +10,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepush": "npm run lint",
+    "prepublish": "npm run build",
     "build": "tsc",
     "watch": "tsc --watch",
     "lint": "tslint 'src/**/*.ts'",
