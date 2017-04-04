@@ -39,10 +39,11 @@ To learn more about what mouette can do, run `mouette --help`
 
 ## Features
 
-- Completely schemaless, mouette needs no information about your db to run.
-- Suggests fixes when possible
+- Completely schemaless, mouette needs no information about your db to run
+- Suggests fixes where possible
 - Prints queries ready to be pasted into the MongoDB shell that print all the documents that need fixing
 - Includes a diffing function that can be used to find all rule violations that were added since your last lint
+- Can be run as a binary or included as a library
 
 ## Develop
 
@@ -56,8 +57,8 @@ node dist/bin/mouette.js lint <your mongodb://...>
 
 ## Add a new rule
 
-1. Copy `src/rules/_RULE_TEMPLATE.ts` to a new file in the `src/rules/` folder.
+1. Copy `src/rules/_RULE_TEMPLATE.ts` to a new file in `src/rules/`.
 2. Follow the instructions in that file to implement your rule.
 3. Add default options for your new rule to `defaultConfig.toml`.
-4. Write tests and add them to the `__tests__/rules/` folder.
+4. Write tests and add them to `__tests__/rules.test.ts`.
 5. Send me a pull request and share your new rule with the world.
