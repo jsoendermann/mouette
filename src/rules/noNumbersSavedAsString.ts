@@ -38,7 +38,7 @@ export class Rule extends AbstractCollectionRule {
     isFuzzy: false,
     optionsDescription: `
       [strict-number-check]
-        description = "When this is set to true, strings like '015', '0xF' or '0b1111 are ignored."
+        description = "When this is set to true, strings like '015', '0xF' or '0b1111 are not considered to be numbers."
         type = "boolean"
     `,
     optionsSchema: {

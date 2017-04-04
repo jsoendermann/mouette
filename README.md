@@ -32,7 +32,7 @@ To see all functions, run `mouette --help`
 - [X] **No mixed types**: Makes sure columns contain values of no more than one type.
 - [ ] **No null**: Make sure columns do not contain null values.
 - [X] **No numbers saved as string**: Makes sure numbers don't get saved as strings.
-  * *strict-number-check*: When this is set to true, strings like '015', '0xF' or '0b1111 are ignored.
+  * *strict-number-check*: When this is set to true, strings like '015', '0xF' or '0b1111 are not considered to be numbers.
 - [ ] **No undefined**: Make sure columns do not contain undefined values.
 - [X] **Question keys should refer to booleans**: Make sure columns with keys that start with verbs like "is" or "has" contain nothing but booleans.
   * *boolean-key-prefixes*: Which prefixes should indicate booleans.
