@@ -10,7 +10,7 @@ mouette lint -s summary mongodb://...
 mouette lint mongodb://...
 ```
 
-To see all functions, run `mouette --help`
+To learn more about what mouette can do, run `mouette --help`
 
 ## Rules
 
