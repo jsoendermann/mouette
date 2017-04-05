@@ -1,31 +1,15 @@
 import * as Joi from 'joi'
 
-import { IDb, MapReduceResult } from '../db'
+import { IDb } from '../db'
 import {
-  AbstractCollectionRule,
+  AbstractKeyRule,
   IRuleFailureSpecificJson,
   RuleFailure,
   RuleGranularity,
 } from '../rule'
 
 
-// TODO Rewrite this to exclusively use regexp
-export class Rule extends AbstractCollectionRule {
-  private static NUMBER_CHECK_STRICT = `typeof value === 'string' && String(Number(value)) === value`
-  private static NUMBER_CHECK_LOOSE = `typeof value === 'string' && !isNaN(Number(value))`
-  private static MAP = (numberCheck: string) => `
-    function () {
-      for (var key in this) {
-        var value = this[key];
-        if (${numberCheck})
-        {
-            emit(key, value);
-        }
-      }
-    }
-  `
-  private static REDUCE = 'function () {}'
-
+export class Rule extends AbstractKeyRule {
   private static REGEXP_STRICT = '^-?[1-9]\\d*\\.?(\\d*[1-9])?$'
   private static REGEXP_LOOSE = '^(0x|0b|-)?\\d+\\.?\\d*$'
 
@@ -48,29 +32,27 @@ export class Rule extends AbstractCollectionRule {
 
   protected getMetadata() { return Rule.metadata }
 
-  protected async getFailuresForCollection(
+  protected async getFailuresForCollectionAndKey(
     db: IDb,
     collectionName: string,
+    keyName: string,
   ): Promise<RuleFailure[]> {
-    let mapReduceResult: MapReduceResult
-
+    let regexp = Rule.REGEXP_LOOSE
     if (this.options['strict-number-check']) {
-      mapReduceResult = await db.mapReduceOnCollection(
-        collectionName,
-        Rule.MAP(Rule.NUMBER_CHECK_STRICT),
-        Rule.REDUCE,
-      )
-    } else {
-      mapReduceResult = await db.mapReduceOnCollection(
-        collectionName,
-        Rule.MAP(Rule.NUMBER_CHECK_LOOSE),
-        Rule.REDUCE,
-      )
+      regexp = Rule.REGEXP_STRICT
     }
 
-    return mapReduceResult.map(res => (
-      new RuleFailure(this, { collectionName, keyName: res._id })
-    ))
+    const doesContainNumberSavedAsString = await db.doesContainInCollection(
+      collectionName,
+      {
+        [keyName]: { $type: 2, $regex: new RegExp(regexp) },
+      },
+    )
+
+    if (doesContainNumberSavedAsString) {
+      return [new RuleFailure(this, { collectionName, keyName })]
+    }
+    return []
   }
 
   public getFailureSpecificJson(failure: RuleFailure): IRuleFailureSpecificJson {

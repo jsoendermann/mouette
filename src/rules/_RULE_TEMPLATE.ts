@@ -23,10 +23,7 @@ export class Rule extends AbstractCollectionRule {
     description: 'Makes sure collections collect.',
     // A justification for why it exists.
     rationale: 'Because we say so.',
-    // What your rule operates on. Usually, this will correspond to the
-    // superclass you are inheriting from but if you are using map reduce
-    // to loop over keys, you might want to inherit from AbstractCollectionRule
-    // and still set this to RuleGranularity.KeyName or RuleGranularity.Column.
+    // What your rule operates on.
     granularity: RuleGranularity.CollectionName,
     // Whether any guessing is involved in your rule. This applies
     // only to the rule itself, not to the suggestions it makes.

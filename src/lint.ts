@@ -4,12 +4,12 @@ import { merge, flatten } from 'lodash'
 import { dirname, resolve } from 'path'
 import { parse } from 'toml'
 
-import { MongoDbWrapper } from './db'
+import { IDb, MongoDbWrapper } from './db'
 import { IRuleFailureJson, AbstractRule } from './rule'
 
 
 export const lint = async (mongoUrl: string, userConfig: any = {}): Promise<IRuleFailureJson[]> => {
-  const db = new MongoDbWrapper(mongoUrl)
+  const db: IDb = new MongoDbWrapper(mongoUrl)
 
   const moduleFolder = dirname(module.filename)
   const defaultConfigFileName = resolve(moduleFolder, '../defaultConfig.toml')

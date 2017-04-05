@@ -1,14 +1,6 @@
 import { Db, MongoClient } from 'mongodb'
 
 
-export interface IMapReduceResultElement {
-  _id: string
-  value: any
-}
-
-export type MapReduceResult = IMapReduceResultElement[]
-
-// TODO Do we have to check for NumberInt/NumberDecimal types?
 export type MongoType =
   | 'missing'
   | 'null'
@@ -20,23 +12,59 @@ export type MongoType =
   | 'ObjectId'
   | 'Date'
 
-
 export interface IDb {
-  doesContainInCollection(collectionName: string, query: any): Promise<boolean>
+  /**
+   * Returns the names of all collections in the db. Calling this method is very cheap since it caches the result.
+   *
+   * @returns {Promise<string[]>} A promise that resolves to an array containing the collection names.
+   *
+   * @memberOf IDb
+   */
   getCollectionNames(): Promise<string[]>
+
+  /**
+   * Returns the union of the keys of all documents in the collection. Calling this method is very cheap
+   * since it caches the result.
+   *
+   * @param {string} collectionName The collection for which you want to get key names.
+   * @returns {Promise<string[]>} A promise that resolves to an array containing the key names.
+   *
+   * @memberOf IDb
+   */
   getKeysInCollection(collectionName: string): Promise<string[]>
-  getTypesOfKeysInCollection(collectionName: string): Promise<Map<string, MongoType[]>>
+
+  /**
+   * Returns the types of the values found in the given column. Calling this method is very cheap since it
+   * caches the result.
+   *
+   * @param {string} collectionName The collection that contains the column.
+   * @param {string} keyName The name of the column.
+   * @returns {Promise<MongoType[]>} A promise that resolves to an array containing all the MongoTypes that
+   * are found in the column.
+   *
+   * @memberOf IDb
+   */
   getTypesOfKeyInCollection(collectionName: string, keyName: string): Promise<MongoType[]>
-  mapReduceOnCollection(
-    collectionName: string,
-    map: string,
-    reduce: string,
-  ): Promise<MapReduceResult>
-  mapReduceOnCollectionDoesProduceResults(
-    collectionName: string,
-    map: string,
-    reduce: string,
-  ): Promise<boolean>
+
+  /**
+   * Whether any documents satisfying the given query exist in the collection.
+   *
+   * @param {string} collectionName The name of the collection.
+   * @param {*} query A MongoDB query
+   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the collection doe
+   * contain at least one document that satisfies the query.
+   *
+   * @memberOf IDb
+   */
+  doesContainInCollection(collectionName: string, query: any): Promise<boolean>
+
+  /**
+   * Closes the connection to the db.
+   *
+   * @returns {Promise<void>} A promise that gets resolved when the connection has been closed.
+   *
+   * @memberOf IDb
+   */
   close(): Promise<void>
 }
 
@@ -71,12 +99,6 @@ export class MongoDbWrapper implements IDb {
     })
 
     return this.connectionPromise
-  }
-
-  public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
-    const db = await this.getDb()
-    const recordCount = await db.collection(collectionName).count(query)
-    return recordCount > 0
   }
 
   public async getCollectionNames(): Promise<string[]> {
@@ -115,7 +137,7 @@ export class MongoDbWrapper implements IDb {
     return promise
   }
 
-  public async getTypesOfKeysInCollection(
+  private async getTypesOfKeysInCollection(
     collectionName: string,
   ): Promise<Map<string, MongoType[]>> {
     const keyToType = this.collectionToKeyToTypes.get(collectionName)
@@ -195,26 +217,10 @@ export class MongoDbWrapper implements IDb {
     return types
   }
 
-  public async mapReduceOnCollection(
-    collectionName: string,
-    map: string,
-    reduce: string,
-  ): Promise<MapReduceResult> {
+  public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
     const db = await this.getDb()
-    return db.collection(collectionName).mapReduce(
-      map,
-      reduce,
-      { out: { inline: 1 } },
-    )
-  }
-
-  public async mapReduceOnCollectionDoesProduceResults(
-    collectionName: string,
-    map: string,
-    reduce: string,
-  ): Promise<boolean> {
-    const mapReduceResult = await this.mapReduceOnCollection(collectionName, map, reduce)
-    return mapReduceResult.length > 0
+    const record = await db.collection(collectionName).findOne(query)
+    return !!record
   }
 
   public async close() {
@@ -225,22 +231,12 @@ export class MongoDbWrapper implements IDb {
 
 
 export class TestDbWrapper implements IDb {
-  public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
-    throw new Error('doesContainInCollection should be mocked')
-  }
-
   public async getCollectionNames(): Promise<string[]> {
     throw new Error('getCollectionNames should be mocked')
   }
 
   public async getKeysInCollection(collectionName: string): Promise<string[]> {
     throw new Error('getKeysInCollection should be mocked')
-  }
-
-  public async getTypesOfKeysInCollection(
-    collectionName: string,
-  ): Promise<Map<string, MongoType[]>> {
-    throw new Error('getTypesOfKeysInCollection should be mocked')
   }
 
   public async getTypesOfKeyInCollection(
@@ -250,20 +246,8 @@ export class TestDbWrapper implements IDb {
     throw new Error('getTypesOfKeyInCollection should be mocked')
   }
 
-  public async mapReduceOnCollection(
-    collectionName: string,
-    map: string,
-    reduce: string,
-  ): Promise<MapReduceResult> {
-    throw new Error('mapReduceOnCollection should be mocked')
-  }
-
-  public async mapReduceOnCollectionDoesProduceResults(
-    collectionName: string,
-    map: string,
-    reduce: string,
-  ): Promise<boolean> {
-    throw new Error('mapReduceOnCollectionDoesProduceResults should be mocked')
+  public async doesContainInCollection(collectionName: string, query: any): Promise<boolean> {
+    throw new Error('doesContainInCollection should be mocked')
   }
 
   public async close(): Promise<void> {
