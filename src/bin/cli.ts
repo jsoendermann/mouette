@@ -5,7 +5,7 @@ import { parse as parseToml } from 'toml'
 
 import args from './argsParser'
 import { lint, diff, IRuleFailureJson } from '..'
-import commandLineFormatter from './commandLineFormatter'
+import fullCommandLineFormatter from './fullCommandLineFormatter'
 import summaryCommandLineFormatter from './summaryCommandLineFormatter'
 
 
@@ -47,7 +47,7 @@ const logFailures = (failures: IRuleFailureJson[], style: string) => {
       console.log(JSON.stringify(failures))
       return
     case 'full':
-      console.log(commandLineFormatter(failures))
+      console.log(fullCommandLineFormatter(failures))
       return
     case 'summary':
       console.log(summaryCommandLineFormatter(failures))
