@@ -170,9 +170,9 @@ const ruleDetails: IRuleTestDetails[] = [
       (db.getKeysInCollection as jest.Mock<any>).mockReturnValueOnce([
         'key1', 'key2',
       ])
-      db.mapReduceOnCollection = jest.fn();
-      (db.mapReduceOnCollection as jest.Mock<any>).mockReturnValueOnce([{ _id: 'key1' }]);
-      (db.mapReduceOnCollection as jest.Mock<any>).mockReturnValueOnce([])
+      db.doesContainInCollection = jest.fn();
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(true);
+      (db.doesContainInCollection as jest.Mock<any>).mockReturnValueOnce(false)
     },
   },
   {
