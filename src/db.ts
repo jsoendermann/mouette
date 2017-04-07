@@ -23,8 +23,8 @@ export interface IDb {
   getCollectionNames(): Promise<string[]>
 
   /**
-   * Returns the union of the keys of all documents in the collection. Calling this method is very cheap
-   * since it caches the result.
+   * Returns the union of the keys of all documents in the collection. Calling
+   * this method is very cheap since it caches the result.
    *
    * @param {string} collectionName The collection for which you want to get key names.
    * @returns {Promise<string[]>} A promise that resolves to an array containing the key names.
@@ -34,8 +34,8 @@ export interface IDb {
   getKeysInCollection(collectionName: string): Promise<string[]>
 
   /**
-   * Returns the types of the values found in the given column. Calling this method is very cheap since it
-   * caches the result.
+   * Returns the types of the values found in the given column. Calling this
+   * method is very cheap since it caches the result.
    *
    * @param {string} collectionName The collection that contains the column.
    * @param {string} keyName The name of the column.
@@ -51,8 +51,8 @@ export interface IDb {
    *
    * @param {string} collectionName The name of the collection.
    * @param {*} query A MongoDB query
-   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the collection doe
-   * contain at least one document that satisfies the query.
+   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the collection contains at
+   *  least one document that satisfies the query.
    *
    * @memberOf IDb
    */
