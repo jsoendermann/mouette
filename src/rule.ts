@@ -111,9 +111,9 @@ export abstract class AbstractRule {
       options: this.options,
       location,
       ...failureSpecificJson,
-      hash: crypto.createHash('sha256').update(
+      hash: 'M' + crypto.createHash('sha256').update(
         `${ruleMetadata.name}.${location.collectionName}.${location.keyName}`,
-      ).digest('hex').slice(0, 8),
+      ).digest('hex').slice(0, 4),
     }
     if (result.mongoCommand) {
       // This is pretty hacky
