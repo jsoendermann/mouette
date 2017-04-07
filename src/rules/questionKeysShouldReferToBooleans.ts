@@ -1,7 +1,8 @@
 const serialize = require('serialize-javascript')
 import * as Joi from 'joi'
 
-import { IDb, MongoType } from '../db'
+import { MongoType } from '../types'
+import { IDb } from '../db'
 import {
   AbstractKeyRule,
   IRuleFailureSpecificJson,
