@@ -1,16 +1,6 @@
 import { Db, MongoClient } from 'mongodb'
+import { MongoType } from './types'
 
-
-export type MongoType =
-  | 'missing'
-  | 'null'
-  | 'boolean'
-  | 'number'
-  | 'string'
-  | 'array'
-  | 'object'
-  | 'ObjectId'
-  | 'Date'
 
 export interface IDb {
   /**
