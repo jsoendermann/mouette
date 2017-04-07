@@ -45,7 +45,7 @@ export class Rule extends AbstractKeyRule {
     const keyName = failure.getKeyName() as string
 
     return {
-      failure: `Collection ${collectionName} contains a key named **${
+      failure: `Collection ${collectionName} contains a column named **${
         keyName}** which is not a good name.`,
     }
   }
