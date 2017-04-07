@@ -97,7 +97,7 @@ exports[`collection-names-case.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Collection name **_123** is not in camel case.",
-    "hash": "b8169c08",
+    "hash": "Mb816",
     "location": Object {
       "collectionName": "_123",
     },
@@ -117,7 +117,7 @@ Array [
   },
   Object {
     "failure": "Collection name **flower_bed** is not in camel case.",
-    "hash": "f2134408",
+    "hash": "Mf213",
     "location": Object {
       "collectionName": "flower_bed",
     },
@@ -137,7 +137,7 @@ Array [
   },
   Object {
     "failure": "Collection name **my_flowerBed** is not in camel case.",
-    "hash": "c26c1fcb",
+    "hash": "Mc26c",
     "location": Object {
       "collectionName": "my_flowerBed",
     },
@@ -157,7 +157,7 @@ Array [
   },
   Object {
     "failure": "Collection name **** is not in snake case.",
-    "hash": "64da5f34",
+    "hash": "M64da",
     "location": Object {},
     "options": Object {
       "case": "snake",
@@ -175,7 +175,7 @@ Array [
   },
   Object {
     "failure": "Collection name **_123** is not in snake case.",
-    "hash": "b8169c08",
+    "hash": "Mb816",
     "location": Object {
       "collectionName": "_123",
     },
@@ -195,7 +195,7 @@ Array [
   },
   Object {
     "failure": "Collection name **123** is not in snake case.",
-    "hash": "c7fbc481",
+    "hash": "Mc7fb",
     "location": Object {
       "collectionName": "123",
     },
@@ -215,7 +215,7 @@ Array [
   },
   Object {
     "failure": "Collection name **flowerBed** is not in snake case.",
-    "hash": "3274645e",
+    "hash": "M3274",
     "location": Object {
       "collectionName": "flowerBed",
     },
@@ -235,7 +235,7 @@ Array [
   },
   Object {
     "failure": "Collection name **my_flowerBed** is not in snake case.",
-    "hash": "c26c1fcb",
+    "hash": "Mc26c",
     "location": Object {
       "collectionName": "my_flowerBed",
     },
@@ -420,7 +420,7 @@ exports[`collection-names-number.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Collection name **cows** is not singular.",
-    "hash": "5aadb81e",
+    "hash": "M5aad",
     "location": Object {
       "collectionName": "cows",
     },
@@ -440,7 +440,7 @@ Array [
   },
   Object {
     "failure": "Collection name **flower_beds** is not singular.",
-    "hash": "db1ef0dd",
+    "hash": "Mdb1e",
     "location": Object {
       "collectionName": "flower_beds",
     },
@@ -460,7 +460,7 @@ Array [
   },
   Object {
     "failure": "Collection name **flowerBeds** is not singular.",
-    "hash": "eeba8c3d",
+    "hash": "Meeba",
     "location": Object {
       "collectionName": "flowerBeds",
     },
@@ -480,7 +480,7 @@ Array [
   },
   Object {
     "failure": "Collection name **data** is not singular.",
-    "hash": "0507e404",
+    "hash": "M0507",
     "location": Object {
       "collectionName": "data",
     },
@@ -500,7 +500,7 @@ Array [
   },
   Object {
     "failure": "Collection name **** is not pluralized.",
-    "hash": "b156e3e7",
+    "hash": "Mb156",
     "location": Object {},
     "options": Object {
       "number": "plural",
@@ -518,7 +518,7 @@ Array [
   },
   Object {
     "failure": "Collection name **123** is not pluralized.",
-    "hash": "944a45d4",
+    "hash": "M944a",
     "location": Object {
       "collectionName": "123",
     },
@@ -538,7 +538,7 @@ Array [
   },
   Object {
     "failure": "Collection name **cow** is not pluralized.",
-    "hash": "3c58b5fe",
+    "hash": "M3c58",
     "location": Object {
       "collectionName": "cow",
     },
@@ -558,7 +558,7 @@ Array [
   },
   Object {
     "failure": "Collection name **flower_bed** is not pluralized.",
-    "hash": "533aa05d",
+    "hash": "M533a",
     "location": Object {
       "collectionName": "flower_bed",
     },
@@ -578,7 +578,7 @@ Array [
   },
   Object {
     "failure": "Collection name **flowerBed** is not pluralized.",
-    "hash": "2c4d4d49",
+    "hash": "M2c4d",
     "location": Object {
       "collectionName": "flowerBed",
     },
@@ -598,7 +598,7 @@ Array [
   },
   Object {
     "failure": "Collection name **water** is not pluralized.",
-    "hash": "99a5dc71",
+    "hash": "M99a5",
     "location": Object {
       "collectionName": "water",
     },
@@ -781,7 +781,7 @@ exports[`key-names-case.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Key name **collection._123** is not in camel case.",
-    "hash": "fc2c984f",
+    "hash": "Mfc2c",
     "location": Object {
       "collectionName": "collection",
       "keyName": "_123",
@@ -802,7 +802,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.flower_bed** is not in camel case.",
-    "hash": "f928aed8",
+    "hash": "Mf928",
     "location": Object {
       "collectionName": "collection",
       "keyName": "flower_bed",
@@ -823,7 +823,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.my_flowerBed** is not in camel case.",
-    "hash": "2ab09e18",
+    "hash": "M2ab0",
     "location": Object {
       "collectionName": "collection",
       "keyName": "my_flowerBed",
@@ -844,7 +844,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.** is not in snake case.",
-    "hash": "ff04ca8c",
+    "hash": "Mff04",
     "location": Object {
       "collectionName": "collection",
     },
@@ -864,7 +864,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection._123** is not in snake case.",
-    "hash": "fc2c984f",
+    "hash": "Mfc2c",
     "location": Object {
       "collectionName": "collection",
       "keyName": "_123",
@@ -885,7 +885,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.123** is not in snake case.",
-    "hash": "937104af",
+    "hash": "M9371",
     "location": Object {
       "collectionName": "collection",
       "keyName": "123",
@@ -906,7 +906,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.flowerBed** is not in snake case.",
-    "hash": "0740317e",
+    "hash": "M0740",
     "location": Object {
       "collectionName": "collection",
       "keyName": "flowerBed",
@@ -927,7 +927,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.my_flowerBed** is not in snake case.",
-    "hash": "2ab09e18",
+    "hash": "M2ab0",
     "location": Object {
       "collectionName": "collection",
       "keyName": "my_flowerBed",
@@ -948,7 +948,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection.userID** is not in snake case.",
-    "hash": "646e5097",
+    "hash": "M646e",
     "location": Object {
       "collectionName": "collection",
       "keyName": "userID",
@@ -1102,7 +1102,7 @@ exports[`keys-that-end-in-at-should-refer-to-dates.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Column **collection.arstAt** ends in \\"At\\" but contains values that are not dates, null or undefined.",
-    "hash": "7408cc5e",
+    "hash": "M7408",
     "location": Object {
       "collectionName": "collection",
       "keyName": "arstAt",
@@ -1124,7 +1124,7 @@ Array [
   },
   Object {
     "failure": "Column **collection.At** ends in \\"At\\" but contains values that are not dates, null or undefined.",
-    "hash": "2a33bab1",
+    "hash": "M2a33",
     "location": Object {
       "collectionName": "collection",
       "keyName": "At",
@@ -1146,7 +1146,7 @@ Array [
   },
   Object {
     "failure": "Column **collection.arstAt** ends in \\"At\\" but contains values that are not dates, null, undefined or satisfying the provided regexp.",
-    "hash": "7408cc5e",
+    "hash": "M7408",
     "location": Object {
       "collectionName": "collection",
       "keyName": "arstAt",
@@ -1168,7 +1168,7 @@ Array [
   },
   Object {
     "failure": "Column **collection.At** ends in \\"At\\" but contains values that are not dates, null, undefined or satisfying the provided regexp.",
-    "hash": "2a33bab1",
+    "hash": "M2a33",
     "location": Object {
       "collectionName": "collection",
       "keyName": "At",
@@ -1190,7 +1190,7 @@ Array [
   },
   Object {
     "failure": "Column **collection.arstAt** ends in \\"At\\" but contains values that are not dates, null, undefined or satisfying the provided regexp.",
-    "hash": "7408cc5e",
+    "hash": "M7408",
     "location": Object {
       "collectionName": "collection",
       "keyName": "arstAt",
@@ -1212,7 +1212,7 @@ Array [
   },
   Object {
     "failure": "Column **collection.At** ends in \\"At\\" but contains values that are not dates, null, undefined or satisfying the provided regexp.",
-    "hash": "2a33bab1",
+    "hash": "M2a33",
     "location": Object {
       "collectionName": "collection",
       "keyName": "At",
@@ -1349,7 +1349,7 @@ exports[`max-key-count.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Collection **collection2** has 12 keys which exceeds the allowed maximum of 2",
-    "hash": "d1aa8f56",
+    "hash": "Md1aa",
     "location": Object {
       "collectionName": "collection2",
     },
@@ -1368,7 +1368,7 @@ Array [
   },
   Object {
     "failure": "Collection **collection2** has 12 keys which exceeds the allowed maximum of 5",
-    "hash": "d1aa8f56",
+    "hash": "Md1aa",
     "location": Object {
       "collectionName": "collection2",
     },
@@ -1483,8 +1483,8 @@ Array [
 exports[`no-bad-key-names.failuresJson 1`] = `
 Array [
   Object {
-    "failure": "Collection collection2 contains a key named **stuff** which is not a good name.",
-    "hash": "89903032",
+    "failure": "Collection collection2 contains a column named **stuff** which is not a good name.",
+    "hash": "M8990",
     "location": Object {
       "collectionName": "collection2",
       "keyName": "stuff",
@@ -1506,8 +1506,8 @@ Array [
     },
   },
   Object {
-    "failure": "Collection collection2 contains a key named **data** which is not a good name.",
-    "hash": "0e5cd09b",
+    "failure": "Collection collection2 contains a column named **data** which is not a good name.",
+    "hash": "M0e5c",
     "location": Object {
       "collectionName": "collection2",
       "keyName": "data",
@@ -1708,7 +1708,7 @@ exports[`no-leading-underscores-in-key-names.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Key name **collection1._** should not start with an underscore.",
-    "hash": "d7d20903",
+    "hash": "Md7d2",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "_",
@@ -1727,7 +1727,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection1._arst** should not start with an underscore.",
-    "hash": "d2ba8828",
+    "hash": "Md2ba",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "_arst",
@@ -1746,7 +1746,7 @@ Array [
   },
   Object {
     "failure": "Key name **collection1.__v** should not start with an underscore.",
-    "hash": "a3eef867",
+    "hash": "Ma3ee",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "__v",
@@ -1811,7 +1811,7 @@ exports[`no-null.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Column **collection1._** contains null values.",
-    "hash": "dc6f7986",
+    "hash": "Mdc6f",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "_",
@@ -1831,7 +1831,7 @@ Array [
   },
   Object {
     "failure": "Column **collection1._arst** contains null values.",
-    "hash": "bfbf709a",
+    "hash": "Mbfbf",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "_arst",
@@ -1898,7 +1898,7 @@ exports[`no-numbers-saved-as-string.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Column **collection.key1** contains numbers that are saved as strings.",
-    "hash": "5282932d",
+    "hash": "M5282",
     "location": Object {
       "collectionName": "collection",
       "keyName": "key1",
@@ -1919,7 +1919,7 @@ Array [
   },
   Object {
     "failure": "Column **collection.key1** contains numbers that are saved as strings.",
-    "hash": "5282932d",
+    "hash": "M5282",
     "location": Object {
       "collectionName": "collection",
       "keyName": "key1",
@@ -2021,7 +2021,7 @@ exports[`no-undefined.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Column **collection1._** contains undefined values.",
-    "hash": "3e0487fc",
+    "hash": "M3e04",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "_",
@@ -2041,7 +2041,7 @@ Array [
   },
   Object {
     "failure": "Column **collection1._arst** contains undefined values.",
-    "hash": "4c8016f1",
+    "hash": "M4c80",
     "location": Object {
       "collectionName": "collection1",
       "keyName": "_arst",
@@ -2099,7 +2099,7 @@ exports[`question-keys-should-refer-to-booleans.failuresJson 1`] = `
 Array [
   Object {
     "failure": "Column **collection.isQwfp** starts with \\"is\\" but contains values that are not booleans, null or undefined",
-    "hash": "87c8bf9b",
+    "hash": "M87c8",
     "location": Object {
       "collectionName": "collection",
       "keyName": "isQwfp",
