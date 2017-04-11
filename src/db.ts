@@ -171,7 +171,6 @@ export class MongoDbWrapper implements IDb {
           var value = values[i];
           for (var type in value) {
             if (value.hasOwnProperty(type) && value[type]) {
-              print(type)
               result[type] = true;
             }
           }
