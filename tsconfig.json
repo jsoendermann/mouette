@@ -7,8 +7,9 @@
     "**/*.spec.ts"
   ],
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "noImplicitAny": true,
+    "noImplicitThis": true,
     "strictNullChecks": true,
     "outDir": "dist",
     "declaration": true,
@@ -17,7 +18,7 @@
       "es7",
       "dom"
     ],
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node"
   }
 }

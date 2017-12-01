@@ -1,6 +1,6 @@
 {
   "name": "mouette",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A linter for your MongoDB.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -9,12 +9,11 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "prepush": "npm run lint",
-    "prepublish": "npm run build",
-    "build": "tsc",
-    "watch": "tsc --watch",
-    "lint": "tslint 'src/**/*.ts'",
-    "test": "jest"
+    "prepush": "npm run ts:lint",
+    "prepublish": "npm run ts:build",
+    "ts:build": "tsc",
+    "ts:watch": "tsc --watch",
+    "ts:lint": "tslint 'src/**/*.ts'"
   },
   "repository": {
     "type": "git",
@@ -24,60 +23,16 @@
   "bugs": {
     "url": "https://github.com/jsoendermann/mouette/issues"
   },
-  "homepage": "https://github.com/jsoendermann/mouette#readme",
+  "homepage": "https://github.com/jsoendermann/mouette",
   "devDependencies": {
-    "@types/argparse": "^1.0.30",
-    "@types/colors": "^1.1.1",
-    "@types/humps": "^1.1.2",
-    "@types/jest": "^19.2.2",
-    "@types/joi": "^10.0.1",
-    "@types/js-yaml": "^3.5.29",
-    "@types/lodash": "^4.14.57",
-    "@types/mongodb": "^2.1.41",
-    "@types/node": "^7.0.8",
-    "cartesian-product": "^2.1.2",
-    "husky": "^0.13.2",
-    "jest": "^19.0.2",
-    "ts-jest": "^19.0.5",
-    "tslint": "^4.5.1",
-    "typescript": "^2.2.1"
+    "@types/lodash": "^4.14.64",
+    "@types/mongodb": "^2.2.2",
+    "husky": "^0.13.4",
+    "tslint": "^5.4.0",
+    "typescript": "^2.3.4"
   },
   "dependencies": {
-    "argparse": "^1.0.9",
-    "cli-table2": "^0.2.0",
-    "colors": "^1.1.2",
-    "humps": "^2.0.0",
-    "inversify": "^3.3.0",
-    "joi": "^10.3.0",
-    "js-yaml": "^3.8.2",
-    "lingo": "^0.0.5",
     "lodash": "^4.17.4",
-    "mongodb": "^2.2.25",
-    "serialize-javascript": "^1.3.0",
-    "to-case": "^2.0.0",
-    "toml": "^2.3.2"
-  },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/__tests__/.*\\.(test|spec)\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/!(mouette|_RULE_TEMPLATE).ts"
-    ],
-    "coverageReporters": [
-      "html",
-      "json"
-    ]
+    "mongodb": "^2.2.27"
   }
 }
